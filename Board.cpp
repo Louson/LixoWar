@@ -8,34 +8,27 @@
 Board::Board() {
 }
 
-Board::Board(double x, double y) {
-	assert(x>0 && y>0);
-	dx = x;
-	dy = y;
+Board::Board(double s) {
+	assert(s>0);
+	side = s;
 	set_normal(0, 0, 1);
-	set_vertex(0,  dx/2, -dy/2, 0);
-	set_vertex(1,  dx/2,  dy/2, 0);
-	set_vertex(2, -dx/2,  dy/2, 0);
-	set_vertex(3, -dx/2, -dy/2, 0);
+	set_vertex(0,  s/2, -s/2, 0);
+	set_vertex(1,  s/2,  s/2, 0);
+	set_vertex(2, -s/2,  s/2, 0);
+	set_vertex(3, -s/2, -s/2, 0);
 }
 
 /**
  * Accesseurs
  */
-void Board::set_dim(double x, double y) {
-	assert(x>0 && y>0);
-	dx = x;
-	dy = y;
+void Board::set_dim(double s) {
+	assert(s>0);
+	s = side;
 }
 
-double Board::get_dx() {
-	assert( dx>0 );
-	return dx;
-}
-
-double Board::get_dy() {
-	assert( dy>0 );
-	return dy;
+double Board::get_side() {
+	assert( side>0 );
+	return side;
 }
 
 void Board::set_normal(float x, float y, float z) {

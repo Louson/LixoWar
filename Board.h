@@ -11,14 +11,13 @@ public :
 	 * Constructeurs
 	 */
 	Board();
-	Board(double dx, double dy);
+	Board(double s);
 
 	/**
 	 * Accesseurs
 	 */
-	void set_dim(double dx, double dy);
-	double get_dx();
-	double get_dy();
+	void set_dim(double c);
+	double get_side();
 	void set_normal(float x, float y, float z);
 	void set_vertex(int v, float x, float y, float z);
 	/**
@@ -26,8 +25,7 @@ public :
 	 */
 	void drawBoard();
 private:
-	double dx;
-	double dy;
+	double side;
 	GLfloat n[3];
 	GLfloat v[4][3];
 };
