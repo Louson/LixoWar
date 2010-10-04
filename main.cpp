@@ -2,12 +2,12 @@
 #include <vector>
 #include <math.h>
 
+#include "Constantes.h"
 #include "Board.h"
 
 using namespace std;
 
-Board b(1000);
-const float side = b.get_side();
+Board b(BOARD_SIDE);
 //Camera_Ortho Cam0 = Camera_Ortho();
 
 void display() {
@@ -32,19 +32,19 @@ void init() {
 	/* Setup the view of the cube */
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(3*side, 2*side, 3*side, /* eye position */
+	gluLookAt(3*BOARD_SIDE, 2*BOARD_SIDE, 3*BOARD_SIDE, /* eye position */
 		  0.0, 0.0, 0.0, /* center position */
  		  -9.0/11.0, -6.0/11.0, 13.0/11.0); /* up in positive z direction */
 
  	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-0.75*side, 0.75*side, -0.75*side, 0.75*side,
-		/* Z near */ 0.5*side*sqrt(22.0), /* Z far */ 1.5*side*sqrt(22.0));
+	glOrtho(-0.75*BOARD_SIDE, 0.75*BOARD_SIDE, -0.75*BOARD_SIDE, 0.75*BOARD_SIDE,
+		/* Z near */ 0.5*BOARD_SIDE*sqrt(22.0), /* Z far */ 1.5*BOARD_SIDE*sqrt(22.0));
 
 
 // 	gluPerspective( /* field of view in degree */ 20.0,
 // 			/* aspect ratio */ 1.0,
-// 			/* Z near */ 0.5*side*sqrt(22.0), /* Z far */ 1.5*side*sqrt(22.0));
+// 			/* Z near */ 0.5*BOARD_SIDE*sqrt(22.0), /* Z far */ 1.5*BOARD_SIDE*sqrt(22.0));
 
 }
 
