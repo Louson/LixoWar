@@ -7,7 +7,8 @@
 using namespace std;
 
 Board b(1000);
-const double side = b.get_side();
+const float side = b.get_side();
+//Camera_Ortho Cam0 = Camera_Ortho();
 
 void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -18,21 +19,32 @@ void display() {
 
 void init() {
 
+	/* Caractéristiques de la fenêtre */
+	glutFullScreen();
+
+	/* Autorisation des luminosités des objets */
 	glColorMaterial(GL_FRONT_AND_BACK, GL_SHININESS);
 	glEnable(GL_COLOR_MATERIAL);
 
-
 	/* Use Depth Buffering */
 	glEnable(GL_DEPTH_TEST);
+
 	/* Setup the view of the cube */
 	glMatrixMode(GL_MODELVIEW);
- 	gluLookAt(3*side, 2*side, 3*side, /* eye position */
- 		  0.0, 0.0, 0.0, /* center position */
- 		  0.0, 0.0, 1.0); /* up in positive y direction */
-	glMatrixMode(GL_PROJECTION);
-	gluPerspective( /* field of view in degree */ 40.0,
-			/* aspect ratio */ 1.0,
-			/* Z near */ 0.5*side*sqrt(22.0), /* Z far */ 1.5*side*sqrt(22.0));
+	glLoadIdentity();
+	gluLookAt(3*side, 2*side, 3*side, /* eye position */
+		  0.0, 0.0, 0.0, /* center position */
+ 		  -9.0/11.0, -6.0/11.0, 13.0/11.0); /* up in positive z direction */
+
+ 	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(-0.75*side, 0.75*side, -0.75*side, 0.75*side,
+		/* Z near */ 0.5*side*sqrt(22.0), /* Z far */ 1.5*side*sqrt(22.0));
+
+
+// 	gluPerspective( /* field of view in degree */ 20.0,
+// 			/* aspect ratio */ 1.0,
+// 			/* Z near */ 0.5*side*sqrt(22.0), /* Z far */ 1.5*side*sqrt(22.0));
 
 }
 
