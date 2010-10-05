@@ -1,6 +1,10 @@
 #ifndef _CONFIG_H
 #define _CONFIG_H
 
-#define BOARD_SIDE 1000
+/* Board settings */
+#define SIDE_X 1000
+#define SIDE_Y 1000
+#define D_LINE_X 50
+#define D_LINE_Y 50
 
 #endif
