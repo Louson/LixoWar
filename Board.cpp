@@ -15,7 +15,8 @@ GLfloat LineColor[3] = {1, 0, 0};
 Board::Board() {
 }
 
-Board::Board(GLfloat x, GLfloat y) {
+Board::Board(GLfloat x, GLfloat y): side_x(x), side_y(y) {
+
 	if (side_x < 2*D_LINE_X || side_y < 2*D_LINE_Y) {
 		throw(range_error("Dimensions insuffisantes"));
 	}
