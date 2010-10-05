@@ -1,6 +1,10 @@
 #include <GL/glut.h>
-#include "Board.h"
 #include <assert.h>
+
+#include "Board.h"
+
+GLfloat BoardColor[3] = {0, 0, 1};
+GLfloat LineColor[3] = {1, 0, 0};
 
 /**
  * Constructeurs
@@ -57,29 +61,25 @@ void Board::drawBoard() {
 	glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
 
 	glBegin(GL_QUADS); {
-		glColor3f(0, 0, 1);
+		glColor3fv(BoardColor);
 		glNormal3fv(n);
 		glVertex3fv(v[0]);
-//		glColor3f(1, 0, 0);
 		glVertex3fv(v[1]);
-//		glColor3f(0, 1, 0);
 		glVertex3fv(v[2]);
-//		glColor3f(0, 0, 0);
 		glVertex3fv(v[3]);
 		glEnd();
 	}
+	glColor3fv(LineColor);
 	for (int i=D_LINE; i<=side-D_LINE; i+=D_LINE) {
 		lineh = i*v[0][1]+(side-i)*v[1][1];
 		linev = i*v[3][0]+(side-i)*v[0][0];
 		/* Lignes // (Ox) */
 		glBegin(GL_LINES);
-		glColor3f(1, 0, 0);
 		glVertex3f(v[0][0], lineh/side, 0.1);
 		glVertex3f(v[3][0], lineh/side, 0.1);
 		glEnd();
 		/* Lignes // (Oy) */
 		glBegin(GL_LINES);
-		glColor3f(1, 0, 0);
 		glVertex3f(linev/side, v[0][1], 0.1);
 		glVertex3f(linev/side, v[1][1], 0.1);
 		glEnd();

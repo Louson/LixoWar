@@ -1,5 +1,5 @@
-#ifndef _CONSTANTES_H
-#define _CONSTANTES_H
+#ifndef _CONFIG_H
+#define _CONFIG_H
 
 #define BOARD_SIDE 1000
 
