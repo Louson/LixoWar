@@ -22,7 +22,7 @@ public :
 		      GLfloat near,GLfloat  far);
 	void activer();
 private :
-	/* Camera position */
+	/* Camera field */
 	GLfloat xmin;
 	GLfloat xmax;
 	GLfloat ymin;
