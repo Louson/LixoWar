@@ -10,12 +10,21 @@
 extern Board * pt_board;
 extern Camera_Ortho Cam_A;
 
+/**
+ * Create the window
+ */
 void Window::create(const char * window_name, int * argc, char ** argv){
     glutInit(argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutCreateWindow(window_name);
+    glutFullScreen();
 }
 
+/**
+ * Because of the limitations of GLUT C bindings,
+ * this function needs to be static => it's impossible to 
+ * use Functor
+ */
 void Window::display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
@@ -23,13 +32,12 @@ void Window::display() {
     glutSwapBuffers();
 }
 
+/**
+ * Init the windows
+ */
 void Window::init(){
 
-
-	glutDisplayFunc(&Window::display);
-    
-    /* Window settings */
-    glutFullScreen();
+    glutDisplayFunc(&Window::display);
 
     /* Enable object emission light */
     glColorMaterial(GL_FRONT_AND_BACK, GL_SHININESS);
