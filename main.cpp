@@ -4,7 +4,6 @@
 #include "Config.h"
 #include "Board.h"
 #include "Camera_Ortho.h"
-#include "Config.h"
 
 using namespace std;
 
@@ -13,8 +12,8 @@ Camera_Ortho Cam_A;
 
 int main(int argc, char ** argv){
 
-    const char * window_name = "Lixo War 3000";
-
+	const char * window_name = "Lixo War 3000";
+ 
     /* recuperer valeurs fichiers */
 
     /* lancer jeu */

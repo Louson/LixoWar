@@ -2,9 +2,9 @@
 #define _CONFIG_H
 
 /* Board settings */
-#define SIDE_X 1000
-#define SIDE_Y 1000
-#define D_LINE_X 50
-#define D_LINE_Y 50
+#define SIDE_X 10000
+#define SIDE_Y 10000
+#define D_LINE_X 300
+#define D_LINE_Y 300
 
 #endif

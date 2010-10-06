@@ -3,7 +3,17 @@
 
 #include <GL/glut.h>
 
+#include "Config.h"
 #include "Light.h"
+
+#define L_LOCATION {10000, 10000, -10000, 1.0}
+#define L_DIFFUSE {1.0, 1.0, 1.0, 1.0}
+#define L_AMBIENT {0.01, 0.01, 0.01, 1.0}
+#define L_SPECULAR {1.0, 1.0, 1.0, 1.0}
+extern GLfloat L_Location[4];
+extern GLfloat L_Diffuse[4];
+extern GLfloat L_Ambient[4];
+extern GLfloat L_Specular[4];
 
 class Located_Light : public Light {
 public :

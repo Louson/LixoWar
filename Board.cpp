@@ -6,7 +6,11 @@
 
 using namespace std;
 
-GLfloat BoardColor[3] = {0, 0, 1};
+GLfloat BoardEmission[3] = {0.0, 1.0, 0.0};
+GLfloat BoardDiffuse[3] = {0, 0.5, 1.0};
+GLfloat BoardAmbient[3] = {1.0, 0.0, 0.0};
+GLfloat BoardSpecular[3] = {1.0, 0.0, 0.0};
+//GLfloat BoardShininess[3] = {0.0, 0.0, 0.0};
 GLfloat LineColor[3] = {1, 0, 0};
 
 /**
@@ -53,8 +57,24 @@ void Board::drawBoard() {
 	glHint(GL_POLYGON_SMOOTH, GL_NICEST);
 	glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
 
+
+	/* Test de sphere */
+//	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, BoardColor);
+// 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, BoardAmbient);
+// 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, BoardDiffuse);;
+// 	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, BoardSpecular);
+//	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, BoardColor);
+	glColor3f(1.0, 0, 0);
+ 	gluSphere(gluNewQuadric(), 5000, 32, 32);
+	/******************/
+
 	glBegin(GL_QUADS); {
-		glColor3fv(BoardColor);
+//		glColor3f(1.0, 1.0, 0);
+// 		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, BoardEmission);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, BoardAmbient);
+ 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, BoardDiffuse);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, BoardSpecular);
+//		glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, BoardShininess);
 		glNormal3fv(n);
 		glVertex3fv(v[0]);
 		glVertex3fv(v[1]);
@@ -62,8 +82,8 @@ void Board::drawBoard() {
 		glVertex3fv(v[3]);
 		glEnd();
 	}
-	glColor3fv(LineColor);
 	for (int i=D_LINE_X ; i<=side_x-D_LINE_X ; i+=D_LINE_X) {
+//		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, LineColor);
 		linev = i*v[3][0]+(side_x-i)*v[0][0];
 		/* Lignes // (Oy) */
 		glBegin(GL_LINES);
