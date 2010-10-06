@@ -64,8 +64,8 @@ void Board::drawBoard() {
 // 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, BoardDiffuse);;
 // 	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, BoardSpecular);
 //	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, BoardColor);
-	glColor3f(1.0, 0, 0);
- 	gluSphere(gluNewQuadric(), 5000, 32, 32);
+// 	glColor3f(1.0, 0, 0);
+//  	gluSphere(gluNewQuadric(), 5000, 32, 32);
 	/******************/
 
 	glBegin(GL_QUADS); {

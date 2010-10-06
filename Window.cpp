@@ -41,12 +41,12 @@ void Window::init(){
 	glutDisplayFunc(&Window::display);
 
 	/* Enable object emission light */
- 	glColorMaterial(GL_FRONT_AND_BACK, GL_SHININESS);
-	glEnable(GL_COLOR_MATERIAL);
+//  	glColorMaterial(GL_FRONT_AND_BACK, GL_SHININESS);
+// 	glEnable(GL_COLOR_MATERIAL);
 	
 	/* Lights settings */
 
-// 	glEnable(GL_LIGHTING);
+ 	glEnable(GL_LIGHTING);
 //   	glEnable(GL_LIGHT1);
 //  	GLfloat ocation[4] = {10000.0, 0.0, 10000.0, 1.0};
 // 	GLfloat iffuse[4] = {1.0, 1.0, 1.0, 1.0};
