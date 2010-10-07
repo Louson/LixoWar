@@ -3,6 +3,7 @@
 
 #include "Config.h"
 #include "Board.h"
+#include "Moto.h"
 
 using namespace std;
 
@@ -51,6 +52,7 @@ void Board::drawBoard() {
 	GLfloat lineh, linev;
 	GLfloat s_x = SIDE_X/QUALITY_X;
 	GLfloat s_y = SIDE_Y/QUALITY_Y;
+	Moto m(0, 0);
 
 	/* Antialiassing des lignes */
 	glEnable(GL_LINE_SMOOTH);
@@ -60,6 +62,7 @@ void Board::drawBoard() {
 	glHint(GL_POLYGON_SMOOTH, GL_NICEST);
 	glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
 
+	m.drawMoto();
 
 	/* Test de sphere */
 // //	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, BoardColor);
