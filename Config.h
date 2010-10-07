@@ -12,7 +12,7 @@
 #define D_LINE_Y 300
 
 namespace Config{
-    int fetchParam(const string & paramName,int defaultValue,File & configFile);
+    int fetchParam(const string & paramName,int defaultValue, const File & configFile);
 };
 
 #endif

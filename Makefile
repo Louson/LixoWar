@@ -10,7 +10,8 @@ Located_Light.o\
 Window.o\
 File.o\
 Config.o\
-Moto.o
+Moto.o\
+Game.o
 
 all: $(PROJECT_NAME)
 

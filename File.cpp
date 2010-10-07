@@ -35,7 +35,7 @@ File::File(const char * path_file) throw(ExceptionBadPath){
     file.close();
 }
 
-int File::getParamInt(const string & param) throw(ExceptionParamInexistent){
+int File::getParamInt(const string & param) const throw(ExceptionParamInexistent){
     map<string,string>::const_iterator it = lines.find(param);
     
     if(it == lines.end()) throw ExceptionParamInexistent();

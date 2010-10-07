@@ -26,7 +26,6 @@ int main(int argc, char ** argv){
         return RETURN_BAD_PATH;
     }
 
-
     /* lancer jeu */
     Window::create(WINDOW_NAME,&argc,argv);
     Window::init();
