@@ -40,7 +40,14 @@ void Located_Light::init() {
 	glLightfv(N_LIGHT, GL_AMBIENT, Color_Ambient);
 	glLightfv(N_LIGHT, GL_DIFFUSE, Color_Diffuse);
 	glLightfv(N_LIGHT, GL_SPECULAR, Color_Specular);
-// 	glLightf(N_LIGHT, GL_CONSTANT_ATTENUATION, 1.0);
+	
+
+/* POSITION LAMPE?*/
+/* 	GLfloat direction[3] = {-SIDE_X, -SIDE_Y, 0};
+	glLightfv(N_LIGHT, GL_SPOT_DIRECTION, direction);
+	glLightf(N_LIGHT, GL_SPOT_EXPONENT, 20);
+	glLightf(N_LIGHT, GL_SPOT_CUTOFF, 90.0001);*/
+//	glLightf(N_LIGHT, GL_CONSTANT_ATTENUATION, 1.0);
 // 	glLightf(N_LIGHT, GL_LINEAR_ATTENUATION, 0.00000000000000010);
 //	glLightf(N_LIGHT, GL_QUADRATIC_ATTENUATION, 1);
 }

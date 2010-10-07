@@ -10,7 +10,7 @@ GLfloat BoardEmission[3] = {0.0, 1.0, 0.0};
 GLfloat BoardDiffuse[3] = {0, 0.5, 1.0};
 GLfloat BoardAmbient[3] = {1.0, 0.0, 0.0};
 GLfloat BoardSpecular[3] = {1.0, 0.0, 0.0};
-//GLfloat BoardShininess[3] = {0.0, 0.0, 0.0};
+GLfloat BoardShininess = 120;
 GLfloat LineColor[3] = {1, 0, 0};
 
 /**
@@ -49,6 +49,9 @@ void Board::set_vertex(int ve, GLfloat x, GLfloat y, GLfloat z) {
  */
 void Board::drawBoard() {
 	GLfloat lineh, linev;
+	GLfloat s_x = SIDE_X/QUALITY_X;
+	GLfloat s_y = SIDE_Y/QUALITY_Y;
+
 	/* Antialiassing des lignes */
 	glEnable(GL_LINE_SMOOTH);
 	glHint(GL_LINE_SMOOTH, GL_NICEST);
@@ -68,22 +71,33 @@ void Board::drawBoard() {
 //  	gluSphere(gluNewQuadric(), 5000, 32, 32);
 	/******************/
 
-	glBegin(GL_QUADS); {
-//		glColor3f(1.0, 1.0, 0);
-// 		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, BoardEmission);
-		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, BoardAmbient);
- 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, BoardDiffuse);
-		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, BoardSpecular);
-//		glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, BoardShininess);
-		glNormal3fv(n);
-		glVertex3fv(v[0]);
-		glVertex3fv(v[1]);
-		glVertex3fv(v[2]);
-		glVertex3fv(v[3]);
-		glEnd();
-	}
+
+
+	/* Board's drawing */
+//	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, BoardEmission);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, BoardAmbient);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, BoardDiffuse);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, BoardSpecular);
+	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, BoardShininess);
+
+	for (int i=0; i<QUALITY_X; i++)
+		for (int j=0; j<QUALITY_Y; j++) {
+			glBegin(GL_QUADS);
+			glNormal3fv(n);
+			glVertex3f(v[3][0]+i*s_x, v[3][1]+j*s_y, 0);
+			glVertex3f(v[3][0]+(i+1)*s_x, v[3][1]+j*s_y, 0);
+			glVertex3f(v[3][0]+(i+1)*s_x, v[3][1]+(j+1)*s_y, 0);
+			glVertex3f(v[3][0]+i*s_x, v[3][1]+(j+1)*s_y, 0);
+			glEnd();
+		}
+
+
+	/* Lines' drawing */
 	for (int i=D_LINE_X ; i<=side_x-D_LINE_X ; i+=D_LINE_X) {
 //		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, LineColor);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, LineColor);
+ 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, LineColor);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, LineColor);
 		linev = i*v[3][0]+(side_x-i)*v[0][0];
 		/* Lignes // (Oy) */
 		glBegin(GL_LINES);
