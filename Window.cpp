@@ -18,6 +18,8 @@ extern Camera_Ortho Cam_A;
 void Window::create(const char * window_name, int * argc, char ** argv){
     glutInit(argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_NORMALIZE);
     glutCreateWindow(window_name);
     glutFullScreen();
 }
@@ -40,13 +42,15 @@ void Window::display() {
 void Window::init(){
 
     glutDisplayFunc(&Window::display);
+    glutKeyboardFunc(&Window::keyboard);
 
     /* Enable object emission light */
-    //  	glColorMaterial(GL_FRONT_AND_BACK, GL_SHININESS);
+    //  glColorMaterial(GL_FRONT_AND_BACK, GL_SHININESS);
     // 	glEnable(GL_COLOR_MATERIAL);
 
-    /* Lights settings */
+   /* Lights settings */
 
+    glShadeModel(GL_SMOOTH);
     glEnable(GL_LIGHTING);
     //   	glEnable(GL_LIGHT1);
     //  	GLfloat ocation[4] = {10000.0, 0.0, 10000.0, 1.0};
@@ -62,6 +66,7 @@ void Window::init(){
     GLfloat L_Diffuse[4] = L_DIFFUSE;
     GLfloat L_Ambient[4] = L_AMBIENT;
     GLfloat L_Specular[4] = L_SPECULAR;
+    glMatrixMode(GL_PROJECTION);
     Located_Light Light0(GL_LIGHT0, L_Location, L_Diffuse, L_Ambient, L_Specular);
     Light0.init();
 
@@ -70,8 +75,9 @@ void Window::init(){
 
     /* Setup the view of the cube */
     Cam_A.set_position(3*SIDE_X, 2*SIDE_Y, 3*SIDE_X, /*Cam position */
-            0.0, 0.0, 0.0, /* center position */
-            -9.0/11.0, -6.0/11.0, 13.0/11.0); /* up in positive z direction */
+		       0.0, 0.0, 0.0, /* center position */
+		       0,0,1);
+//            -9.0/11.0, -6.0/11.0, 13.0/11.0); /* up direction */
     Cam_A.set_view(/* X */ -0.75*SIDE_X, 0.75*SIDE_X,
             /* Y */ -0.75*SIDE_Y, 0.75*SIDE_Y,
             /* Z near */ 0.5*SIDE_X*sqrt(22.0),

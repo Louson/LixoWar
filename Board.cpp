@@ -62,16 +62,21 @@ void Board::drawBoard() {
 
 
 	/* Test de sphere */
-//	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, BoardColor);
+// //	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, BoardColor);
 // 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, BoardAmbient);
 // 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, BoardDiffuse);;
 // 	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, BoardSpecular);
-//	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, BoardColor);
+// 	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, BoardShininess);
 // 	glColor3f(1.0, 0, 0);
 //  	gluSphere(gluNewQuadric(), 5000, 32, 32);
 	/******************/
 
-
+// 	glBegin(GL_LINES);
+// 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, LineColor);
+// 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, LineColor);
+// 	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, LineColor);
+// 	glVertex3f(0, 0, 0);
+// 	glVertex3f(SIDE_X/2, SIDE_Y/2, 0);
 
 	/* Board's drawing */
 //	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, BoardEmission);

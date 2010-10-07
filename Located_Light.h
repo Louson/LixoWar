@@ -6,7 +6,7 @@
 #include "Config.h"
 #include "Light.h"
 
-#define L_LOCATION {SIDE_X/2, SIDE_Y/2, SIDE_X/2}
+#define L_LOCATION {0, 0, -4.1*SIDE_X}
 #define L_DIFFUSE {1.0, 1.0, 1.0, 1.0}
 #define L_AMBIENT {0.01, 0.01, 0.01, 1.0}
 #define L_SPECULAR {1.0, 1.0, 1.0, 1.0}
