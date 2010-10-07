@@ -1,9 +1,12 @@
 #include <string>
 
+
 #include "Window.h"
 #include "Config.h"
 #include "Board.h"
 #include "Camera_Ortho.h"
+#include "File.h"
+#include "main.h"
 
 using namespace std;
 
@@ -12,16 +15,16 @@ Camera_Ortho Cam_A;
 
 int main(int argc, char ** argv){
 
-	const char * window_name = "Lixo War 3000";
  
     /* recuperer valeurs fichiers */
+    File config_file(PATH_CONFIG_FILE);
 
     /* lancer jeu */
-    Window::create(window_name,&argc,argv);
+    Window::create(WINDOW_NAME,&argc,argv);
     Window::init();
 
 
-    //	glutKeyboardFunc(clavier);
+    glutKeyboardFunc(Window::keyboard);
 
     /* Camera activated */
     Cam_A.activer();

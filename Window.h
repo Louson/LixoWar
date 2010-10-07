@@ -1,9 +1,9 @@
 #ifndef _WINDOW_H
 #define _WINDOW_H
 
-#include <string>
-
 #include "Board.h"
+
+#define KEY_ESC         0x001B
 
 namespace Window{
 
@@ -11,6 +11,8 @@ namespace Window{
 
         void create(const char * window_name, int * argc, char ** argv);  
         void init();
+
+        void keyboard(unsigned char cara,int x, int y);
 };
 
 #endif
