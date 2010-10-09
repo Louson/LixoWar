@@ -11,7 +11,7 @@ void Camera_Persp::set_view(GLfloat f, GLfloat r,
 	zfar = far;
 }
 
-void Camera_Persp::activer() {
+void Camera_Persp::activate() {
 	lookAt();
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();

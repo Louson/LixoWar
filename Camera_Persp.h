@@ -18,7 +18,7 @@ public :
 		     GLfloat near, GLfloat far);
 	void set_view(GLfloat field, GLfloat ratio,
 		      GLfloat near,GLfloat  far);
-	void activer();
+	void activate();
 private :
 	/* Camera field */
 	GLfloat field;

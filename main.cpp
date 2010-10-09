@@ -31,7 +31,7 @@ int main(int argc, char ** argv){
     Window::init();
 
     /* Camera activated */
-    Cam_A.activer();
+    Cam_A.activate();
     glutMainLoop();
     return EXIT_SUCCESS;
 }

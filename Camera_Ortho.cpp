@@ -1,6 +1,3 @@
-#include <math.h>
-
-#include "Config.h"
 #include "Camera_Ortho.h"
 
 Camera_Ortho::Camera_Ortho() {
@@ -17,7 +14,7 @@ void Camera_Ortho::set_view(GLfloat left, GLfloat right,
 	zfar = far;
 }
 
-void Camera_Ortho::activer() {
+void Camera_Ortho::activate() {
 	lookAt();
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();

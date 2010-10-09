@@ -36,18 +36,17 @@ Located_Light::Located_Light(GLenum n, GLfloat location[4],
 
 void Located_Light::init() {
 	glEnable(N_LIGHT);
-//	glMatrixMode(GL_MODELVIEW);
+	glMatrixMode(GL_MODELVIEW);
 	glLightfv(N_LIGHT, GL_POSITION, Location);
 	glLightfv(N_LIGHT, GL_DIFFUSE, Color_Diffuse);
 	glLightfv(N_LIGHT, GL_AMBIENT, Color_Ambient);
 	glLightfv(N_LIGHT, GL_SPECULAR, Color_Specular);
 	
 
-/* POSITION LAMPE?*/
-// 	GLfloat direction[3] = {-SIDE_X/2, SIDE_Y/2, SIDE_X/2};
-// 	glLightfv(N_LIGHT, GL_SPOT_DIRECTION, direction);
-// 	glLightf(N_LIGHT, GL_SPOT_EXPONENT, 20);
-// 	glLightf(N_LIGHT, GL_SPOT_CUTOFF, 90.01);
+	GLfloat direction[3] = {0, 0, -1};
+	glLightfv(N_LIGHT, GL_SPOT_DIRECTION, direction);
+	glLightf(N_LIGHT, GL_SPOT_EXPONENT, 2);
+	glLightf(N_LIGHT, GL_SPOT_CUTOFF, 45);
 // 	glLightf(N_LIGHT, GL_CONSTANT_ATTENUATION, 1.0);
 // 	glLightf(N_LIGHT, GL_LINEAR_ATTENUATION, 0.00000000000000010);
 // 	glLightf(N_LIGHT, GL_QUADRATIC_ATTENUATION, 1);

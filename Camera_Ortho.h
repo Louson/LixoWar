@@ -20,7 +20,7 @@ public :
 	void set_view(GLfloat left, GLfloat right,
 		      GLfloat down, GLfloat up,
 		      GLfloat near,GLfloat  far);
-	void activer();
+	void activate();
 private :
 	/* Camera field */
 	GLfloat xmin;
