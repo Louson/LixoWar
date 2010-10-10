@@ -1,9 +1,6 @@
 #include "Camera.h"
 #include "Config.h"
 
-Camera::Camera() {
-}
-
 void Camera::set_position(GLfloat xp, GLfloat yp, GLfloat zp,
 			  GLfloat xc, GLfloat yc, GLfloat zc,
 			  GLfloat xup, GLfloat yup, GLfloat zup) {

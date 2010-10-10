@@ -22,7 +22,6 @@ extern GLfloat direction[3];
 
 class Spot : public Located_Light {
 public :
-	Spot();
 	Spot(GLenum n, GLfloat location[4],
 	     GLfloat diffuse[4], GLfloat ambient[4], GLfloat specular[4],
 	     GLfloat direction[3], GLfloat exponent, GLfloat cutoff);

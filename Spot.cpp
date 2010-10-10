@@ -1,11 +1,12 @@
-#include "Spot.h"
+#include <GL/glut.h>
 
-Spot::Spot() {
-}
+#include "Spot.h"
 
 Spot::Spot(GLenum n, GLfloat location[4],
 	   GLfloat diffuse[4], GLfloat ambient[4], GLfloat specular[4],
 	   GLfloat direct[3], GLfloat expon, GLfloat cut) {
+
+	glMatrixMode(GL_PROJECTION);
 	N_LIGHT = n;
 	for (int i=0 ; i < 3 ; i++) {
 		Location[i] = location[i];

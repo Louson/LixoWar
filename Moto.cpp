@@ -13,9 +13,10 @@ Moto::Moto(GLfloat start_x, GLfloat start_y, GLfloat start_d[2])
 	: x(start_x), y(start_y) {
 	direction[0] = start_d[0];
 	direction[1] = start_d[1];
+    setCam();
 }
 
-void Moto::drawMoto() {
+void Moto::draw() {
 // 	GLfloat n[5][3]={{1,0,0}, (0,1,0},
 // 			  {-1,0,0}, {0,-1,0}, {0,0,1}};
 // 	GLfloat v[8][3]={{-2,-2,0}, {2,-2,0},

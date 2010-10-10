@@ -2,13 +2,15 @@
 #define _MOTO_H
 
 #include <GL/glut.h>
-#include "Camera_Persp.h"
 
-class Moto {
+#include "Camera_Persp.h"
+#include "Drawable.h"
+
+class Moto : public Drawable{
 public :
 	Moto();
 	Moto(GLfloat start_x, GLfloat start_y, GLfloat start_d[2]);
-	void drawMoto();
+	void draw();
 	void setCam();
 	void activateCam();
 private :
