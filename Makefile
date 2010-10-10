@@ -7,6 +7,7 @@ Camera.o\
 Camera_Ortho.o\
 Camera_Persp.o\
 Located_Light.o\
+Spot.o\
 Window.o\
 File.o\
 Config.o\

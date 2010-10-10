@@ -6,14 +6,6 @@
 #include "Config.h"
 #include "Light.h"
 
-#define L_LOCATION {0, 0, SIDE_X}
-#define L_DIFFUSE {1.0, 1.0, 1.0, 1.0}
-#define L_AMBIENT {0.01, 0.01, 0.01, 1.0}
-#define L_SPECULAR {1.0, 1.0, 1.0, 1.0}
-extern GLfloat L_Location[3];
-extern GLfloat L_Diffuse[4];
-extern GLfloat L_Ambient[4];
-extern GLfloat L_Specular[4];
 
 class Located_Light : public Light {
 public :
@@ -21,8 +13,10 @@ public :
 	Located_Light(GLenum n, GLfloat location[4], GLfloat color[4]);
 	Located_Light(GLenum n, GLfloat location[4],
 		      GLfloat diffuse[4], GLfloat ambient[4], GLfloat specular[4]);
+	void set_attenuation(GLfloat constant, GLfloat linear, GLfloat Quad);
+
 	void init();
-private :
+protected :
 	GLfloat Location[4];
 };
 

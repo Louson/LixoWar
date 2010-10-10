@@ -15,8 +15,8 @@ Located_Light::Located_Light(GLenum n, GLfloat location[3], GLfloat color[4]) {
 	Color_Diffuse[3] = color[3];
 // 	Color_Ambient[3] = color[3];
 // 	Color_Specular[3] = color[3];
-	
 }
+
 Located_Light::Located_Light(GLenum n, GLfloat location[4],
 			     GLfloat diffuse[4],
 			     GLfloat ambient[4],
@@ -34,6 +34,12 @@ Located_Light::Located_Light(GLenum n, GLfloat location[4],
 	Color_Specular[3] = specular[3];
 }
 
+void Located_Light::set_attenuation(GLfloat constant, GLfloat linear, GLfloat Quad) {
+	glLightf(N_LIGHT, GL_CONSTANT_ATTENUATION, constant);
+	glLightf(N_LIGHT, GL_LINEAR_ATTENUATION, linear);
+	glLightf(N_LIGHT, GL_QUADRATIC_ATTENUATION, Quad);
+}
+
 void Located_Light::init() {
 	glEnable(N_LIGHT);
 	glMatrixMode(GL_MODELVIEW);
@@ -41,13 +47,5 @@ void Located_Light::init() {
 	glLightfv(N_LIGHT, GL_DIFFUSE, Color_Diffuse);
 	glLightfv(N_LIGHT, GL_AMBIENT, Color_Ambient);
 	glLightfv(N_LIGHT, GL_SPECULAR, Color_Specular);
-	
-
-	GLfloat direction[3] = {0, 0, -1};
-	glLightfv(N_LIGHT, GL_SPOT_DIRECTION, direction);
-	glLightf(N_LIGHT, GL_SPOT_EXPONENT, 2);
-	glLightf(N_LIGHT, GL_SPOT_CUTOFF, 45);
-// 	glLightf(N_LIGHT, GL_CONSTANT_ATTENUATION, 1.0);
-// 	glLightf(N_LIGHT, GL_LINEAR_ATTENUATION, 0.00000000000000010);
-// 	glLightf(N_LIGHT, GL_QUADRATIC_ATTENUATION, 1);
+//	set_attenuation(1.0, 0.00000000000000010, 1.0);
 }
