@@ -47,7 +47,7 @@ void Board::set_vertex(int ve, GLfloat x, GLfloat y, GLfloat z) {
 /**
  * Méthodes
  */
-void Board::drawBoard() {
+void Board::draw() {
 	GLfloat lineh, linev;
 	GLfloat s_x = SIDE_X/QUALITY_X;
 	GLfloat s_y = SIDE_Y/QUALITY_Y;

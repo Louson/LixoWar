@@ -2,8 +2,9 @@
 #define _GBOARD_H
 
 #include <GL/glut.h>
+#include "Drawable.h"
 
-class Board {
+class Board : public Drawable{
 public :
 	/**
 	 * Constructeurs
@@ -21,7 +22,7 @@ public :
 	/**
 	 * Méthodes
 	 */
-	void drawBoard();
+	void draw();
 private:
 	GLfloat side_x;
 	GLfloat side_y;

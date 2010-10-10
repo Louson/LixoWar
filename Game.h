@@ -19,8 +19,7 @@ class Game: public Drawable{
         int opponentNumber;
   
         /* graphic components */
-        //Moto * tab_motos;
-        std::vector<Moto::Moto> tab_motos;
+        std::vector<Moto> tab_motos;
         Board board;
 
         std::vector<Light *> lights;
@@ -29,9 +28,7 @@ class Game: public Drawable{
         Camera_Persp cam_persp;
         Camera * pt_cam_active;
         
-        std::vector<Drawable::Drawable*> graph_elements;
-
-        // Moto *** tab_game;
+        std::vector<Drawable*> graph_elements;
 
     public:
         Game(int _opponent_number, int _board_size_x, int _board_size_y, bool cam_ortho);

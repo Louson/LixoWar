@@ -18,7 +18,7 @@ Game::Game(int _opponent_number, int _board_size_x, int _board_size_y, bool _cam
     GLfloat m_direction[2] ={-1, 0};
     tab_motos.push_back(Moto(0, 0, m_direction));
 
-    for(std::vector<Moto::Moto>::const_iterator it = tab_motos.begin();it<tab_motos.end();it++)
+    for(std::vector<Moto>::const_iterator it = tab_motos.begin();it<tab_motos.end();it++)
         graph_elements.push_back((Drawable*) &(*it));
 
 
@@ -34,9 +34,6 @@ Game::Game(int _opponent_number, int _board_size_x, int _board_size_y, bool _cam
 
     for(std::vector<Light*>::iterator it = lights.begin(); it < lights.end();it++)
         (*it) -> init();
-
-
-
 
     /* Camera ortho init */
     cam_ortho.set_position(3*_board_size_x, 2*_board_size_y, 3*_board_size_x, /*Cam position */
@@ -56,7 +53,7 @@ Game::Game(int _opponent_number, int _board_size_x, int _board_size_y, bool _cam
 }
 
 void Game::draw(){
-    for(std::vector<Drawable::Drawable *>::const_iterator it = graph_elements.begin(); it < graph_elements.end();it++)
+    for(std::vector<Drawable *>::iterator it = graph_elements.begin(); it < graph_elements.end();it++)
         (*it) -> draw();
 }
 
