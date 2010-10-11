@@ -16,11 +16,12 @@ Game::Game(int _opponent_number, int _board_size_x, int _board_size_y, bool _cam
     /* motos */
 
     GLfloat m_direction[2] ={-1, 0};
-    tab_motos.push_back(Moto(0, 0, m_direction));
+    pt_player = new Moto(0,0, m_direction);
+    pt_cam_persp = pt_player->getPtCam();
+    tab_motos.push_back(pt_player);
 
-    for(std::vector<Moto>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
-        graph_elements.push_back(&(*it));
-
+    for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
+        graph_elements.push_back(*it);
 
     /* Camera ortho init */
     cam_ortho.set_position(3*_board_size_x, 2*_board_size_y, 3*_board_size_x, /*Cam position */
@@ -34,7 +35,7 @@ Game::Game(int _opponent_number, int _board_size_x, int _board_size_y, bool _cam
     graph_elements.push_back(&board);
 
     /* cam */
-    pt_cam_active = (_cam_ortho) ? (Camera * ) &cam_ortho : (Camera *) &cam_persp;
+    pt_cam_active = (_cam_ortho) ? (Camera * ) &cam_ortho : (Camera *) pt_cam_persp;
     pt_cam_active -> activate();
 
     /* light */
@@ -43,7 +44,7 @@ Game::Game(int _opponent_number, int _board_size_x, int _board_size_y, bool _cam
     GLfloat L_Ambient[4] = L_AMBIENT;
     GLfloat L_Specular[4] = L_SPECULAR;
     GLfloat L_Direction[3] = L_DIRECTION;
-    lights.push_back((Light *) new Spot(GL_LIGHT0, L_Location,
+    lights.push_back(new Spot(GL_LIGHT0, L_Location,
                 L_Diffuse, L_Ambient, L_Specular,
                 L_Direction, L_EXPONENT, L_CUTOFF));
 
@@ -60,4 +61,9 @@ void Game::draw(){
 Game::~Game(){
     for(std::vector<Light*>::iterator it = lights.begin(); it < lights.end();it++)
         delete *it;
+}
+
+void Game::exchangeCam(){
+    pt_cam_active = (pt_cam_active == &cam_ortho) ? (Camera *) pt_cam_persp : (Camera*) &cam_ortho;
+    pt_cam_active->activate();
 }

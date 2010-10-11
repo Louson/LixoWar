@@ -33,16 +33,16 @@ void Moto::draw() {
 	GLfloat v[8][3];  /* Will be filled in with X,Y,Z vertexes. */
 
 	/* plans x = -2 et x = 2 */
-	v[0][0] = v[1][0] = v[2][0] = v[3][0] = -2;
-	v[4][0] = v[5][0] = v[6][0] = v[7][0] =  2;
+	v[0][0] = v[1][0] = v[2][0] = v[3][0] = -2*MOTO_SIZE;
+	v[4][0] = v[5][0] = v[6][0] = v[7][0] =  2*MOTO_SIZE;
 	/* y = -2 et y = 2*/ 
-	v[0][1] = v[1][1] = v[5][1] = -2;
-	v[4][1] = -1;
-	v[2][1] = v[3][1] = v[6][1] =  2;
-	v[7][1] =  1;
+	v[0][1] = v[1][1] = v[5][1] = -2*MOTO_SIZE;
+	v[4][1] = -1*MOTO_SIZE;
+	v[2][1] = v[3][1] = v[6][1] =  2*MOTO_SIZE;
+	v[7][1] =  1*MOTO_SIZE;
 	/* z = 4 et z = 0 */
-	v[0][2] = v[3][2] = v[4][2] = v[7][2] =  4;
-	v[1][2] = v[2][2] = v[5][2] = v[6][2] =  0;
+	v[0][2] = v[3][2] = v[4][2] = v[7][2] =  4*MOTO_SIZE;
+	v[1][2] = v[2][2] = v[5][2] = v[6][2] =  0*MOTO_SIZE;
 
 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, MotoAmbient);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MotoDiffuse);
@@ -71,4 +71,8 @@ void Moto::setCam() {
 
 void Moto::activateCam() {
 	cam.activate();
+}
+
+Camera_Persp * Moto::getPtCam(){
+    return &cam;
 }

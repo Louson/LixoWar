@@ -64,7 +64,8 @@ void Window::keyboard(unsigned char cara,int x, int y){
 		exit(EXIT_SUCCESS);
 		break;
 	case 'c' :
-        /* change cam */
+        pt_game->exchangeCam();
+        glutPostRedisplay();
 		break;
 	default:
 		std::cout << "cara: "<<(int)cara<<" x: "<<x<<" y: "<<y<<std::endl;

@@ -6,6 +6,8 @@
 #include "Camera_Persp.h"
 #include "Drawable.h"
 
+#define MOTO_SIZE 100
+
 class Moto : public Drawable{
 public :
 	Moto();
@@ -13,6 +15,7 @@ public :
 	void draw();
 	void setCam();
 	void activateCam();
+    Camera_Persp * getPtCam();
 private :
 	GLfloat x;
 	GLfloat y;
