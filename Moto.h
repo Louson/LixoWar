@@ -6,7 +6,7 @@
 #include "Camera_Persp.h"
 #include "Drawable.h"
 
-#define MOTO_SIZE 100
+#define MOTO_SIZE 1000.0
 
 class Moto : public Drawable{
 public :
