@@ -22,19 +22,6 @@ Game::Game(int _opponent_number, int _board_size_x, int _board_size_y, bool _cam
         graph_elements.push_back(&(*it));
 
 
-    /* light */
-    GLfloat L_Location[4] = L_LOCATION;
-    GLfloat L_Diffuse[4] = L_DIFFUSE;
-    GLfloat L_Ambient[4] = L_AMBIENT;
-    GLfloat L_Specular[4] = L_SPECULAR;
-    GLfloat L_Direction[3] = L_DIRECTION;
-    lights.push_back((Light *) new Spot(GL_LIGHT0, L_Location,
-                L_Diffuse, L_Ambient, L_Specular,
-                L_Direction, L_EXPONENT, L_CUTOFF));
-
-    for(std::vector<Light*>::iterator it = lights.begin(); it < lights.end();it++)
-        (*it) -> init();
-
     /* Camera ortho init */
     cam_ortho.set_position(3*_board_size_x, 2*_board_size_y, 3*_board_size_x, /*Cam position */
             0.0, 0.0, 0.0, /* center position */
@@ -49,6 +36,19 @@ Game::Game(int _opponent_number, int _board_size_x, int _board_size_y, bool _cam
     /* cam */
     pt_cam_active = (_cam_ortho) ? (Camera * ) &cam_ortho : (Camera *) &cam_persp;
     pt_cam_active -> activate();
+
+    /* light */
+    GLfloat L_Location[4] = L_LOCATION;
+    GLfloat L_Diffuse[4] = L_DIFFUSE;
+    GLfloat L_Ambient[4] = L_AMBIENT;
+    GLfloat L_Specular[4] = L_SPECULAR;
+    GLfloat L_Direction[3] = L_DIRECTION;
+    lights.push_back((Light *) new Spot(GL_LIGHT0, L_Location,
+                L_Diffuse, L_Ambient, L_Specular,
+                L_Direction, L_EXPONENT, L_CUTOFF));
+
+    for(std::vector<Light*>::iterator it = lights.begin(); it < lights.end();it++)
+        (*it) -> init();
 
 }
 
