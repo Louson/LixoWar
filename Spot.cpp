@@ -34,7 +34,4 @@ void Spot::init() {
 	glLightfv(N_LIGHT, GL_SPOT_DIRECTION, Direction);
 	glLightf(N_LIGHT, GL_SPOT_EXPONENT, Exponent);
 	glLightf(N_LIGHT, GL_SPOT_CUTOFF, Cutoff);
-// 	glLightf(N_LIGHT, GL_CONSTANT_ATTENUATION, 1.0);
-// 	glLightf(N_LIGHT, GL_LINEAR_ATTENUATION, 0.00000000000000010);
-// 	glLightf(N_LIGHT, GL_QUADRATIC_ATTENUATION, 1);
 }

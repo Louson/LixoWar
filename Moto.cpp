@@ -17,12 +17,6 @@ Moto::Moto(GLfloat start_x, GLfloat start_y, GLfloat start_d[2])
 }
 
 void Moto::draw() {
-// 	GLfloat n[5][3]={{1,0,0}, (0,1,0},
-// 			  {-1,0,0}, {0,-1,0}, {0,0,1}};
-// 	GLfloat v[8][3]={{-2,-2,0}, {2,-2,0},
-// 			 {2,2,0}, {-2,2,0},
-// 			 {-2,-2,4}, {2,-2,4},
-// 			 {2,2,4}, {-2,2,4}};
 	GLfloat n[6][3] = {  /* Normals for the 6 faces of a cube. */
 		{-1.0, 0.0, 0.0}, {0.0, 1.0, 0.0},
 		{1.0, 0.0, 0.0}, {0.0, -1.0, 0.0},
@@ -61,11 +55,11 @@ void Moto::draw() {
 }
 
 void Moto::setCam() {
-	cam.set_position(x-3*MOTO_SIZE*direction[0], y-3*MOTO_SIZE*direction[1], 2*MOTO_SIZE,
-			 x+MOTO_SIZE*direction[0], y+MOTO_SIZE*direction[1], 0,
+	cam.set_position(x-1.5*MOTO_SIZE*direction[0], y-1.5*MOTO_SIZE*direction[1], 1.5*MOTO_SIZE,
+			 x+MOTO_SIZE*direction[0], y+MOTO_SIZE*direction[1], MOTO_SIZE,
 			 0, 0, 1);
 	cam.set_view(100, 1,
-		     0.05, 3*MOTO_SIZE);		
+		     0.05, VIEW_DIST);		
 }
 
 void Moto::activateCam() {

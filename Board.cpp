@@ -31,6 +31,40 @@ Board::Board(GLfloat x, GLfloat y): side_x(x), side_y(y) {
 	set_vertex(3, -x/2, -y/2, 0);
 }
 
+Board::Board(GLfloat x, GLfloat y,
+	     GLfloat d_line_x, GLfloat d_line_y) {
+
+	if (side_x < 2*d_line_x || side_y < 2*d_line_y) {
+		throw(range_error("Dimensions insuffisantes"));
+	}
+	d_lines_x = d_line_x;
+	d_lines_y = d_line_y;
+	set_normal(0, 0, 1);
+	set_vertex(0,  x/2, -y/2, 0);
+	set_vertex(1,  x/2,  y/2, 0);
+	set_vertex(2, -x/2,  y/2, 0);
+	set_vertex(3, -x/2, -y/2, 0);
+}
+
+Board::Board(GLfloat x, GLfloat y,
+	     GLfloat d_line_x, GLfloat d_line_y,
+	     GLfloat q_x, GLfloat q_y) {
+
+	if (side_x < 2*d_line_x || side_y < 2*d_line_y) {
+		throw(range_error("Dimensions insuffisantes"));
+	}
+	d_lines_x = d_line_x;
+	d_lines_y = d_line_y;
+	quality_x = q_x;
+	quality_y = q_y;
+	set_normal(0, 0, 1);
+	set_vertex(0,  x/2, -y/2, 0);
+	set_vertex(1,  x/2,  y/2, 0);
+	set_vertex(2, -x/2,  y/2, 0);
+	set_vertex(3, -x/2, -y/2, 0);
+
+}
+
 /* Mutateurs */
 void Board::set_normal(GLfloat x, GLfloat y, GLfloat z) {
 	n[0] = x;

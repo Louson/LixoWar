@@ -11,6 +11,11 @@ public :
 	 */
 	Board();
 	Board(GLfloat side_x, GLfloat side_y);
+	Board(GLfloat side_x, GLfloat side_y,
+	      GLfloat d_lines_x, GLfloat d_lines_y);
+	Board(GLfloat side_x, GLfloat side_y,
+	      GLfloat d_lines_x, GLfloat d_lines_y,
+	      GLfloat quality_x, GLfloat quality_y);
 
 	/**
 	 * Accesseurs
@@ -26,6 +31,10 @@ public :
 private:
 	GLfloat side_x;
 	GLfloat side_y;
+	GLfloat d_lines_x;
+	GLfloat d_lines_y;
+	GLfloat quality_x;
+	GLfloat quality_y;
 	GLfloat n[3];
 	GLfloat v[4][3];
 };

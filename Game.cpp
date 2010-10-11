@@ -66,4 +66,6 @@ Game::~Game(){
 void Game::exchangeCam(){
     pt_cam_active = (pt_cam_active == &cam_ortho) ? (Camera *) pt_cam_persp : (Camera*) &cam_ortho;
     pt_cam_active->activate();
+    for(std::vector<Light*>::iterator it = lights.begin(); it < lights.end();it++)
+	    (*it) -> init();
 }
