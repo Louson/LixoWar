@@ -3,19 +3,13 @@
 
 #include "Moto.h"
 
-GLfloat MotoDiffuse[3] = {0, 1.0, 0};
-GLfloat MotoAmbient[3] = {1.0, 0.0, 0.0};
-GLfloat MotoSpecular[3] = {1.0, 0.0, 0.0};
-GLfloat MotoShininess = 120;
-
-Moto::Moto() {
-}
-
-Moto::Moto(GLfloat start_x, GLfloat start_y, GLfloat start_d[2])
-	: x(start_x), y(start_y) {
-	if (start_d[0]*start_d[1]) {
+Moto::Moto(GLfloat start_x, GLfloat start_y, GLfloat start_d[2]):
+        x(start_x),
+        y(start_y)
+{
+	if (start_d[0]*start_d[1])
 		throw(std::range_error("Direction initiale du véhicule impossible"));
-	}
+	
 	direction[0] = start_d[0];
 	direction[1] = start_d[1];
 	setCam();
@@ -63,8 +57,7 @@ void Moto::setCam() {
 	cam.set_position(x-1.5*MOTO_SIZE*direction[0], y-1.5*MOTO_SIZE*direction[1], 1.5*MOTO_SIZE,
 			 x+MOTO_SIZE*direction[0], y+MOTO_SIZE*direction[1], MOTO_SIZE,
 			 0, 0, 1);
-	cam.set_view(100, 1,
-		     0.05, VIEW_DIST);		
+	cam.set_view(100, 1, 0.05, VIEW_DIST);
 }
 
 void Moto::activateCam() {
