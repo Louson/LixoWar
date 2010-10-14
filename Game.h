@@ -33,7 +33,11 @@ class Game: public Drawable{
         std::vector<Drawable*> graph_elements;
 
     public:
-        Game(int _opponent_number, int _board_size_x, int _board_size_y, bool cam_ortho);
+        Game(int _opponent_number,
+	     GLfloat _board_size_x,GLfloat _board_size_y,
+	     GLfloat quality_x, GLfloat quality_y,
+	     GLfloat d_line_x, GLfloat d_line_y,
+	     bool _cam_ortho);
         ~Game();
         void draw();
         void exchangeCam();

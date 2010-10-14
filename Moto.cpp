@@ -1,4 +1,6 @@
 #include <cmath>
+#include <stdexcept>
+
 #include "Moto.h"
 
 GLfloat MotoDiffuse[3] = {0, 1.0, 0};
@@ -11,6 +13,9 @@ Moto::Moto() {
 
 Moto::Moto(GLfloat start_x, GLfloat start_y, GLfloat start_d[2])
 	: x(start_x), y(start_y) {
+	if (start_d[0]*start_d[1]) {
+		throw(std::range_error("Direction initiale du véhicule impossible"));
+	}
 	direction[0] = start_d[0];
 	direction[1] = start_d[1];
 	setCam();

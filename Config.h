@@ -4,12 +4,12 @@
 #include "File.h"
 
 /* Board settings */
-#define SIDE_X 10000    /* Board's dimensions in meters*/
+#define SIDE_X 10000
 #define SIDE_Y 10000
-#define QUALITY_X 10    /* Number of subdivisions along (Ox) */
-#define QUALITY_Y 10    /* Number of subdivisions along (Oy) */
-#define D_LINE_X 10     /* Space dimensions between two lines */
-#define D_LINE_Y 10
+#define QUALITY_X 1    /* Number of subdivisions along (Ox) */
+#define QUALITY_Y 1    /* Number of subdivisions along (Oy) */
+#define D_LINE_X 25     /* Space dimensions between two lines */
+#define D_LINE_Y 25
 #define OPPONENT_NUMBER 1
 
 namespace Config{

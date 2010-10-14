@@ -7,11 +7,9 @@
 #include "Located_Light.h"
 
 /* Paramètres de la lampe 0 */
-#define L_LOCATION {SIDE_X, SIDE_Y, SIDE_X}
-#define L_DIFFUSE {1.0, 1.0, 1.0, 1.0}
+#define L_DIFFUSE {1.0, 1.0, 1.0, 1.0};
 #define L_AMBIENT {0.01, 0.01, 0.01, 1.0}
 #define L_SPECULAR {1.0, 1.0, 1.0, 1.0}
-#define L_DIRECTION {-SIDE_X, -SIDE_Y, -SIDE_X}
 #define L_EXPONENT 20
 #define L_CUTOFF 20
 extern GLfloat L_Location[3];

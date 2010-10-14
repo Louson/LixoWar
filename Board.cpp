@@ -1,5 +1,6 @@
 #include <GL/glut.h>
 #include <stdexcept>
+#include <iostream>
 
 #include "Config.h"
 #include "Board.h"
@@ -34,9 +35,11 @@ Board::Board(GLfloat x, GLfloat y): side_x(x), side_y(y) {
 Board::Board(GLfloat x, GLfloat y,
 	     GLfloat d_line_x, GLfloat d_line_y) {
 
-	if (side_x < 2*d_line_x || side_y < 2*d_line_y) {
+	if (x < 2*d_line_x || y < 2*d_line_y) {
 		throw(range_error("Dimensions insuffisantes"));
 	}
+	side_x = x;
+	side_y = y;
 	d_lines_x = d_line_x;
 	d_lines_y = d_line_y;
 	set_normal(0, 0, 1);
@@ -47,12 +50,14 @@ Board::Board(GLfloat x, GLfloat y,
 }
 
 Board::Board(GLfloat x, GLfloat y,
-	     GLfloat d_line_x, GLfloat d_line_y,
-	     GLfloat q_x, GLfloat q_y) {
+	     GLfloat q_x, GLfloat q_y,
+	     GLfloat d_line_x, GLfloat d_line_y) {
 
-	if (side_x < 2*d_line_x || side_y < 2*d_line_y) {
+	if (x < 2*d_line_x || y < 2*d_line_y) {
 		throw(range_error("Dimensions insuffisantes"));
 	}
+	side_x = x;
+	side_y = y;
 	d_lines_x = d_line_x;
 	d_lines_y = d_line_y;
 	quality_x = q_x;
@@ -83,8 +88,8 @@ void Board::set_vertex(int ve, GLfloat x, GLfloat y, GLfloat z) {
  */
 void Board::draw() {
 	GLfloat lineh, linev;
-	GLfloat s_x = SIDE_X/QUALITY_X;
-	GLfloat s_y = SIDE_Y/QUALITY_Y;
+	GLfloat s_x = side_x/quality_x;
+	GLfloat s_y = side_y/quality_y;
 
 	/* Antialiassing des lignes */
 	glEnable(GL_LINE_SMOOTH);
@@ -105,13 +110,6 @@ void Board::draw() {
 //  	gluSphere(gluNewQuadric(), 5000, 32, 32);
 	/******************/
 
-// 	glBegin(GL_LINES);
-// 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, LineColor);
-// 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, LineColor);
-// 	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, LineColor);
-// 	glVertex3f(0, 0, 0);
-// 	glVertex3f(SIDE_X/2, SIDE_Y/2, 0);
-
 	/* Board's drawing */
 //	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, BoardEmission);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, BoardAmbient);
@@ -119,8 +117,9 @@ void Board::draw() {
 	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, BoardSpecular);
 	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, BoardShininess);
 
-	for (int i=0; i<QUALITY_X; i++)
-		for (int j=0; j<QUALITY_Y; j++) {
+	for (int i=0; i<quality_x; i++)
+		for (int j=0; j<quality_y; j++) {
+			cout << j <<endl;
 			glBegin(GL_QUADS);
 			glNormal3fv(n);
 			glVertex3f(v[3][0]+i*s_x, v[3][1]+j*s_y, 0);
@@ -129,10 +128,10 @@ void Board::draw() {
 			glVertex3f(v[3][0]+i*s_x, v[3][1]+(j+1)*s_y, 0);
 			glEnd();
 		}
-
+	
 
 	/* Lines' drawing */
-	for (int i=D_LINE_X ; i<=side_x-D_LINE_X ; i+=D_LINE_X) {
+	for (int i=d_lines_x ; i<=side_x-d_lines_x ; i+=d_lines_x) {
 //		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, LineColor);
 		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, LineColor);
  		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, LineColor);
@@ -144,7 +143,7 @@ void Board::draw() {
 		glVertex3f(linev/side_x, v[1][1], 0.1);
 		glEnd();
 	}
-	for (int i=D_LINE_Y ; i<=side_y-D_LINE_Y ; i+=D_LINE_Y) {
+	for (int i=d_lines_y ; i<=side_y-d_lines_y ; i+=d_lines_y) {
 		lineh = i*v[0][1]+(side_y-i)*v[1][1];
 		/* Lignes // (Ox) */
 		glBegin(GL_LINES);

@@ -39,8 +39,12 @@ int main(int argc, char ** argv){
     Window::create(WINDOW_NAME,&argc,argv);
     Window::init();
 
-    pt_game = new Game(opponent_number, side_x, side_y, true);
-    
+    pt_game = new Game(opponent_number,
+		       side_x, side_y,
+		       quality_x, quality_y,
+		       d_line_x, d_line_y,
+		       true);
+
     glutMainLoop();
     return EXIT_SUCCESS;
 }
