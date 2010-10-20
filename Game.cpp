@@ -21,21 +21,33 @@ Game::Game(int _opponent_number,
 {
     /* motos */
     GLfloat m_direction[2] ={-1, 0};
-    pt_player = new Moto(0,0, m_direction);
+    GLfloat x_init=0;
+    GLfloat y_init=0;
+    pt_player = new Moto(x_init, y_init, m_direction);
     pt_cam_persp = pt_player->getPtCam();
     tab_motos.push_back(pt_player);
 
     for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
         graph_elements.push_back(*it);
 
-    /* Camera ortho init */
-    cam_ortho.set_position(3*_board_size_x, 2*_board_size_y, 3*_board_size_x, /*Cam position */
-            0.0, 0.0, 0.0, /* center position */
-            0,0,1);
-    cam_ortho.set_view(/* X */ -0.7*_board_size_x, 0.7*_board_size_x,
-            /* Y */ -0.45*_board_size_y, 0.45*_board_size_y,
-            /* Z near */ 0.86*_board_size_x*sqrt(22.0),
-            /* Z far  */ 1.12*_board_size_x*sqrt(22.0));
+    /* Camera otho init - Vue de haut */
+    cam_ortho.set_position(0, 0, H_CAM, /*Cam position */
+			   x_init, y_init, 0,
+			   0, 1, 0);
+    cam_ortho.set_view(/* X */ -_board_size_x/2.0,
+		       _board_size_x/2.0,
+		       /* Y */ -_board_size_y/2.0, _board_size_y/2.0,
+		       /* Z near */ 0,
+		       /* Z far  */ 1.1*H_CAM);
+
+     /* Camera ortho init - Vue globale */
+//     cam_ortho.set_position(3*_board_size_x, 2*_board_size_y, 3*_board_size_x, /*Cam position */
+//             0.0, 0.0, 0.0, /* center position */
+//             0,0,1);
+//     cam_ortho.set_view(/* X */ -0.7*_board_size_x, 0.7*_board_size_x,
+//             /* Y */ -0.45*_board_size_y, 0.45*_board_size_y,
+//             /* Z near */ 0.86*_board_size_x*sqrt(22.0),
+//             /* Z far  */ 1.12*_board_size_x*sqrt(22.0));
 
     graph_elements.push_back(&board);
 

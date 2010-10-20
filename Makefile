@@ -2,7 +2,8 @@ PROJECT_NAME = lixo_war
 CC = g++
 CFLAGS =  -Wall -L/usr/X11R6/lib -lglut -lGLU -lm -lGL -lX11
 
-OBJECTS = Board.o\
+OBJECTS = Plan.o\
+Board.o\
 Camera.o\
 Camera_Ortho.o\
 Camera_Persp.o\

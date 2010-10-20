@@ -3,6 +3,9 @@
 
 #include "File.h"
 
+/* Screen settings */
+#define SCREEN_RATIO 16.0/9.0
+
 /* Board settings */
 #define SIDE_X 10000
 #define SIDE_Y 10000
@@ -11,6 +14,9 @@
 #define D_LINE_X 25     /* Space dimensions between two lines */
 #define D_LINE_Y 25
 #define OPPONENT_NUMBER 1
+
+/* Camera height */
+#define H_CAM 100
 
 namespace Config{
     int fetchParam(const string & paramName,int defaultValue, const File & configFile);
