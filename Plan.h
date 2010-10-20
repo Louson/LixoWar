@@ -24,7 +24,6 @@ public :
 	/**
 	 * Méthodes
 	 */
-	virtual void draw();
 protected:
 	GLfloat side_x;
 	GLfloat side_y;

@@ -31,3 +31,4 @@ void Plan::set_vertex(int ve, GLfloat x, GLfloat y, GLfloat z) {
 	v[ve][1] = y;
 	v[ve][2] = z;
 }
+
