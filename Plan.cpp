@@ -10,6 +10,8 @@ using namespace std;
 /**
  * Constructeurs
  */
+Plan::Plan(){
+}
 Plan::Plan(GLfloat x, GLfloat y): side_x(x), side_y(y) {
 
 	set_normal(0, 0, 1);
@@ -31,4 +33,3 @@ void Plan::set_vertex(int ve, GLfloat x, GLfloat y, GLfloat z) {
 	v[ve][1] = y;
 	v[ve][2] = z;
 }
-

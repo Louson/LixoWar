@@ -55,6 +55,21 @@ void Window::init(){
 	 */
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_LIGHTING);
+
+	/**
+	 * Graphics settings
+	 */
+	
+	/* Lines antialiassing */
+	glEnable(GL_LINE_SMOOTH);
+	glHint(GL_LINE_SMOOTH, GL_NICEST);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_POLYGON_SMOOTH);
+	glHint(GL_POLYGON_SMOOTH, GL_NICEST);
+	glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
+
+	/* Textures */
+	glEnable(GL_TEXTURE_2D);
 }
 
 void Window::keyboard(unsigned char cara,int x, int y){

@@ -17,7 +17,9 @@ Game::Game(int _opponent_number,
 	opponentNumber(_opponent_number),
 	board(_board_size_x, _board_size_y,
 	      _quality_x, _quality_y,
-	      _d_lines_x, _d_lines_y)
+	      _d_lines_x, _d_lines_y),
+	sky(2*_board_size_x, 2*_board_size_y,
+	    string("./Images/etoiles.ppm").c_str())
 {
     /* motos */
     GLfloat m_direction[2] ={-1, 0};
@@ -50,6 +52,7 @@ Game::Game(int _opponent_number,
 //             /* Z far  */ 1.12*_board_size_x*sqrt(22.0));
 
     graph_elements.push_back(&board);
+    graph_elements.push_back(&sky);
 
     /* cam */
     pt_cam_active = (_cam_ortho) ? (Camera * ) &cam_ortho : (Camera *) pt_cam_persp;

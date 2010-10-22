@@ -17,21 +17,6 @@ GLfloat LineColor[3] = {1, 0, 0};
 /**
  * Constructeurs
  */
-Board::Board() {
-}
-
-Board::Board(GLfloat x, GLfloat y): side_x(x), side_y(y) {
-
-	if (side_x < 2*D_LINE_X || side_y < 2*D_LINE_Y) {
-		throw(range_error("Dimensions insuffisantes"));
-	}
-	set_normal(0, 0, 1);
-	set_vertex(0,  x/2, -y/2, 0);
-	set_vertex(1,  x/2,  y/2, 0);
-	set_vertex(2, -x/2,  y/2, 0);
-	set_vertex(3, -x/2, -y/2, 0);
-}
-
 Board::Board(GLfloat x, GLfloat y,
 	     GLfloat d_line_x, GLfloat d_line_y) {
 
@@ -70,19 +55,6 @@ Board::Board(GLfloat x, GLfloat y,
 
 }
 
-/* Mutateurs */
-void Board::set_normal(GLfloat x, GLfloat y, GLfloat z) {
-	n[0] = x;
-	n[1] = y;
-	n[2] = z;
-}
-
-void Board::set_vertex(int ve, GLfloat x, GLfloat y, GLfloat z) {
-	v[ve][0] = x;
-	v[ve][1] = y;
-	v[ve][2] = z;
-}
-
 /**
  * Méthodes
  */
@@ -90,14 +62,6 @@ void Board::draw() {
 	GLfloat lineh, linev;
 	GLfloat s_x = side_x/quality_x;
 	GLfloat s_y = side_y/quality_y;
-
-	/* Antialiassing des lignes */
-	glEnable(GL_LINE_SMOOTH);
-	glHint(GL_LINE_SMOOTH, GL_NICEST);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_POLYGON_SMOOTH);
-	glHint(GL_POLYGON_SMOOTH, GL_NICEST);
-	glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
 
 
 	/* Test de sphere */
@@ -139,16 +103,16 @@ void Board::draw() {
 		linev = i*v[3][0]+(side_x-i)*v[0][0];
 		/* Lignes // (Oy) */
 		glBegin(GL_LINES);
-		glVertex3f(linev/side_x, v[0][1], 0.1);
-		glVertex3f(linev/side_x, v[1][1], 0.1);
+		glVertex3f(linev/side_x, v[0][1], 0.001);
+		glVertex3f(linev/side_x, v[1][1], 0.001);
 		glEnd();
 	}
 	for (int i=d_lines_y ; i<=side_y-d_lines_y ; i+=d_lines_y) {
 		lineh = i*v[0][1]+(side_y-i)*v[1][1];
 		/* Lignes // (Ox) */
 		glBegin(GL_LINES);
-		glVertex3f(v[0][0], lineh/side_y, 0.1);
-		glVertex3f(v[3][0], lineh/side_y, 0.1);
+		glVertex3f(v[0][0], lineh/side_y, 0.001);
+		glVertex3f(v[3][0], lineh/side_y, 0.001);
 		glEnd();
 	}
 }

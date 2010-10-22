@@ -5,6 +5,7 @@
 
 #include "Moto.h"
 #include "Board.h"
+#include "Sky.h"
 #include "Drawable.h"
 #include "Camera.h"
 #include "Camera_Ortho.h"
@@ -13,13 +14,14 @@
 
 class Game: public Drawable{
 
- private:
-   
+private:
+	
         /* game logistic */
         int opponentNumber;
   
         /* graphic components */
         Board board;
+	Sky sky;
 
         std::vector<Light *> lights;
 

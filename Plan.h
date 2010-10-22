@@ -4,13 +4,12 @@
 #include <GL/glut.h>
 #include "Drawable.h"
 
-#define H_SKY 2000
-
 class Plan : public Drawable{
 public :
 	/**
 	 * Constructeurs
 	 */
+	Plan();
 	Plan(GLfloat side_x, GLfloat side_y);
 
 	/**
