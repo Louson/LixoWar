@@ -1,6 +1,6 @@
 PROJECT_NAME = lixo_war
 CC = g++
-CFLAGS =  -Wall -L/usr/X11R6/lib -lglut -lGLU -lm -lGL -lX11
+CFLAGS =  -Wall -L/usr/X11R6/lib -lglut -lGLU -lm -lGL -lX11 -g
 
 OBJECTS = Plan.o\
 Board.o\
