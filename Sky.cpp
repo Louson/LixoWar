@@ -16,7 +16,6 @@ Sky::Sky(GLfloat _board_x, GLfloat _board_y, const char* _path) {
 
 	/* Ouverture du fichier image */
 	readPPM(_path);
-	cout<<(int)image[0]<<endl;
 }
 
 Sky::~Sky() {
@@ -24,27 +23,20 @@ Sky::~Sky() {
 }
 
 void Sky::draw() {
-	
-// 	GLfloat BoardDiffuse[3] = {0, 0.5, 1.0};
-// 	GLfloat BoardAmbient[3] = {1.0, 0.0, 0.0};
-// 	GLfloat BoardSpecular[3] = {1.0, 0.0, 0.0};
-// 	GLfloat BoardShininess = 120;
 
 	/* Texture set */
+	glEnable(GL_TEXTURE_2D);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexImage2D(GL_TEXTURE_2D,
 		     0,
-		     4,
+		     GL_RGB,
 		     width, height, 0,
 		     GL_RGB,
 		     GL_UNSIGNED_BYTE,
 		     image);
 	
 	/* Sky's drawing */
-// 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, BoardAmbient);
-// 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, BoardDiffuse);
-// 	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, BoardSpecular);
-// 	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, BoardShininess);
-
 	glBegin(GL_QUADS); {
 		glNormal3fv(n);
 		glTexCoord2f(0.0, 0.0);
@@ -57,6 +49,7 @@ void Sky::draw() {
 		glVertex3f(v[3][0], v[3][1], v[3][2]);
 		glEnd();
 	}
+	glDisable(GL_TEXTURE_2D);
 
 }
 

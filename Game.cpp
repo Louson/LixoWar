@@ -36,9 +36,10 @@ Game::Game(int _opponent_number,
     cam_ortho.set_position(0, 0, H_CAM, /*Cam position */
 			   x_init, y_init, 0,
 			   0, 1, 0);
-    cam_ortho.set_view(/* X */ -_board_size_x/2.0,
-		       _board_size_x/2.0,
-		       /* Y */ -_board_size_y/2.0, _board_size_y/2.0,
+    cam_ortho.set_view(/* X */ -SCREEN_RATIO*_board_size_x/2.0,
+		       SCREEN_RATIO*_board_size_x/2.0,
+		       /* Y */ -_board_size_y/2.0,
+		       _board_size_y/2.0,
 		       /* Z near */ 0,
 		       /* Z far  */ 1.1*H_CAM);
 

@@ -48,6 +48,8 @@ void Window::init(){
 	/* Use Depth Buffering */
 	glEnable(GL_DEPTH_TEST);
 
+	/* Textures */
+
 	/* Lights settings
 	 *
 	 *if the light is set before the cam, the location depends of the
@@ -68,8 +70,6 @@ void Window::init(){
 	glHint(GL_POLYGON_SMOOTH, GL_NICEST);
 	glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
 
-	/* Textures */
-	glEnable(GL_TEXTURE_2D);
 }
 
 void Window::keyboard(unsigned char cara,int x, int y){

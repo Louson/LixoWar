@@ -1,6 +1,7 @@
 #include <cmath>
 #include <stdexcept>
 
+#include "Config.h"
 #include "Moto.h"
 
 Moto::Moto(GLfloat start_x, GLfloat start_y, GLfloat start_d[2]):
@@ -32,7 +33,7 @@ void Moto::draw() {
 	v[0][1] = v[1][1] = v[5][1] = v[4][1] = y-MOTO_SIZE/2.0;
 	v[2][1] = v[3][1] = v[6][1] = v[7][1] = y+MOTO_SIZE/2.0;
 	/* z = 4 et z = 0 */
-	v[4][2] = v[7][2] = MOTO_SIZE/2;
+	v[4][2] = v[7][2] = MOTO_SIZE;
 	v[0][2] = v[3][2] = MOTO_SIZE;
 	v[1][2] = v[2][2] = v[5][2] = v[6][2] =  0;
 
@@ -57,7 +58,7 @@ void Moto::setCam() {
 	cam.set_position(x-1.5*MOTO_SIZE*direction[0], y-1.5*MOTO_SIZE*direction[1], 1.5*MOTO_SIZE,
 			 x+MOTO_SIZE*direction[0], y+MOTO_SIZE*direction[1], MOTO_SIZE,
 			 0, 0, 1);
-	cam.set_view(100, 1, 0.05, VIEW_DIST);
+	cam.set_view(100, SCREEN_RATIO, 0.05, VIEW_DIST);
 }
 
 void Moto::activateCam() {

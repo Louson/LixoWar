@@ -7,12 +7,17 @@
 
 using namespace std;
 
-GLfloat BoardEmission[3] = {0.0, 1.0, 0.0};
-GLfloat BoardDiffuse[3] = {0, 0.5, 1.0};
-GLfloat BoardAmbient[3] = {1.0, 0.0, 0.0};
-GLfloat BoardSpecular[3] = {1.0, 0.0, 0.0};
+//GLfloat BoardEmission[3] = {0.0, 1.0, 0.0};
+GLfloat BoardDiffuse[3] = {0, 0.5, 0.5};
+GLfloat BoardAmbient[3] = {1.0, 1.0, 1.0};
+GLfloat BoardSpecular[3] = {1.0, 0, 0};
 GLfloat BoardShininess = 120;
-GLfloat LineColor[3] = {1, 0, 0};
+
+GLfloat LineDiffuse[3] = {0.5, 1, 1};
+GLfloat LineAmbient[3] = {1.0, 1.0, 1.0};
+GLfloat LineSpecular[3] = {0, 0, 0};
+GLfloat LineShininess = 120;
+
 
 /**
  * Constructeurs
@@ -63,7 +68,6 @@ void Board::draw() {
 	GLfloat s_x = side_x/quality_x;
 	GLfloat s_y = side_y/quality_y;
 
-
 	/* Test de sphere */
 // //	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, BoardColor);
 // 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, BoardAmbient);
@@ -73,6 +77,29 @@ void Board::draw() {
 // 	glColor3f(1.0, 0, 0);
 //  	gluSphere(gluNewQuadric(), 5000, 32, 32);
 	/******************/
+
+	/* Lines' drawing */
+//	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, LineColor);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, LineAmbient);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, LineDiffuse);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, LineSpecular);
+	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, LineShininess);
+	for (int i=d_lines_x ; i<=side_x-d_lines_x ; i+=d_lines_x) {
+		linev = i*v[3][0]+(side_x-i)*v[0][0];
+		/* Lignes // (Oy) */
+		glBegin(GL_LINES);
+		glVertex3f(linev/side_x, v[0][1], 0.001);
+		glVertex3f(linev/side_x, v[1][1], 0.001);
+		glEnd();
+	}
+	for (int i=d_lines_y ; i<=side_y-d_lines_y ; i+=d_lines_y) {
+		lineh = i*v[0][1]+(side_y-i)*v[1][1];
+		/* Lignes // (Ox) */
+		glBegin(GL_LINES);
+		glVertex3f(v[0][0], lineh/side_y, 0.00);
+		glVertex3f(v[3][0], lineh/side_y, 0.00);
+		glEnd();
+	}
 
 	/* Board's drawing */
 //	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, BoardEmission);
@@ -94,25 +121,4 @@ void Board::draw() {
 		}
 	
 
-	/* Lines' drawing */
-	for (int i=d_lines_x ; i<=side_x-d_lines_x ; i+=d_lines_x) {
-//		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, LineColor);
-		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, LineColor);
- 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, LineColor);
-		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, LineColor);
-		linev = i*v[3][0]+(side_x-i)*v[0][0];
-		/* Lignes // (Oy) */
-		glBegin(GL_LINES);
-		glVertex3f(linev/side_x, v[0][1], 0.001);
-		glVertex3f(linev/side_x, v[1][1], 0.001);
-		glEnd();
-	}
-	for (int i=d_lines_y ; i<=side_y-d_lines_y ; i+=d_lines_y) {
-		lineh = i*v[0][1]+(side_y-i)*v[1][1];
-		/* Lignes // (Ox) */
-		glBegin(GL_LINES);
-		glVertex3f(v[0][0], lineh/side_y, 0.001);
-		glVertex3f(v[3][0], lineh/side_y, 0.001);
-		glEnd();
-	}
 }

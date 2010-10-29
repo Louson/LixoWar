@@ -4,12 +4,20 @@
 #include <GL/glut.h>
 #include "Plan.h"
 
+/**
+ * Ambient détermine la couleur qui sera réfléchie
+ */
+
+
 extern GLfloat BoardEmission[3];
 extern GLfloat BoardDiffuse[3];
 extern GLfloat BoardAmbient[3];
 extern GLfloat BoardSpecular[3];
 extern GLfloat BoardShininess;
-extern GLfloat LineColor[3];
+extern GLfloat LineDiffuse[3];
+extern GLfloat LineAmbient[3];
+extern GLfloat LineSpecular[3];
+extern GLfloat LineShininess;
 
 
 class Board : public Plan{
