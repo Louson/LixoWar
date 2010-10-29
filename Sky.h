@@ -4,8 +4,9 @@
 #include <GL/glut.h>
 #include <string>
 #include "Plan.h"
+#include "Texture.h"
 
-#define H_SKY 2000
+#define H_SKY 3000
 
 using namespace std;
 
@@ -24,6 +25,7 @@ public :
 	void readPPM(const char* _path);
 protected:
 	unsigned char *image;
+	//Texture image;
 	GLint width;
 	GLint height;
 };

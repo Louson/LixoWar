@@ -9,6 +9,8 @@
 #include "Light.h"
 #include "Spot.h"
 
+#define SKY_IMAGE "Images/ciel.ppm"
+
 Game::Game(int _opponent_number,
 	   GLfloat _board_size_x,GLfloat _board_size_y,
 	   GLfloat _quality_x, GLfloat _quality_y,
@@ -19,7 +21,7 @@ Game::Game(int _opponent_number,
 	      _quality_x, _quality_y,
 	      _d_lines_x, _d_lines_y),
 	sky(2*_board_size_x, 2*_board_size_y,
-	    string("./Images/etoiles.ppm").c_str())
+	    string(SKY_IMAGE).c_str())
 {
     /* motos */
     GLfloat m_direction[2] ={-1, 0};
