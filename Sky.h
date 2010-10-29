@@ -4,7 +4,6 @@
 #include <GL/glut.h>
 #include <string>
 #include "Plan.h"
-#include "Texture.h"
 
 #define H_SKY 3000
 

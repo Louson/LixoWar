@@ -5,7 +5,6 @@
 
 #include "Sky.h"
 #include "Board.h"
-#include "Texture.h"
 
 Sky::Sky(GLfloat _board_x, GLfloat _board_y, const char* _path) {
 
@@ -17,17 +16,15 @@ Sky::Sky(GLfloat _board_x, GLfloat _board_y, const char* _path) {
 
 	cout<<_path<<endl;
 	readPPM(_path);
-//	image = Texture(_path, _board_x, _board_y);
 }
 
 Sky::~Sky() {
-	if (&image) delete &image;
+	if (image) delete image;
 }
 
 void Sky::draw() {
 
 	/* Texture set */
-//	image.activate();
 	glEnable(GL_TEXTURE_2D);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -124,12 +121,9 @@ void Sky::readPPM(const char* _path) {
 // 			for (int l=0 ; l<height ; l++)
 // 				image[c][l] = new unsigned char[3];
 // 	}
-	cout<<"width="<<width<<", height="<<height<<endl;
 	image = new unsigned char[width*height*3];
 	
 	fread(image, width*height*3, sizeof(char), fp);
-
-	cout<<image[0]<<"__"<<image[width*height*3-1]<<endl;
 
 	fclose(fp);	
 }
