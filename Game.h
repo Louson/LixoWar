@@ -15,7 +15,6 @@
 class Game: public Drawable{
 
 private:
-	
         /* game logistic */
         int opponentNumber;
   
@@ -25,10 +24,10 @@ private:
 
         std::vector<Light *> lights;
 
-        Camera_Ortho cam_ortho;
+        Camera_Ortho * pt_cam_ortho;
         Camera_Persp * pt_cam_persp;
         Camera * pt_cam_active;
-    
+
         std::vector<Moto*> tab_motos;
         Moto * pt_player;
 
@@ -38,8 +37,7 @@ private:
         Game(int _opponent_number,
 	     GLfloat _board_size_x,GLfloat _board_size_y,
 	     GLfloat quality_x, GLfloat quality_y,
-	     GLfloat d_line_x, GLfloat d_line_y,
-	     bool _cam_ortho);
+	     GLfloat d_line_x, GLfloat d_line_y);
         ~Game();
         void draw();
         void exchangeCam();

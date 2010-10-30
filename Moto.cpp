@@ -13,6 +13,7 @@ Moto::Moto(GLfloat start_x, GLfloat start_y, GLfloat start_d[2]):
 	
 	direction[0] = start_d[0];
 	direction[1] = start_d[1];
+	setCam_ext();
 	setCam();
 }
 
@@ -61,10 +62,30 @@ void Moto::setCam() {
 	cam.set_view(100, SCREEN_RATIO, 0.05, VIEW_DIST);
 }
 
+void Moto::setCam_ext() {
+	cam_ext.set_position(0, 0, H_CAM, /*Cam position */
+			       x, y, 0,
+			       0, 1, 0);
+	cam_ext.set_view(/* X */ -SCREEN_RATIO*2.0*MOTO_WIDTH,
+			   SCREEN_RATIO*2.0*MOTO_WIDTH,
+			   /* Y */ -2.0*MOTO_LENGTH,
+			   2.0*MOTO_LENGTH,
+			   /* Z near */ 0,
+			   /* Z far  */ 1.1*H_CAM);
+}
+
 void Moto::activateCam() {
 	cam.activate();
 }
 
+void Moto::activateCam_ext() {
+	cam_ext.activate();
+}
+
 Camera_Persp * Moto::getPtCam(){
     return &cam;
+}
+
+Camera_Ortho * Moto::getPtCam_ext(){
+    return &cam_ext;
 }

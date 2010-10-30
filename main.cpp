@@ -42,8 +42,7 @@ int main(int argc, char ** argv){
     pt_game = new Game(opponent_number,
 		       side_x, side_y,
 		       quality_x, quality_y,
-		       d_line_x, d_line_y,
-		       true);
+		       d_line_x, d_line_y);
 
     glutMainLoop();
     return EXIT_SUCCESS;

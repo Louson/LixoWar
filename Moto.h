@@ -4,9 +4,12 @@
 #include <GL/glut.h>
 
 #include "Camera_Persp.h"
+#include "Camera_Ortho.h"
 #include "Drawable.h"
 
 #define MOTO_SIZE 4.0
+#define MOTO_WIDTH 4.0
+#define MOTO_LENGTH 4.0
 #define VIEW_DIST 200000.0
 
 static const GLfloat MotoDiffuse[3] = {0, 1.0, 0};
@@ -19,13 +22,17 @@ public :
 	Moto(GLfloat start_x, GLfloat start_y, GLfloat start_d[2]);
 	void draw();
 	void setCam();
+	void setCam_ext();
 	void activateCam();
-    Camera_Persp * getPtCam();
+	Camera_Persp * getPtCam();
+	void activateCam_ext();
+	Camera_Ortho * getPtCam_ext();
 private :
 	GLfloat x;
 	GLfloat y;
 	GLfloat direction[2];
 	Camera_Persp cam;
+	Camera_Ortho cam_ext;
 };
 
 #endif

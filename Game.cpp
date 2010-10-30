@@ -14,8 +14,7 @@
 Game::Game(int _opponent_number,
 	   GLfloat _board_size_x,GLfloat _board_size_y,
 	   GLfloat _quality_x, GLfloat _quality_y,
-	   GLfloat _d_lines_x, GLfloat _d_lines_y,
-	   bool _cam_ortho):
+	   GLfloat _d_lines_x, GLfloat _d_lines_y):
 	opponentNumber(_opponent_number),
 	board(_board_size_x, _board_size_y,
 	      _quality_x, _quality_y,
@@ -35,15 +34,19 @@ Game::Game(int _opponent_number,
         graph_elements.push_back(*it);
 
     /* Camera otho init - Vue de haut */
-    cam_ortho.set_position(0, 0, H_CAM, /*Cam position */
-			   x_init, y_init, 0,
-			   0, 1, 0);
-    cam_ortho.set_view(/* X */ -SCREEN_RATIO*_board_size_x/2.0,
-		       SCREEN_RATIO*_board_size_x/2.0,
-		       /* Y */ -_board_size_y/2.0,
-		       _board_size_y/2.0,
-		       /* Z near */ 0,
-		       /* Z far  */ 1.1*H_CAM);
+//     cam_ortho.set_position(0, 0, H_CAM, /*Cam position */
+// 			   x_init, y_init, 0,
+// 			   0, 1, 0);
+//     cam_ortho.set_view(/* X */ -SCREEN_RATIO*_board_size_x/40.0,
+// 		       SCREEN_RATIO*_board_size_x/40.0,
+// 		       /* Y */ -_board_size_y/40.0,
+// 		       _board_size_y/40.0,
+// 		       /* Z near */ 0,
+// 		       /* Z far  */ 1.1*H_CAM);
+    pt_cam_ortho = pt_player->getPtCam_ext();
+
+
+
 
      /* Camera ortho init - Vue globale */
 //     cam_ortho.set_position(3*_board_size_x, 2*_board_size_y, 3*_board_size_x, /*Cam position */
@@ -58,7 +61,7 @@ Game::Game(int _opponent_number,
     graph_elements.push_back(&sky);
 
     /* cam */
-    pt_cam_active = (_cam_ortho) ? (Camera * ) &cam_ortho : (Camera *) pt_cam_persp;
+    pt_cam_active = (pt_cam_ortho) ? (Camera * ) pt_cam_ortho : (Camera *) pt_cam_persp;
     pt_cam_active -> activate();
 
     /* light */
@@ -87,7 +90,7 @@ Game::~Game(){
 }
 
 void Game::exchangeCam(){
-    pt_cam_active = (pt_cam_active == &cam_ortho) ? (Camera *) pt_cam_persp : (Camera*) &cam_ortho;
+    pt_cam_active = (pt_cam_active == pt_cam_ortho) ? (Camera *) pt_cam_persp : (Camera*) pt_cam_ortho;
     pt_cam_active->activate();
     for(std::vector<Light*>::iterator it = lights.begin(); it < lights.end();it++)
 	    (*it) -> init();
