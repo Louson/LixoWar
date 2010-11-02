@@ -34,21 +34,10 @@ Game::Game(int _opponent_number,
         graph_elements.push_back(*it);
 
     /* Camera otho init - Vue de haut */
-//     cam_ortho.set_position(0, 0, H_CAM, /*Cam position */
-// 			   x_init, y_init, 0,
-// 			   0, 1, 0);
-//     cam_ortho.set_view(/* X */ -SCREEN_RATIO*_board_size_x/40.0,
-// 		       SCREEN_RATIO*_board_size_x/40.0,
-// 		       /* Y */ -_board_size_y/40.0,
-// 		       _board_size_y/40.0,
-// 		       /* Z near */ 0,
-// 		       /* Z far  */ 1.1*H_CAM);
     pt_cam_ortho = pt_player->getPtCam_ext();
 
 
-
-
-     /* Camera ortho init - Vue globale */
+    /* Camera ortho init - Vue globale */
 //     cam_ortho.set_position(3*_board_size_x, 2*_board_size_y, 3*_board_size_x, /*Cam position */
 //             0.0, 0.0, 0.0, /* center position */
 //             0,0,1);
