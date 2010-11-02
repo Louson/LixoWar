@@ -37,7 +37,7 @@ private:
         Game(int _opponent_number,
 	     GLfloat _board_size_x,GLfloat _board_size_y,
 	     GLfloat quality_x, GLfloat quality_y,
-	     GLfloat d_line_x, GLfloat d_line_y);
+	     GLfloat d_line_x, GLfloat d_line_y, int _moto_size);
         ~Game();
         void draw();
         void exchangeCam();

@@ -14,7 +14,7 @@
 Game::Game(int _opponent_number,
 	   GLfloat _board_size_x,GLfloat _board_size_y,
 	   GLfloat _quality_x, GLfloat _quality_y,
-	   GLfloat _d_lines_x, GLfloat _d_lines_y):
+	   GLfloat _d_lines_x, GLfloat _d_lines_y, int _moto_size):
 	opponentNumber(_opponent_number),
 	board(_board_size_x, _board_size_y,
 	      _quality_x, _quality_y,
@@ -26,7 +26,7 @@ Game::Game(int _opponent_number,
     GLfloat m_direction[2] ={-1, 0};
     GLfloat x_init=0;
     GLfloat y_init=0;
-    pt_player = new Moto(x_init, y_init, m_direction);
+    pt_player = new Moto(x_init, y_init, m_direction, (GLfloat) _moto_size);
     pt_cam_persp = pt_player->getPtCam();
     tab_motos.push_back(pt_player);
 
