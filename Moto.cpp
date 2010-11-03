@@ -83,8 +83,8 @@ void Moto::draw() {
 }
 
 void Moto::setCam() {
-    cam.set_position(x-1.5*MOTO_SIZE*direction[0], y-1.5*MOTO_SIZE*direction[1], 1.5*MOTO_SIZE,
-            x+MOTO_SIZE*direction[0], y+MOTO_SIZE*direction[1], MOTO_SIZE,
+    cam.set_position(x-1*MOTO_SIZE*direction[0], y-1*MOTO_SIZE*direction[1], 2*MOTO_SIZE,
+            x+1.5*MOTO_SIZE*direction[0], y+1.5*MOTO_SIZE*direction[1], MOTO_SIZE,
             0, 0, 1);
     cam.set_view(100, SCREEN_RATIO, 0.05, VIEW_DIST);
 }

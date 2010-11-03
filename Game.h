@@ -6,6 +6,7 @@
 #include "Moto.h"
 #include "Board.h"
 #include "Sky.h"
+#include "WallN.h"
 #include "Drawable.h"
 #include "Camera.h"
 #include "Camera_Ortho.h"
@@ -21,6 +22,7 @@ private:
         /* graphic components */
         Board board;
 	Sky sky;
+	WallN wallN;
 
         std::vector<Light *> lights;
 

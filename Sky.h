@@ -3,7 +3,9 @@
 
 #include <GL/glut.h>
 #include <string>
+
 #include "Plan.h"
+#include "Texture.h"
 
 #define H_SKY 3000
 
@@ -14,6 +16,7 @@ public :
 	/**
 	 * Constructeurs
 	 */
+	Sky();
 	Sky(GLfloat _board_x, GLfloat _board_y, const char* _path);
 	~Sky();
 
@@ -24,7 +27,7 @@ public :
 	void readPPM(const char* _path);
 protected:
 	unsigned char *image;
-	//Texture image;
+	Texture *text;
 	GLint width;
 	GLint height;
 };
