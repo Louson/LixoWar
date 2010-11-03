@@ -11,8 +11,8 @@
 #define MOTO_LENGTH 4.0
 #define VIEW_DIST 200000.0
 
-static const GLfloat MotoDiffuse[3] = {0, 1.0, 0};
-static const GLfloat MotoAmbient[3] = {1.0, 0.0, 0.0};
+static const GLfloat MotoDiffuse[3] = {0.1, 0.2, 0.4};
+static const GLfloat MotoAmbient[3] = {0.2, 0.2, 0.2};
 static const GLfloat MotoSpecular[3] = {1.0, 0.0, 0.0};
 static const GLfloat MotoShininess = 120;
 

@@ -52,36 +52,34 @@ void Moto::drawCube(){
         glVertex3fv(v[faces[i][1]]);
         glVertex3fv(v[faces[i][2]]);
         glVertex3fv(v[faces[i][3]]);
-
-        glutWireCube((float)2.0);
         glEnd();
     }
 }
 
 void Moto::draw() {
     for(int k=0; k<3; k++)
-    for(int j=0; j<4; j++)
-    for(int i = -2; i< 2; i++){
-        float delta = 3.0 - (float) k;
-        glPushMatrix();
-        float random_value = (double) rand() / RAND_MAX * 0.3;
-        switch(j){
-            case 0:
-                glTranslatef((float)0.0+i*moto_size+moto_size/2,(float) random_value + delta, k*moto_size);
-                break;
-            case 1:
-                glTranslatef((float) random_value + delta, (float)0.0+i*moto_size+moto_size/2, k*moto_size);
-                break;
-            case 2:
-                glTranslatef((float)0.0+i*moto_size+moto_size/2,(float) random_value - delta, k*moto_size);
-                break;
-            case 3:
-                glTranslatef((float) random_value - delta, (float)0.0+i*moto_size+moto_size/2, k*moto_size);
-                break;
-        }
-        drawCube();
-        glPopMatrix();
-    }
+        for(int j=0; j<4; j++)
+            for(int i = -2; i< 2; i++){
+                float delta = 3.0 - (float) k;
+                glPushMatrix();
+                float random_value = (double) rand() / RAND_MAX * 0.3;
+                switch(j){
+                    case 0:
+                        //glTranslatef((float)0.0+i*moto_size+moto_size/2,(float) random_value + delta, k*moto_size);
+                        break;
+                    case 1:
+                        //              glTranslatef((float) random_value + delta, (float)0.0+i*moto_size+moto_size/2, k*moto_size);
+                        break;
+                    case 2:
+                        //            glTranslatef((float)0.0+i*moto_size+moto_size/2,(float) random_value - delta, k*moto_size);
+                        break;
+                    case 3:
+                        glTranslatef((float) random_value - delta, (float)0.0+i*moto_size+moto_size/2, k*moto_size);
+                        break;
+                }
+                drawCube();
+                glPopMatrix();
+            }
 }
 
 void Moto::setCam() {
