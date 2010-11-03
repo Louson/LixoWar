@@ -1,5 +1,6 @@
 #include <cmath>
 #include <stdexcept>
+#include <cstdlib>
 
 #include "Config.h"
 #include "Moto.h"
@@ -18,14 +19,7 @@ Moto::Moto(GLfloat start_x, GLfloat start_y, GLfloat start_d[2], GLfloat _moto_s
     setCam();
 }
 
-void Moto::draw() {
-    glPushMatrix();
-    glTranslatef(0.0f,5.0f,0.0f);
-    glutSolidCube((GLdouble) moto_size);
-    glPopMatrix();
-    //#   glEnd();
-    //#   return;
-
+void Moto::drawCube(){
     GLfloat n[6][3] = {  /* Normals for the 6 faces of a cube. */
         {-1.0, 0.0, 0.0}, {0.0, 1.0, 0.0},
         {1.0, 0.0, 0.0}, {0.0, -1.0, 0.0},
@@ -47,18 +41,46 @@ void Moto::draw() {
     v[1][2] = v[2][2] = v[5][2] = v[6][2] =  0;
 
     for (int i=0 ; i<6 ; i++) {
-       glBegin(GL_QUADS);
-     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, MotoAmbient);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MotoDiffuse);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, MotoSpecular);
-    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, MotoShininess);
+        glBegin(GL_QUADS);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, MotoAmbient);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MotoDiffuse);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, MotoSpecular);
+        glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, MotoShininess);
 
         glNormal3fv(n[i]);
         glVertex3fv(v[faces[i][0]]);
         glVertex3fv(v[faces[i][1]]);
         glVertex3fv(v[faces[i][2]]);
         glVertex3fv(v[faces[i][3]]);
+
+        glutWireCube((float)2.0);
         glEnd();
+    }
+}
+
+void Moto::draw() {
+    for(int k=0; k<3; k++)
+    for(int j=0; j<4; j++)
+    for(int i = -2; i< 2; i++){
+        float delta = 3.0 - (float) k;
+        glPushMatrix();
+        float random_value = (double) rand() / RAND_MAX * 0.3;
+        switch(j){
+            case 0:
+                glTranslatef((float)0.0+i*moto_size+moto_size/2,(float) random_value + delta, k*moto_size);
+                break;
+            case 1:
+                glTranslatef((float) random_value + delta, (float)0.0+i*moto_size+moto_size/2, k*moto_size);
+                break;
+            case 2:
+                glTranslatef((float)0.0+i*moto_size+moto_size/2,(float) random_value - delta, k*moto_size);
+                break;
+            case 3:
+                glTranslatef((float) random_value - delta, (float)0.0+i*moto_size+moto_size/2, k*moto_size);
+                break;
+        }
+        drawCube();
+        glPopMatrix();
     }
 }
 

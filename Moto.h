@@ -34,6 +34,7 @@ private :
 	Camera_Ortho cam_ext;
     
     GLfloat moto_size;
+    void drawCube(void);
 };
 
 #endif

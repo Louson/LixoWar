@@ -1,5 +1,7 @@
 #include <string>
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 #include "Window.h"
 #include "Config.h"
@@ -16,6 +18,9 @@ int main(int argc, char ** argv){
     int side_x, side_y, quality_x, quality_y, d_line_x, d_line_y;
     int moto_size;
     int opponent_number;
+    
+    /* init random seed for moto construction */
+    srand(time(0));
 
     /* recuperer valeurs fichiers */
     try{
