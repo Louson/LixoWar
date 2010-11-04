@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Wheel.h"
+#include "Moto.h"
 
 using namespace std;
 
@@ -12,12 +13,29 @@ Wheel::Wheel(GLfloat _x, GLfloat _y, GLfloat _direction[2], GLfloat moto_size, G
 
 void Wheel::draw() {
 	glPushMatrix();
+	glLoadIdentity();
+
+
+
+	glTranslatef(1,1,-10);
+	glRotatef(180, 0, 1, 0);
 	glTranslatef(0, 0, height/2.0);
 	glRotatef(sens*90, direction[0], direction[1], 0.0);
-	glTranslatef(1, 0.0, 1);
+	glTranslatef(x, y, 0.0);
 	glutSolidCone(r_base,
 		      height,
 		      N_RINGS,
 		      N_SIDES);
 	glPopMatrix();
+// 	glBegin(GL_POLYGON); {
+// 		glVertex3f(x+height, y+height, 0.0); 
+// 		glVertex3f(x+height, y+height, height); 
+// 		glVertex3f(x+height, y-height, height); 
+// 		glVertex3f(x+height, y-height, 0.0); 
+// 		glVertex3f(x-height, y-height, 0.0); 
+// 		glVertex3f(x-height, y-height, height); 
+// 		glVertex3f(x-height, y+height, height); 
+// 		glVertex3f(x-height, y+height, 0.0); 
+// 	} glEnd();
+
 }
