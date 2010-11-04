@@ -4,11 +4,11 @@
 #include <GL/glut.h>
 #include "Plan.h"
 
+#define B_DEPTH -2.0
+
 /**
  * Ambient détermine la couleur qui sera réfléchie
  */
-
-
 extern GLfloat BoardEmission[3];
 extern GLfloat BoardDiffuse[3];
 extern GLfloat BoardAmbient[3];

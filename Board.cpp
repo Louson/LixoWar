@@ -89,18 +89,50 @@ void Board::draw() {
 	for (int i=d_lines_x ; i<=side_x-d_lines_x ; i+=d_lines_x) {
 		linev = i*v[3][0]+(side_x-i)*v[0][0];
 		/* Lignes // (Oy) */
-		glBegin(GL_LINES);
-		glVertex3f(linev/side_x, v[0][1], 0.001);
-		glVertex3f(linev/side_x, v[1][1], 0.001);
-		glEnd();
+//		glBegin(GL_LINES);
+		glPointSize(1.0);
+ 		glBegin(GL_QUADS);
+ 		glVertex3f(linev/side_x-1, v[0][1], 0.0);
+ 		glVertex3f(linev/side_x-1, v[1][1], 0.0);
+  		glVertex3f(linev/side_x-1, v[1][1], B_DEPTH);
+  		glVertex3f(linev/side_x-1, v[0][1], B_DEPTH);
+ 		glEnd();
+ 		glBegin(GL_QUADS);
+ 		glVertex3f(linev/side_x+1, v[0][1], 0.0);
+ 		glVertex3f(linev/side_x+1, v[1][1], 0.0);
+  		glVertex3f(linev/side_x+1, v[1][1], B_DEPTH);
+  		glVertex3f(linev/side_x+1, v[0][1], B_DEPTH);
+ 		glEnd();
+ 		glBegin(GL_QUADS);
+ 		glVertex3f(linev/side_x-1, v[0][1], 0.0);
+ 		glVertex3f(linev/side_x-1, v[1][1], 0.0);
+  		glVertex3f(linev/side_x+1, v[1][1], 0.0);
+  		glVertex3f(linev/side_x+1, v[0][1], 0.0);
+ 		glEnd();
 	}
 	for (int i=d_lines_y ; i<=side_y-d_lines_y ; i+=d_lines_y) {
 		lineh = i*v[0][1]+(side_y-i)*v[1][1];
 		/* Lignes // (Ox) */
-		glBegin(GL_LINES);
-		glVertex3f(v[0][0], lineh/side_y, 0.00);
-		glVertex3f(v[3][0], lineh/side_y, 0.00);
+//		glBegin(GL_LINES);
+		glBegin(GL_QUADS);
+		glVertex3f(v[0][0], lineh/side_y-1, 0.0);
+		glVertex3f(v[3][0], lineh/side_y-1, 0.0);
+		glVertex3f(v[3][0], lineh/side_y-1, B_DEPTH);
+		glVertex3f(v[0][0], lineh/side_y-1, B_DEPTH);
 		glEnd();
+		glBegin(GL_QUADS);
+		glVertex3f(v[0][0], lineh/side_y+1, 0.0);
+		glVertex3f(v[3][0], lineh/side_y+1, 0.0);
+		glVertex3f(v[3][0], lineh/side_y+1, B_DEPTH);
+		glVertex3f(v[0][0], lineh/side_y+1, B_DEPTH);
+		glEnd();
+		glBegin(GL_QUADS);
+		glVertex3f(v[0][0], lineh/side_y-1, 0.0);
+		glVertex3f(v[3][0], lineh/side_y-1, 0.0);
+		glVertex3f(v[3][0], lineh/side_y+1, 0.0);
+		glVertex3f(v[0][0], lineh/side_y+1, 0.0);
+		glEnd();
+		glPointSize(1.0);
 	}
 
 
@@ -125,10 +157,10 @@ void Board::draw() {
 		for (int j=0; j<quality_y; j++) {
 			glBegin(GL_QUADS);
 			glNormal3fv(n);
-			glVertex3f(v[3][0]+i*s_x, v[3][1]+j*s_y, 0);
-			glVertex3f(v[3][0]+(i+1)*s_x, v[3][1]+j*s_y, 0);
-			glVertex3f(v[3][0]+(i+1)*s_x, v[3][1]+(j+1)*s_y, 0);
-			glVertex3f(v[3][0]+i*s_x, v[3][1]+(j+1)*s_y, 0);
+			glVertex3f(v[3][0]+i*s_x, v[3][1]+j*s_y, B_DEPTH);
+			glVertex3f(v[3][0]+(i+1)*s_x, v[3][1]+j*s_y, B_DEPTH);
+			glVertex3f(v[3][0]+(i+1)*s_x, v[3][1]+(j+1)*s_y, B_DEPTH);
+			glVertex3f(v[3][0]+i*s_x, v[3][1]+(j+1)*s_y, B_DEPTH);
 			glEnd();
 		}
 	
