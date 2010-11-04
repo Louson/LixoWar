@@ -11,7 +11,7 @@ Moto::Moto(GLfloat start_x, GLfloat start_y, GLfloat start_d[2], GLfloat _moto_s
     y(start_y),
     moto_size(_moto_size),
     wheelNW(start_x + (start_d[0]-start_d[1]/2.0)*_moto_size,
-	    start_y + (start_d[0]/2.0+start_d[1])*_moto_size, start_d, _moto_size,  1),
+	    start_y + (start_d[0]/2.0+start_d[1])*_moto_size, start_d, _moto_size,  -1),
 
     wheelNE(start_x + (start_d[0]+start_d[1]/2.0)*_moto_size,
 	    start_y + (-start_d[0]/2.0+start_d[1])*_moto_size, start_d, _moto_size, 1),
@@ -20,7 +20,7 @@ Moto::Moto(GLfloat start_x, GLfloat start_y, GLfloat start_d[2], GLfloat _moto_s
 	    start_y + (-start_d[0]/2.0-start_d[1])*_moto_size, start_d, _moto_size, 1),
 
     wheelSW(start_x + (-start_d[0]-start_d[1]/2.0)*_moto_size,
-	    start_y + (start_d[0]/2.0-start_d[1])*_moto_size, start_d, _moto_size,  1)
+	    start_y + (start_d[0]/2.0-start_d[1])*_moto_size, start_d, _moto_size,  -1)
 {
     if (start_d[0]*start_d[1])
         throw(std::range_error("Direction initiale du véhicule impossible"));
@@ -69,18 +69,14 @@ void Moto::draw() {
         glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MotoDiffuse);
         glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, MotoSpecular);
         glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, MotoShininess);
-//	wheelNW.draw();
+	wheelNW.draw();
  	wheelNE.draw();
  	wheelSE.draw();
  	wheelSW.draw();
 
 	glBegin(GL_LINES);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, MotoAmbient);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MotoDiffuse);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, MotoSpecular);
-        glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, MotoShininess);
-	glVertex3f(0.0, 1.0, 0.0);
-	glVertex3f(100, 101, 0.0);
+        glVertex3f(0.0, 0.0, 0.0);
+        glVertex3f(100, 100, 0.0);
 	glEnd();
 
 //     for(int k=0; k<3; k++)

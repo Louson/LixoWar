@@ -15,8 +15,8 @@ extern Game * pt_game;
 void Window::create(const char * window_name, int * argc, char ** argv){
     glutInit(argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_NORMALIZE);
+    glEnable(GL_DEPTH_TEST | GL_NORMALIZE);
+    glShadeModel(GL_SMOOTH);
     glutCreateWindow(window_name);
     glutFullScreen();
 }
@@ -24,7 +24,7 @@ void Window::create(const char * window_name, int * argc, char ** argv){
 /**
  * Because of the limitations of GLUT C bindings,
  * this function needs to be static => it's impossible to 
- * use Functor
+ * use Functor with glut/freeglut
  */
 void Window::display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -37,6 +37,10 @@ void Window::display() {
     glutSwapBuffers();
 }
 
+void Window::windowReshape(int x, int y){
+    
+}
+
 /**
  * Init the windows
  */
@@ -44,7 +48,7 @@ void Window::init(){
 
 	glutDisplayFunc(&Window::display);
 	glutKeyboardFunc(&Window::keyboard);
-
+    glutReshapeFunc(&Window::windowReshape);
 	/* Use Depth Buffering */
 	glEnable(GL_DEPTH_TEST);
 
@@ -69,7 +73,6 @@ void Window::init(){
 	glEnable(GL_POLYGON_SMOOTH);
 	glHint(GL_POLYGON_SMOOTH, GL_NICEST);
 	glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
-
 }
 
 void Window::keyboard(unsigned char cara,int x, int y){

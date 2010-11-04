@@ -123,7 +123,6 @@ void Board::draw() {
 
 	for (int i=0; i<quality_x; i++)
 		for (int j=0; j<quality_y; j++) {
-			cout << j <<endl;
 			glBegin(GL_QUADS);
 			glNormal3fv(n);
 			glVertex3f(v[3][0]+i*s_x, v[3][1]+j*s_y, 0);

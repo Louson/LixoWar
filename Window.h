@@ -13,6 +13,8 @@ namespace Window{
         void init();
 
         void keyboard(unsigned char cara,int x, int y);
+
+        void windowReshape(int, int);
 };
 
 #endif
