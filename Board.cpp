@@ -68,6 +68,8 @@ void Board::draw() {
 	GLfloat s_x = side_x/quality_x;
 	GLfloat s_y = side_y/quality_y;
 
+	GLfloat fog_color[4] = {0.70, 0.70, 0.70, 1.0};
+
 	/* Test de sphere */
 // //	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, BoardColor);
 // 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, BoardAmbient);
@@ -101,6 +103,17 @@ void Board::draw() {
 		glEnd();
 	}
 
+
+	/* Fog settings */
+// 	glEnable(GL_FOG);
+// 	glHint(GL_FOG_HINT, GL_NICEST);
+// 	glFogi(GL_FOG, GL_LINEAR);
+// 	glFogfv(GL_FOG_COLOR, fog_color);
+// 	glFogf(GL_FOG_START, 1.0);
+// 	glFogf(GL_FOG_END, 1.5);
+// 	glFogf(GL_FOG_DENSITY, 0.35);
+
+
 	/* Board's drawing */
 //	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, BoardEmission);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, BoardAmbient);
@@ -120,5 +133,6 @@ void Board::draw() {
 			glEnd();
 		}
 	
+	glDisable(GL_FOG);
 
 }

@@ -7,6 +7,9 @@
 #include "Board.h"
 #include "Sky.h"
 #include "WallN.h"
+#include "WallW.h"
+#include "WallS.h"
+#include "WallE.h"
 #include "Drawable.h"
 #include "Camera.h"
 #include "Camera_Ortho.h"
@@ -23,6 +26,9 @@ private:
         Board board;
 	Sky sky;
 	WallN wallN;
+	WallW wallW;
+ 	WallS wallS;
+ 	WallE wallE;
 
         std::vector<Light *> lights;
 

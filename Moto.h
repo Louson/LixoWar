@@ -6,6 +6,7 @@
 #include "Camera_Persp.h"
 #include "Camera_Ortho.h"
 #include "Drawable.h"
+#include "Wheel.h"
 
 #define MOTO_WIDTH 4.0
 #define MOTO_LENGTH 4.0
@@ -32,9 +33,15 @@ private :
 	GLfloat direction[2];
 	Camera_Persp cam;
 	Camera_Ortho cam_ext;
-    
-    GLfloat moto_size;
-    void drawCube(void);
+
+	GLfloat moto_size;
+
+	Wheel wheelNW;
+	Wheel wheelNE;
+	Wheel wheelSE;
+	Wheel wheelSW;
+
+	void drawCube(void);
 };
 
 #endif

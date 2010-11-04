@@ -55,5 +55,6 @@ int main(int argc, char ** argv){
                moto_size);
 
     glutMainLoop();
+    delete pt_game;
     return EXIT_SUCCESS;
 }

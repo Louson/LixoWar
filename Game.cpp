@@ -10,7 +10,10 @@
 #include "Spot.h"
 
 #define SKY_PIC "Images/ciel.ppm"
-#define WALLN_PIC "Images/etoiles.ppm"
+#define WALLN_PIC "Images/neutron.ppm"
+#define WALLW_PIC "Images/neutron.ppm"
+#define WALLS_PIC "Images/neutron.ppm"
+#define WALLE_PIC "Images/neutron.ppm"
 
 Game::Game(int _opponent_number,
 	   GLfloat _board_size_x,GLfloat _board_size_y,
@@ -24,7 +27,13 @@ Game::Game(int _opponent_number,
 	sky(2*_board_size_x, 2*_board_size_y,
 	    string(SKY_PIC).c_str()),
 	wallN(2*_board_size_x, 2*_board_size_y,
-	      string(WALLN_PIC).c_str())
+	      string(WALLN_PIC).c_str()),
+	wallW(2*_board_size_x, 2*_board_size_y,
+	      string(WALLW_PIC).c_str()),
+  	wallS(2*_board_size_x, 2*_board_size_y,
+  	      string(WALLS_PIC).c_str()),
+    	wallE(2*_board_size_x, 2*_board_size_y,
+    	      string(WALLE_PIC).c_str())
 {
     /* motos */
     GLfloat m_direction[2] ={0, 1};
@@ -53,6 +62,9 @@ Game::Game(int _opponent_number,
     graph_elements.push_back(&board);
     graph_elements.push_back(&sky);
     graph_elements.push_back(&wallN);
+    graph_elements.push_back(&wallW);
+    graph_elements.push_back(&wallS);
+    graph_elements.push_back(&wallE);
 
     /* cam */
     pt_cam_active = (pt_cam_ortho) ? (Camera * ) pt_cam_ortho : (Camera *) pt_cam_persp;
@@ -74,8 +86,9 @@ Game::Game(int _opponent_number,
 }
 
 void Game::draw(){
-    for(std::vector<Drawable *>::iterator it = graph_elements.begin(); it < graph_elements.end();it++)
-        (*it) -> draw();
+	glMatrixMode(GL_MODELVIEW);
+	for(std::vector<Drawable *>::iterator it = graph_elements.begin(); it < graph_elements.end();it++)
+		(*it) -> draw();
 }
 
 Game::~Game(){

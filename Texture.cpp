@@ -90,8 +90,9 @@ void Texture::readPPM(const char* _path) {
 // 				image[c][l] = new unsigned char[3];
 // 	}
 	image = new unsigned char[width*height*3];
-	
+
 	fread(image, width*height*3, sizeof(char), fp);
 
 	fclose(fp);	
+	
 }

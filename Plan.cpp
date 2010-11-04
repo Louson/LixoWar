@@ -12,6 +12,7 @@ using namespace std;
  */
 Plan::Plan(){
 }
+
 Plan::Plan(GLfloat x, GLfloat y): side_x(x), side_y(y) {
 
 	set_normal(0, 0, 1);
