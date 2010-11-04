@@ -36,7 +36,7 @@ Game::Game(int _opponent_number,
     //     	      string(WALLE_PIC).c_str())
 {
     /* motos */
-    GLfloat m_direction[2] ={1.0, 0.0};
+    GLfloat m_direction[2] ={0.0, 1.0};
     GLfloat x_init=0;
     GLfloat y_init=0;
     pt_player = new Moto(x_init, y_init, m_direction, (GLfloat) _moto_size);
