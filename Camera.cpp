@@ -17,7 +17,7 @@ void Camera::set_position(GLfloat xp, GLfloat yp, GLfloat zp,
 
 void Camera::lookAt() {
 	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+    glLoadIdentity();
 	gluLookAt(x, y, z,
 		  x_center, y_center, z_center,
 		  x_up_direction, y_up_direction, z_up_direction);

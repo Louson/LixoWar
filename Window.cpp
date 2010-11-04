@@ -9,6 +9,10 @@
 
 extern Game * pt_game;
 
+namespace Window {
+    int window_width, window_height;
+}
+
 /**
  * Create the window
  */
@@ -32,13 +36,34 @@ void Window::display() {
 
     /* drawing main function */
     assert(pt_game !=NULL);
+    
+    for(int i=0; i<VIEWPORT_NUMBER; i++){
+        switch(i){
+            case(NORMAL_VIEWPORT):
+                glViewport(0, 0, window_width, window_height);
+                pt_game->setPerspCam();
+                break;
+            case(MAP_VIEWPORT):
+                pt_game->setOrthoCam();
+                glViewport(window_width*MAP_VIEWPORT_POS_RATIO, 
+                        window_height*MAP_VIEWPORT_POS_RATIO,
+                        window_width*MAP_VIEWPORT_SIZE_RATIO-MAP_VIEWPORT_PIXEL_DEP,
+                        window_height*MAP_VIEWPORT_SIZE_RATIO-MAP_VIEWPORT_PIXEL_DEP);
+                break;
+
+
+        }
     pt_game -> draw();
 
+    }
+
+    glFlush();
     glutSwapBuffers();
 }
 
 void Window::windowReshape(int x, int y){
-    
+    Window::window_width = x;
+    Window::window_height = y;
 }
 
 /**
@@ -82,7 +107,7 @@ void Window::keyboard(unsigned char cara,int x, int y){
 		glutLeaveMainLoop();
 		break;
 	case 'c' :
-        pt_game->exchangeCam();
+//        pt_game->exchangeCam();
         glutPostRedisplay();
 		break;
 	default:

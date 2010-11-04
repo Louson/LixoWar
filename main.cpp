@@ -43,7 +43,6 @@ int main(int argc, char ** argv){
         return RETURN_BAD_PATH;
     }
 
-
     /* Set window */
     Window::create(WINDOW_NAME,&argc,argv);
     Window::init();

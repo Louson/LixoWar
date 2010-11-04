@@ -40,6 +40,8 @@ private:
         Moto * pt_player;
 
         std::vector<Drawable*> graph_elements;
+        
+        void activeCam(void);
 
     public:
         Game(int _opponent_number,
@@ -48,8 +50,8 @@ private:
 	     GLfloat d_line_x, GLfloat d_line_y, int _moto_size);
         ~Game();
         void draw();
-        void exchangeCam();
-
+        void setOrthoCam(void);
+        void setPerspCam(void);
 };
 
 #endif
