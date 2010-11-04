@@ -20,3 +20,11 @@ void Camera_Ortho::activate() {
 	glLoadIdentity();
 	glOrtho(xmin, xmax, ymin, ymax, znear, zfar);	
 }
+
+void Camera_Ortho::zoom(GLfloat gradient){
+    xmin += gradient*16/9;
+    xmax -= gradient*16/9;
+    ymin += gradient;
+   ymax -= gradient;
+
+}

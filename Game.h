@@ -50,8 +50,12 @@ private:
 	     GLfloat d_line_x, GLfloat d_line_y, int _moto_size);
         ~Game();
         void draw();
-        void setOrthoCam(void);
+
         void setPerspCam(void);
+        
+        /* Ortho Camera */
+        void setOrthoCam(void);
+        void zoomOrthoCam(int);
 };
 
 #endif

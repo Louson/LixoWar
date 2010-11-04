@@ -85,31 +85,8 @@ Game::Game(int _opponent_number,
 }
 
 void Game::draw(){
-//    glMatrixMode(GL_MODELVIEW);
-
-    //Set The Viewport To The Top Left.  It Will Take Up Half The Screen Width And Height
- //   glViewport (0, 0, 1440, 900);
-    //glViewport (0, window_height/2, window_width/2, window_height/2);
-    /*    glMatrixMode (GL_PROJECTION);                       // Select The Projection Matrix
-          glLoadIdentity ();                          // Reset The Projection Matrix
-    // Set Up Ortho Mode To Fit 1/4 The Screen (Size Of A Viewport)
-    gluOrtho2D(0, window_width/2, window_height/2, 0);
-    glBegin(GL_QUADS);                          // Begin Drawing A Single Quad
-    // We Fill The Entire 1/4 Section With A Single Textured Quad.
-    glTexCoord2f(1.0f, 0.0f); glVertex2i(window_width/2, 0              );
-    glTexCoord2f(0.0f, 0.0f); glVertex2i(0,              0              );
-    glTexCoord2f(0.0f, 1.0f); glVertex2i(0,              window_height/2);
-    glTexCoord2f(1.0f, 1.0f); glVertex2i(window_width/2, window_height/2);
-    glEnd();                                
-    */
-
-   // for(std::vector<Drawable *>::iterator it = graph_elements.begin(); it < graph_elements.end();it++)
-    //    (*it) -> draw();
-
-   // glViewport(1000,800, 1440, 900);
     for(std::vector<Drawable *>::iterator it = graph_elements.begin(); it < graph_elements.end();it++)
         (*it) -> draw();
-
 }
 
 Game::~Game(){
@@ -131,4 +108,8 @@ void Game::activeCam(){
     pt_cam_active->activate();
     for(std::vector<Light*>::iterator it = lights.begin(); it < lights.end();it++)
         (*it) -> init();
+}
+
+void Game::zoomOrthoCam(int gradient){
+    pt_cam_ortho -> zoom(gradient);
 }

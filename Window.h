@@ -3,7 +3,10 @@
 
 #include "Board.h"
 
+/* KEYS */
 #define KEY_ESC 0x001B
+#define KEY_PLUS 43 
+#define KEY_MINUS 95
 
 #define VIEWPORT_NUMBER 2
 

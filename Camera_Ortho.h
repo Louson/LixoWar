@@ -21,6 +21,7 @@ public :
 		      GLfloat down, GLfloat up,
 		      GLfloat near,GLfloat  far);
 	void activate();
+    void zoom(GLfloat);
 private :
 	/* Camera field */
 	GLfloat xmin;
