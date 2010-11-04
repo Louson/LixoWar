@@ -12,7 +12,7 @@
 
 #define MAP_VIEWPORT_POS_RATIO 6/7
 #define MAP_VIEWPORT_SIZE_RATIO 1/7
-#define MAP_VIEWPORT_PIXEL_DEP 10
+#define MAP_VIEWPORT_PIXEL_DEP 20
 
 namespace Window{
 
