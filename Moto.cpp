@@ -10,10 +10,16 @@ Moto::Moto(GLfloat start_x, GLfloat start_y, GLfloat start_d[2], GLfloat _moto_s
     x(start_x),
     y(start_y),
     moto_size(_moto_size),
-    wheelNW(start_x+start_d[0]*_moto_size/2.0, start_y-start_d[1]*_moto_size/4.0, start_d, _moto_size),
-    wheelNE(start_x+start_d[0]*_moto_size/2.0, start_y+start_d[1]*_moto_size/4.0, start_d, _moto_size),
-    wheelSE(start_x-start_d[0]*_moto_size/2.0, start_y+start_d[1]*_moto_size/4.0, start_d, _moto_size),
-    wheelSW(start_x-start_d[0]*_moto_size/2.0, start_y-start_d[1]*_moto_size/4.0, start_d, _moto_size)
+    wheelNW(start_x + (start_d[0]-start_d[1]/2.0)*_moto_size,
+	    start_y + (start_d[0]/2.0+start_d[1])*_moto_size, start_d, _moto_size, -1),
+
+    wheelNE(start_x + (start_d[0]+start_d[1]/2.0)*_moto_size,
+	    start_y + (-start_d[0]/2.0+start_d[1])*_moto_size, start_d, _moto_size, 1),
+
+    wheelSE(start_x + (start_d[0]+start_d[1]/2.0)*_moto_size,
+	    start_y + (start_d[0]/2.0+start_d[1])*_moto_size, start_d, _moto_size, 1),
+    wheelSW(start_x + (start_d[0]+start_d[1]/2.0)*_moto_size,
+	    start_y + (start_d[0]/2.0+start_d[1])*_moto_size, start_d, _moto_size, -1)
 {
     if (start_d[0]*start_d[1])
         throw(std::range_error("Direction initiale du véhicule impossible"));
@@ -47,10 +53,6 @@ void Moto::drawCube(){
 
     for (int i=0 ; i<6 ; i++) {
         glBegin(GL_QUADS);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, MotoAmbient);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MotoDiffuse);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, MotoSpecular);
-        glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, MotoShininess);
 
         glNormal3fv(n[i]);
         glVertex3fv(v[faces[i][0]]);
@@ -62,38 +64,42 @@ void Moto::drawCube(){
 }
 
 void Moto::draw() {
+        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, MotoAmbient);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MotoDiffuse);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, MotoSpecular);
+        glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, MotoShininess);
 	wheelNW.draw();
-// 	wheelNE.draw();
+ 	wheelNE.draw();
 // 	wheelSE.draw();
 // 	wheelSW.draw();
 
-    for(int k=0; k<3; k++)
-        for(int j=0; j<4; j++)
-            for(int i = -2; i< 2; i++){
-                float delta = 3.0 - (float) k;
-                glPushMatrix();
-                float random_value = (double) rand() / RAND_MAX * 0.3;
-                switch(j){
-                    case 0:
-                        //glTranslatef((float)0.0+i*moto_size+moto_size/2,(float) random_value + delta, k*moto_size);
-                        break;
-                    case 1:
-                        //              glTranslatef((float) random_value + delta, (float)0.0+i*moto_size+moto_size/2, k*moto_size);
-                        break;
-                    case 2:
-                        //            glTranslatef((float)0.0+i*moto_size+moto_size/2,(float) random_value - delta, k*moto_size);
-                        break;
-                    case 3:
-			    glTranslatef( - ((float) random_value - delta)*direction[0]
-					  - ((float)0.0+i*moto_size+moto_size/2)*direction[1],
-					  - ((float) random_value - delta)*direction[1]
-					  - ((float)0.0+i*moto_size+moto_size/2)*direction[0],
-					 k*moto_size);
-                        break;
-                }
-                drawCube();
-                glPopMatrix();
-            }
+//     for(int k=0; k<3; k++)
+//         for(int j=0; j<4; j++)
+//             for(int i = -2; i< 2; i++){
+//                 float delta = 3.0 - (float) k;
+//                 glPushMatrix();
+//                 float random_value = (double) rand() / RAND_MAX * 0.3;
+//                 switch(j){
+//                     case 0:
+//                         //glTranslatef((float)0.0+i*moto_size+moto_size/2,(float) random_value + delta, k*moto_size);
+//                         break;
+//                     case 1:
+//                         //              glTranslatef((float) random_value + delta, (float)0.0+i*moto_size+moto_size/2, k*moto_size);
+//                         break;
+//                     case 2:
+//                         //            glTranslatef((float)0.0+i*moto_size+moto_size/2,(float) random_value - delta, k*moto_size);
+//                         break;
+//                     case 3:
+// 			    glTranslatef( - ((float) random_value - delta)*direction[0]
+// 					  - ((float)0.0+i*moto_size+moto_size/2)*direction[1],
+// 					  - ((float) random_value - delta)*direction[1]
+// 					  - ((float)0.0+i*moto_size+moto_size/2)*direction[0],
+// 					 k*moto_size);
+//                         break;
+//                 }
+//                 drawCube();
+//                 glPopMatrix();
+//             }
 }
 
 void Moto::setCam() {

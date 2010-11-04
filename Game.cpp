@@ -27,27 +27,27 @@ Game::Game(int _opponent_number,
 	sky(2*_board_size_x, 2*_board_size_y,
 	    string(SKY_PIC).c_str()),
 	wallN(2*_board_size_x, 2*_board_size_y,
-	      string(WALLN_PIC).c_str()),
-	wallW(2*_board_size_x, 2*_board_size_y,
-	      string(WALLW_PIC).c_str()),
-  	wallS(2*_board_size_x, 2*_board_size_y,
-  	      string(WALLS_PIC).c_str()),
-    	wallE(2*_board_size_x, 2*_board_size_y,
-    	      string(WALLE_PIC).c_str())
+	      string(WALLN_PIC).c_str())//,
+// 	wallW(2*_board_size_x, 2*_board_size_y,
+// 	      string(WALLW_PIC).c_str()),
+//   	wallS(2*_board_size_x, 2*_board_size_y,
+//   	      string(WALLS_PIC).c_str()),
+//     	wallE(2*_board_size_x, 2*_board_size_y,
+//     	      string(WALLE_PIC).c_str())
 {
-    /* motos */
-    GLfloat m_direction[2] ={0, 1};
-    GLfloat x_init=0;
-    GLfloat y_init=0;
-    pt_player = new Moto(x_init, y_init, m_direction, (GLfloat) _moto_size);
-    pt_cam_persp = pt_player->getPtCam();
-    tab_motos.push_back(pt_player);
-
-    for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
-        graph_elements.push_back(*it);
-
-    /* Camera otho init - Vue de haut */
-    pt_cam_ortho = pt_player->getPtCam_ext();
+	/* motos */
+	GLfloat m_direction[2] ={1.0, 0.0};
+	GLfloat x_init=0;
+	GLfloat y_init=0;
+	pt_player = new Moto(x_init, y_init, m_direction, (GLfloat) _moto_size);
+	pt_cam_persp = pt_player->getPtCam();
+	tab_motos.push_back(pt_player);
+	
+	for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
+		graph_elements.push_back(*it);
+	
+	/* Camera otho init - Vue de haut */
+	pt_cam_ortho = pt_player->getPtCam_ext();
 
 
     /* Camera ortho init - Vue globale */
@@ -59,12 +59,12 @@ Game::Game(int _opponent_number,
 //             /* Z near */ 0.86*_board_size_x*sqrt(22.0),
 //             /* Z far  */ 1.12*_board_size_x*sqrt(22.0));
 
-    graph_elements.push_back(&board);
-    graph_elements.push_back(&sky);
-    graph_elements.push_back(&wallN);
-    graph_elements.push_back(&wallW);
-    graph_elements.push_back(&wallS);
-    graph_elements.push_back(&wallE);
+	graph_elements.push_back(&board);
+	graph_elements.push_back(&sky);
+	graph_elements.push_back(&wallN);
+// 	graph_elements.push_back(&wallW);
+// 	graph_elements.push_back(&wallS);
+// 	graph_elements.push_back(&wallE);
 
     /* cam */
     pt_cam_active = (pt_cam_ortho) ? (Camera * ) pt_cam_ortho : (Camera *) pt_cam_persp;

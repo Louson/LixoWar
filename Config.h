@@ -17,7 +17,7 @@
 
 #define MOTO_SIZE 2
 /* Camera height */
-#define H_CAM 100
+#define H_CAM 10
 
 namespace Config{
     int fetchParam(const string & paramName,int defaultValue, const File & configFile);

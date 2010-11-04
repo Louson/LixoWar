@@ -26,9 +26,9 @@ private:
         Board board;
 	Sky sky;
 	WallN wallN;
-	WallW wallW;
- 	WallS wallS;
- 	WallE wallE;
+/* 	WallW wallW; */
+/*  	WallS wallS; */
+/*  	WallE wallE; */
 
         std::vector<Light *> lights;
 

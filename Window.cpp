@@ -1,6 +1,6 @@
 #include <string>
 #include <cassert>
-#include <GL/glut.h>
+#include <GL/freeglut.h>
 #include <cmath>
 #include <iostream>
 
@@ -76,7 +76,7 @@ void Window::keyboard(unsigned char cara,int x, int y){
 
 	switch((int) cara){
 	case KEY_ESC:
-		exit(EXIT_SUCCESS);
+		glutLeaveMainLoop();
 		break;
 	case 'c' :
         pt_game->exchangeCam();
