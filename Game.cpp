@@ -10,10 +10,6 @@
 #include "Spot.h"
 
 #define SKY_PIC "Images/ciel.ppm"
-#define WALLN_PIC "Images/neutron.ppm"
-#define WALLW_PIC "Images/neutron.ppm"
-#define WALLS_PIC "Images/neutron.ppm"
-#define WALLE_PIC "Images/neutron.ppm"
 
 Game::Game(int _opponent_number,
         GLfloat _board_size_x,GLfloat _board_size_y,
@@ -26,14 +22,7 @@ Game::Game(int _opponent_number,
             _d_lines_x, _d_lines_y),
     sky(2*_board_size_x, 2*_board_size_y,
             string(SKY_PIC).c_str()),
-    wallN(2*_board_size_x, 2*_board_size_y,
-            string(WALLN_PIC).c_str())//,
-    // 	wallW(2*_board_size_x, 2*_board_size_y,
-    // 	      string(WALLW_PIC).c_str()),
-    //   	wallS(2*_board_size_x, 2*_board_size_y,
-    //   	      string(WALLS_PIC).c_str()),
-    //     	wallE(2*_board_size_x, 2*_board_size_y,
-    //     	      string(WALLE_PIC).c_str())
+    wall(2*_board_size_x, 2*_board_size_y)
 {
     /* motos */
     GLfloat m_direction[2] ={0.0, 1.0};
@@ -49,21 +38,9 @@ Game::Game(int _opponent_number,
     /* Camera otho init - Vue de haut */
     pt_cam_ortho = pt_player->getPtCam_ext();
 
-    /* Camera ortho init - Vue globale */
-    //     cam_ortho.set_position(3*_board_size_x, 2*_board_size_y, 3*_board_size_x, /*Cam position */
-    //             0.0, 0.0, 0.0, /* center position */
-    //             0,0,1);
-    //     cam_ortho.set_view(/* X */ -0.7*_board_size_x, 0.7*_board_size_x,
-    //             /* Y */ -0.45*_board_size_y, 0.45*_board_size_y,
-    //             /* Z near */ 0.86*_board_size_x*sqrt(22.0),
-    //             /* Z far  */ 1.12*_board_size_x*sqrt(22.0));
-
     graph_elements.push_back(&board);
     graph_elements.push_back(&sky);
-    graph_elements.push_back(&wallN);
-    // 	graph_elements.push_back(&wallW);
-    // 	graph_elements.push_back(&wallS);
-    // 	graph_elements.push_back(&wallE);
+    graph_elements.push_back(&wall);
 
     /* cam */
     pt_cam_active = (pt_cam_ortho) ? (Camera * ) pt_cam_ortho : (Camera *) pt_cam_persp;

@@ -6,29 +6,27 @@
 #include "Moto.h"
 #include "Board.h"
 #include "Sky.h"
-#include "WallN.h"
-#include "WallW.h"
-#include "WallS.h"
-#include "WallE.h"
 #include "Drawable.h"
 #include "Camera.h"
 #include "Camera_Ortho.h"
 #include "Camera_Persp.h"
 #include "Light.h"
+#include "Wall.h"
 
 class Game: public Drawable{
 
-private:
+    private:
         /* game logistic */
         int opponentNumber;
-  
+
         /* graphic components */
         Board board;
-	Sky sky;
-	WallN wallN;
-/* 	WallW wallW; */
-/*  	WallS wallS; */
-/*  	WallE wallE; */
+        Sky sky;
+        Wall wall;
+        //3	WallN wallN;
+        /* 	WallW wallW; */
+        /*  	WallS wallS; */
+        /*  	WallE wallE; */
 
         std::vector<Light *> lights;
 
@@ -40,19 +38,19 @@ private:
         Moto * pt_player;
 
         std::vector<Drawable*> graph_elements;
-        
+
         void activeCam(void);
 
     public:
         Game(int _opponent_number,
-	     GLfloat _board_size_x,GLfloat _board_size_y,
-	     GLfloat quality_x, GLfloat quality_y,
-	     GLfloat d_line_x, GLfloat d_line_y, int _moto_size);
+                GLfloat _board_size_x,GLfloat _board_size_y,
+                GLfloat quality_x, GLfloat quality_y,
+                GLfloat d_line_x, GLfloat d_line_y, int _moto_size);
         ~Game();
         void draw();
 
         void setPerspCam(void);
-        
+
         /* Ortho Camera */
         void setOrthoCam(void);
         void zoomOrthoCam(int);

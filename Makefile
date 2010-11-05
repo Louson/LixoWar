@@ -5,11 +5,9 @@ CFLAGS =  -Wall -L/usr/X11R6/lib -lglut -lGLU -lm -lGL -lX11 -g
 OBJECTS = Plan.o\
 Texture.o\
 Board.o\
+PlanText.o\
 Sky.o\
-WallN.o\
-WallE.o\
-WallS.o\
-WallW.o\
+Wall.o\
 Camera.o\
 Camera_Ortho.o\
 Camera_Persp.o\

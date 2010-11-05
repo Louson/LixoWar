@@ -8,6 +8,8 @@
 
 #include "Camera.h"
 
+#define ZOOM_MAX -2
+
 class Camera_Ortho : public Camera {
 public :
 	Camera_Ortho();

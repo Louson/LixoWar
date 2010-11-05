@@ -1,36 +1,19 @@
 #ifndef _SKY_H
 #define _SKY_H
 
-#include <GL/glut.h>
-#include <string>
-
-#include "Plan.h"
-#include "Texture.h"
+#include "PlanText.h"
 
 #define H_SKY 3000
 
 using namespace std;
 
-class Sky : public Plan{
-public :
-	/**
-	 * Constructeurs
-	 */
-	Sky();
-	Sky(GLfloat _board_x, GLfloat _board_y, const char* _path);
-	~Sky();
-
-	/**
-	 * Méthodes
-	 */
-	void draw();
-	void readPPM(const char* _path);
-protected:
-	unsigned char *image;
-	Texture *text;
-	GLint width;
-	GLint height;
+class Sky : public Drawable {
+    protected:
+        Texture text;
+        PlanText sky;
+    public :
+        Sky(GLfloat _board_x, GLfloat _board_y, const char* _path);
+        void draw();
 };
-
 
 #endif

@@ -21,6 +21,9 @@ void Window::create(const char * window_name, int * argc, char ** argv){
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glEnable(GL_DEPTH_TEST | GL_NORMALIZE);
     glShadeModel(GL_SMOOTH);
+    glClearDepth(1.0f);                         // Depth Buffer Setup
+    glDepthFunc(GL_LEQUAL); 
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     glutCreateWindow(window_name);
     glutFullScreen();
 }
