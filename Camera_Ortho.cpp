@@ -22,6 +22,7 @@ void Camera_Ortho::activate() {
 }
 
 void Camera_Ortho::zoom(GLfloat gradient){
+    /* prevent the map to be inversed */
     if(xmin + gradient *16/9 > ZOOM_MAX)
         return;
 
