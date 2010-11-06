@@ -30,10 +30,10 @@ void Window::create(const char * window_name, int * argc, char ** argv){
  */
 void Window::display() {
     assert(pt_game!=NULL);
-    for(int i=0; i<VIEWPORT_NUMBER; i++){
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glClearColor(0,0,0,0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClearColor(0,0,0,0);
 
+    for(int i=0; i<VIEWPORT_NUMBER; i++){
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
         glMatrixMode(GL_PROJECTION);
