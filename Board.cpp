@@ -7,16 +7,17 @@
 
 using namespace std;
 
-//GLfloat BoardEmission[3] = {0.0, 1.0, 0.0};
-GLfloat BoardDiffuse[3] = {0, 0.5, 0.5};
-GLfloat BoardAmbient[3] = {1.0, 1.0, 1.0};
-GLfloat BoardSpecular[3] = {1.0, 0, 0};
-GLfloat BoardShininess = 120;
+GLfloat BoardEmission[3] = {0.0, 0.0, 0.0};
+GLfloat BoardDiffuse[3] = {0, 0.3, 0.3};
+GLfloat BoardAmbient[3] = {0.0, 0.0, 0.0};
+GLfloat BoardSpecular[3] = {0, 0, 0};
+GLfloat BoardShininess = 20;
 
-GLfloat LineDiffuse[3] = {0.5, 1, 1};
-GLfloat LineAmbient[3] = {1.0, 1.0, 1.0};
+GLfloat LineEmission[3] = {0.0, 0.0, 0.0};
+GLfloat LineDiffuse[3] = {0.4, 0.8, 0.8};
+GLfloat LineAmbient[3] = {0.0, 0.0, 0.0};
 GLfloat LineSpecular[3] = {0, 0, 0};
-GLfloat LineShininess = 120;
+GLfloat LineShininess = 20;
 
 
 /**
@@ -81,7 +82,7 @@ void Board::draw() {
 	/******************/
 
 	/* Lines' drawing */
-//	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, LineColor);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, LineEmission);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, LineAmbient);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, LineDiffuse);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, LineSpecular);
@@ -147,7 +148,7 @@ void Board::draw() {
 
 
 	/* Board's drawing */
-//	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, BoardEmission);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, BoardEmission);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, BoardAmbient);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, BoardDiffuse);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, BoardSpecular);

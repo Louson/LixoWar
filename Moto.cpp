@@ -59,12 +59,12 @@ void Moto::setCam() {
 
 void Moto::setCam_ext() {
 	cam_ext.set_position(0.0, 0.0, H_CAM, /*Cam position */
-			     x, y, 0.0,
+			     0, 0, 0.0,
 			     0, 1, 0);
-	cam_ext.set_view(/* X */ -SCREEN_RATIO*2.0*MOTO_WIDTH,
-			 SCREEN_RATIO*2.0*MOTO_WIDTH,
-			 /* Y */ -2.0*MOTO_LENGTH,
-			 2.0*MOTO_LENGTH,
+	cam_ext.set_view(/* X */ -SCREEN_RATIO*5000,
+			 SCREEN_RATIO*5000,
+			 /* Y */ -5000,
+			 5000,
 			 /* Z near */ 0,
 			 /* Z far  */ 1.5*H_CAM);
 }

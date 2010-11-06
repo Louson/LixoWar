@@ -10,8 +10,8 @@
 #define L_DIFFUSE {1.0, 1.0, 1.0, 1.0};
 #define L_AMBIENT {0.01, 0.01, 0.01, 1.0}
 #define L_SPECULAR {1.0, 1.0, 1.0, 1.0}
-#define L_EXPONENT 20
-#define L_CUTOFF 20
+/* #define L_EXPONENT 20 */
+/* #define L_CUTOFF 20 */
 extern GLfloat L_Location[3];
 extern GLfloat L_Diffuse[4];
 extern GLfloat L_Ambient[4];

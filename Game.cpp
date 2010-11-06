@@ -26,8 +26,8 @@ Game::Game(int _opponent_number,
 {
     /* motos */
     GLfloat m_direction[2] ={0.0, 1.0};
-    GLfloat x_init=0;
-    GLfloat y_init=0;
+    GLfloat x_init=4900;
+    GLfloat y_init=4900;
     pt_player = new Moto(x_init, y_init, m_direction, (GLfloat) _moto_size);
     pt_cam_persp = pt_player->getPtCam();
     tab_motos.push_back(pt_player);
@@ -47,14 +47,14 @@ Game::Game(int _opponent_number,
     pt_cam_active -> activate();
 
     /* light */
-    GLfloat L_Location[4] = {100.0, 10000.0, 10000.0};
+    GLfloat L_Location[3] = L_LOCATION;
     GLfloat L_Diffuse[4] = L_DIFFUSE;
     GLfloat L_Ambient[4] = L_AMBIENT;
     GLfloat L_Specular[4] = L_SPECULAR;
-    GLfloat L_Direction[3] = {-1.0, -10.0, -10.0};
+    GLfloat L_Direction[3] = L_DIRECTION;
     lights.push_back(new Spot(GL_LIGHT0, L_Location,
-                L_Diffuse, L_Ambient, L_Specular,
-                L_Direction, L_EXPONENT, L_CUTOFF));
+			      L_Diffuse, L_Ambient, L_Specular,
+			      L_Direction, L_EXPONENT, L_CUTOFF));
 
     for(std::vector<Light*>::iterator it = lights.begin(); it < lights.end();it++)
         (*it) -> init();
