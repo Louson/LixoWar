@@ -9,7 +9,7 @@ using namespace std;
 
 GLfloat BoardEmission[3] = {0.0, 0.0, 0.0};
 GLfloat BoardDiffuse[3] = {0, 0.3, 0.3};
-GLfloat BoardAmbient[3] = {0.0, 0.0, 0.0};
+GLfloat BoardAmbient[3] = {01.0, 01.0, 01.0};
 GLfloat BoardSpecular[3] = {0, 0, 0};
 GLfloat BoardShininess = 20;
 
@@ -58,7 +58,8 @@ Board::Board(GLfloat x, GLfloat y,
 	set_vertex(1,  x/2,  y/2, 0);
 	set_vertex(2, -x/2,  y/2, 0);
 	set_vertex(3, -x/2, -y/2, 0);
-
+	boardColor = Color(BoardEmission, BoardAmbient, BoardDiffuse, BoardSpecular, BoardShininess);
+	lineColor = Color(LineEmission, LineAmbient, LineDiffuse, LineSpecular, LineShininess);
 }
 
 /**
@@ -82,15 +83,10 @@ void Board::draw() {
 	/******************/
 
 	/* Lines' drawing */
-	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, LineEmission);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, LineAmbient);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, LineDiffuse);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, LineSpecular);
-	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, LineShininess);
+	lineColor.active();
 	for (int i=d_lines_x ; i<=side_x-d_lines_x ; i+=d_lines_x) {
 		linev = i*v[3][0]+(side_x-i)*v[0][0];
 		/* Lignes // (Oy) */
-//		glBegin(GL_LINES);
 		glPointSize(1.0);
  		glBegin(GL_QUADS);
  		glVertex3f(linev/side_x-1, v[0][1], 0.0);
@@ -114,7 +110,6 @@ void Board::draw() {
 	for (int i=d_lines_y ; i<=side_y-d_lines_y ; i+=d_lines_y) {
 		lineh = i*v[0][1]+(side_y-i)*v[1][1];
 		/* Lignes // (Ox) */
-//		glBegin(GL_LINES);
 		glBegin(GL_QUADS);
 		glVertex3f(v[0][0], lineh/side_y-1, 0.0);
 		glVertex3f(v[3][0], lineh/side_y-1, 0.0);
@@ -148,12 +143,7 @@ void Board::draw() {
 
 
 	/* Board's drawing */
-	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, BoardEmission);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, BoardAmbient);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, BoardDiffuse);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, BoardSpecular);
-	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, BoardShininess);
-
+	boardColor.active();
 	for (int i=0; i<quality_x; i++)
 		for (int j=0; j<quality_y; j++) {
 			glBegin(GL_QUADS);

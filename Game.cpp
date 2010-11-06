@@ -26,8 +26,8 @@ Game::Game(int _opponent_number,
 {
     /* motos */
     GLfloat m_direction[2] ={0.0, 1.0};
-    GLfloat x_init=4900;
-    GLfloat y_init=4900;
+    GLfloat x_init=0;
+    GLfloat y_init=0;
     pt_player = new Moto(x_init, y_init, m_direction, (GLfloat) _moto_size);
     pt_cam_persp = pt_player->getPtCam();
     tab_motos.push_back(pt_player);

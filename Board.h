@@ -3,6 +3,7 @@
 
 #include <GL/glut.h>
 #include "Plan.h"
+#include "Color.h"
 
 #define B_DEPTH -2.0
 
@@ -41,6 +42,8 @@ private:
 	GLfloat d_lines_y;
 	GLfloat quality_x;
 	GLfloat quality_y;
+	Color boardColor;
+	Color lineColor;
 };
 
 #endif

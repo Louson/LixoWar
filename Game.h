@@ -16,7 +16,7 @@
 #define L_LOCATION {5000.0, 5000.0, 5000.0}
 #define L_DIRECTION {-2500.0, -2500.0, -5000.0}
 #define L_EXPONENT 2
-#define L_CUTOFF 40
+#define L_CUTOFF 70
 
 class Game: public Drawable{
 

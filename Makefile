@@ -18,7 +18,8 @@ File.o\
 Config.o\
 Moto.o\
 Wheel.o\
-Game.o
+Game.o\
+Color.o
 
 all: $(PROJECT_NAME)
 
