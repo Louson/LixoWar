@@ -87,6 +87,7 @@ void Board::draw() {
 	for (int i=d_lines_x ; i<=side_x-d_lines_x ; i+=d_lines_x) {
 		linev = i*v[3][0]+(side_x-i)*v[0][0];
 		/* Lignes // (Oy) */
+	boardColor.active();
 		glPointSize(1.0);
  		glBegin(GL_QUADS);
  		glVertex3f(linev/side_x-1, v[0][1], 0.0);
@@ -100,6 +101,7 @@ void Board::draw() {
   		glVertex3f(linev/side_x+1, v[1][1], B_DEPTH);
   		glVertex3f(linev/side_x+1, v[0][1], B_DEPTH);
  		glEnd();
+	lineColor.active();
  		glBegin(GL_QUADS);
  		glVertex3f(linev/side_x-1, v[0][1], 0.0);
  		glVertex3f(linev/side_x-1, v[1][1], 0.0);
@@ -110,6 +112,7 @@ void Board::draw() {
 	for (int i=d_lines_y ; i<=side_y-d_lines_y ; i+=d_lines_y) {
 		lineh = i*v[0][1]+(side_y-i)*v[1][1];
 		/* Lignes // (Ox) */
+	boardColor.active();
 		glBegin(GL_QUADS);
 		glVertex3f(v[0][0], lineh/side_y-1, 0.0);
 		glVertex3f(v[3][0], lineh/side_y-1, 0.0);
@@ -122,6 +125,7 @@ void Board::draw() {
 		glVertex3f(v[3][0], lineh/side_y+1, B_DEPTH);
 		glVertex3f(v[0][0], lineh/side_y+1, B_DEPTH);
 		glEnd();
+	lineColor.active();
 		glBegin(GL_QUADS);
 		glVertex3f(v[0][0], lineh/side_y-1, 0.0);
 		glVertex3f(v[3][0], lineh/side_y-1, 0.0);
