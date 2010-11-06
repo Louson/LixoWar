@@ -18,6 +18,8 @@
 #define L_EXPONENT 2
 #define L_CUTOFF 70
 
+enum MOV{UP, DOWN, LEFT, RIGHT};
+
 class Game: public Drawable{
 
     private:
@@ -28,10 +30,6 @@ class Game: public Drawable{
         Board board;
         Sky sky;
         Wall wall;
-        //3	WallN wallN;
-        /* 	WallW wallW; */
-        /*  	WallS wallS; */
-        /*  	WallE wallE; */
 
         std::vector<Light *> lights;
 
@@ -53,6 +51,8 @@ class Game: public Drawable{
                 GLfloat d_line_x, GLfloat d_line_y, int _moto_size);
         ~Game();
         void draw();
+
+        void motoMov(enum MOV);
 
         void setPerspCam(void);
 

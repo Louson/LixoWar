@@ -28,7 +28,7 @@ Game::Game(int _opponent_number,
     GLfloat m_direction[2] ={0.0, 1.0};
     GLfloat x_init=70;
     GLfloat y_init=0;
-    
+
     pt_player = new Moto(x_init, y_init, m_direction, (GLfloat) _moto_size);
     pt_cam_persp = pt_player->getPtCam();
     pt_cam_ortho = pt_player->getPtCam_ext();
@@ -48,8 +48,8 @@ Game::Game(int _opponent_number,
     GLfloat L_Specular[4] = L_SPECULAR;
     GLfloat L_Direction[3] = L_DIRECTION;
     lights.push_back(new Spot(GL_LIGHT0, L_Location,
-			      L_Diffuse, L_Ambient, L_Specular,
-			      L_Direction, L_EXPONENT, L_CUTOFF));
+                L_Diffuse, L_Ambient, L_Specular,
+                L_Direction, L_EXPONENT, L_CUTOFF));
 
     for(std::vector<Light*>::iterator it = lights.begin(); it < lights.end();it++)
         (*it) -> init();
@@ -86,4 +86,23 @@ void Game::activeCam(){
 
 void Game::zoomOrthoCam(int gradient){
     pt_cam_ortho -> zoom(gradient);
+}
+
+void Game::motoMov(enum MOV mov){ cout << mov << endl;
+    int x=0, y=0;
+    switch(mov){
+        case UP:
+            x=1;
+            break;
+        case DOWN:
+            x=-1;
+            break;
+        case LEFT:
+            y=-1;
+            break;
+        case RIGHT:
+            y=1;
+            break;
+    }
+    pt_player->move(y,x);
 }

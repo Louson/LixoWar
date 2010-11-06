@@ -22,7 +22,7 @@ namespace Window{
         void create(const char * window_name, int * argc, char ** argv);  
         void init();
         void keyboard(unsigned char cara,int x, int y);
-
+        void specialKeyboard(int, int ,int);
         /* used to get the dimension of the windows */
         void windowReshape(int, int);
 };

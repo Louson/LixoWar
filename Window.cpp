@@ -71,6 +71,7 @@ void Window::init(){
     glutDisplayFunc(&Window::display);
     glutKeyboardFunc(&Window::keyboard);
     glutReshapeFunc(&Window::windowReshape);
+    glutSpecialFunc(&Window::specialKeyboard);
 
     /* Use Depth Buffering */
     glEnable(GL_DEPTH_TEST);
@@ -121,4 +122,25 @@ void Window::keyboard(unsigned char cara,int x, int y){
             std::cout << "cara: "<<(int)cara<<" x: "<<x<<" y: "<<y<<std::endl;
             break;
     }
+}
+
+void Window::specialKeyboard(int key, int x, int y){
+    switch(key){
+        case GLUT_KEY_UP:
+            pt_game->motoMov(UP);
+            break;
+        case GLUT_KEY_RIGHT:
+            pt_game->motoMov(RIGHT);
+            break;
+        case GLUT_KEY_DOWN:
+            pt_game->motoMov(DOWN);
+            break;
+        case GLUT_KEY_LEFT:
+            pt_game->motoMov(LEFT);
+            break;
+        default:
+            cout << "Special: "<<key<<endl;
+            return;
+    }
+    glutPostRedisplay();
 }

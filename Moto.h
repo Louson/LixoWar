@@ -29,6 +29,7 @@ public :
 	Camera_Persp * getPtCam();
 	void activateCam_ext();
 	Camera_Ortho * getPtCam_ext();
+    void move(int dx, int dy);
 private :
 	GLfloat x;
 	GLfloat y;
