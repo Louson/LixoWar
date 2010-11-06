@@ -26,25 +26,20 @@ Game::Game(int _opponent_number,
 {
     /* motos */
     GLfloat m_direction[2] ={0.0, 1.0};
-    GLfloat x_init=0;
+    GLfloat x_init=70;
     GLfloat y_init=0;
+    
     pt_player = new Moto(x_init, y_init, m_direction, (GLfloat) _moto_size);
     pt_cam_persp = pt_player->getPtCam();
+    pt_cam_ortho = pt_player->getPtCam_ext();
     tab_motos.push_back(pt_player);
 
+    /* drawing elements */
     for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
         graph_elements.push_back(*it);
-
-    /* Camera otho init - Vue de haut */
-    pt_cam_ortho = pt_player->getPtCam_ext();
-
     graph_elements.push_back(&board);
     graph_elements.push_back(&sky);
     graph_elements.push_back(&wall);
-
-    /* cam */
-    pt_cam_active = (pt_cam_ortho) ? (Camera * ) pt_cam_ortho : (Camera *) pt_cam_persp;
-    pt_cam_active -> activate();
 
     /* light */
     GLfloat L_Location[3] = L_LOCATION;
@@ -68,6 +63,8 @@ void Game::draw(){
 
 Game::~Game(){
     for(std::vector<Light*>::iterator it = lights.begin(); it < lights.end();it++)
+        delete *it;
+    for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
         delete *it;
 }
 

@@ -43,7 +43,7 @@ void Moto::draw() {
 	wheelSW.draw();
 
 	glPushMatrix();
-	glTranslatef(-direction[0], -direction[1], 0);
+	glTranslatef(-direction[0]+x, -direction[1]+y, 0);
 	glRotatef(-90, direction[1], direction[0], 0);
 	glutWireCone(moto_size/3, moto_size*2, 20, 30);
 	glPopMatrix();
@@ -51,22 +51,22 @@ void Moto::draw() {
 }
 
 void Moto::setCam() {
-	cam.set_position(x-1*MOTO_SIZE*direction[0], y-1*MOTO_SIZE*direction[1], 2*MOTO_SIZE,
+	cam.set_position(x-1*MOTO_SIZE*direction[0], y-1*MOTO_SIZE*direction[1], PERSP_HEIGHT*MOTO_SIZE,
 			 x+1.5*MOTO_SIZE*direction[0], y+1.5*MOTO_SIZE*direction[1], MOTO_SIZE,
 			 0, 0, 1);
 	cam.set_view(100, SCREEN_RATIO, 0.05, VIEW_DIST);
 }
 
 void Moto::setCam_ext() {
-	cam_ext.set_position(0.0, 0.0, H_CAM, /*Cam position */
-			     0, 0, 0.0,
-			     0, 1, 0);
-	cam_ext.set_view(/* X */ -SCREEN_RATIO*5000,
-			 SCREEN_RATIO*5000,
-			 /* Y */ -5000,
-			 5000,
-			 /* Z near */ 0,
-			 /* Z far  */ 1.5*H_CAM);
+	cam_ext.set_position(x, y, H_CAM, /*Cam position */
+			     x, y, 0, /* ref point position */
+			     direction[0], direction[1], 0); /* up vector */
+	cam_ext.set_view(-SCREEN_RATIO*PROJ_SIZE, /* left */
+			 SCREEN_RATIO*PROJ_SIZE, /* right */
+			 /* Y */ -PROJ_SIZE, /* Down */
+			 PROJ_SIZE, /* up */
+			 0.5*H_CAM, /* Z near */
+             1.5*H_CAM); /*Z far */
 }
 
 void Moto::activateCam() {

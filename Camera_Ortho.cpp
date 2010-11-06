@@ -1,7 +1,7 @@
 #include "Camera_Ortho.h"
 #include <iostream>
-Camera_Ortho::Camera_Ortho() {
-}
+
+Camera_Ortho::Camera_Ortho(){};
 
 void Camera_Ortho::set_view(GLfloat left, GLfloat right,
         GLfloat down, GLfloat up,
