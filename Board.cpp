@@ -9,12 +9,18 @@ using namespace std;
 
 GLfloat BoardEmission[3] = {0.0, 0.0, 0.0};
 GLfloat BoardDiffuse[3] = {0, 0.3, 0.3};
-GLfloat BoardAmbient[3] = {01.0, 01.0, 01.0};
+GLfloat BoardAmbient[3] = {0.4, 0.4, 0.4};
 GLfloat BoardSpecular[3] = {0, 0, 0};
 GLfloat BoardShininess = 20;
 
+GLfloat SideEmission[3] = {0.0, 0.0, 0.0};
+GLfloat SideDiffuse[3] = {0, 0, 0.3};
+GLfloat SideAmbient[3] = {0.0, 0.0, 0.0};
+GLfloat SideSpecular[3] = {0, 0, 0};
+GLfloat SideShininess = 20;
+
 GLfloat LineEmission[3] = {0.0, 0.0, 0.0};
-GLfloat LineDiffuse[3] = {0.4, 0.8, 0.8};
+GLfloat LineDiffuse[3] = {0.3, 0.7, 0.7};
 GLfloat LineAmbient[3] = {0.0, 0.0, 0.0};
 GLfloat LineSpecular[3] = {0, 0, 0};
 GLfloat LineShininess = 20;
@@ -59,6 +65,7 @@ Board::Board(GLfloat x, GLfloat y,
 	set_vertex(2, -x/2,  y/2, 0);
 	set_vertex(3, -x/2, -y/2, 0);
 	boardColor = Color(BoardEmission, BoardAmbient, BoardDiffuse, BoardSpecular, BoardShininess);
+	sideColor = Color(SideEmission, SideAmbient, SideDiffuse, SideSpecular, SideShininess);
 	lineColor = Color(LineEmission, LineAmbient, LineDiffuse, LineSpecular, LineShininess);
 }
 
@@ -83,11 +90,10 @@ void Board::draw() {
 	/******************/
 
 	/* Lines' drawing */
-	lineColor.active();
 	for (int i=d_lines_x ; i<=side_x-d_lines_x ; i+=d_lines_x) {
 		linev = i*v[3][0]+(side_x-i)*v[0][0];
 		/* Lignes // (Oy) */
-	boardColor.active();
+	sideColor.active();
 		glPointSize(1.0);
  		glBegin(GL_QUADS);
  		glVertex3f(linev/side_x-1, v[0][1], 0.0);
@@ -112,7 +118,7 @@ void Board::draw() {
 	for (int i=d_lines_y ; i<=side_y-d_lines_y ; i+=d_lines_y) {
 		lineh = i*v[0][1]+(side_y-i)*v[1][1];
 		/* Lignes // (Ox) */
-	boardColor.active();
+	sideColor.active();
 		glBegin(GL_QUADS);
 		glVertex3f(v[0][0], lineh/side_y-1, 0.0);
 		glVertex3f(v[3][0], lineh/side_y-1, 0.0);

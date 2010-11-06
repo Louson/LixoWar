@@ -15,6 +15,14 @@ extern GLfloat BoardDiffuse[3];
 extern GLfloat BoardAmbient[3];
 extern GLfloat BoardSpecular[3];
 extern GLfloat BoardShininess;
+
+extern GLfloat SideEmission[3];
+extern GLfloat SideDiffuse[3];
+extern GLfloat SideAmbient[3];
+extern GLfloat SideSpecular[3];
+extern GLfloat SideShininess;
+
+extern GLfloat LineEmission[3];
 extern GLfloat LineDiffuse[3];
 extern GLfloat LineAmbient[3];
 extern GLfloat LineSpecular[3];
@@ -43,6 +51,7 @@ private:
 	GLfloat quality_x;
 	GLfloat quality_y;
 	Color boardColor;
+	Color sideColor;
 	Color lineColor;
 };
 
