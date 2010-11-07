@@ -90,7 +90,7 @@ void Board::draw() {
 	/******************/
 
 	/* Lines' drawing */
-	for (int i=d_lines_x ; i<=side_x-d_lines_x ; i+=d_lines_x) {
+	for (int i=0 ; i<=side_x ; i+=d_lines_x) {
 		linev = i*v[3][0]+(side_x-i)*v[0][0];
 		/* Lignes // (Oy) */
 	sideColor.active();

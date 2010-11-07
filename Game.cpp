@@ -42,11 +42,11 @@ Game::Game(int _opponent_number,
     graph_elements.push_back(&wall);
 
     /* light */
-    GLfloat L_Location[3] = L_LOCATION;
+    GLfloat L_Location[3] = {_board_size_x/2.0, _board_size_y/2.0, (_board_size_x+_board_size_y)/4.0};
     GLfloat L_Diffuse[4] = L_DIFFUSE;
     GLfloat L_Ambient[4] = L_AMBIENT;
     GLfloat L_Specular[4] = L_SPECULAR;
-    GLfloat L_Direction[3] = L_DIRECTION;
+    GLfloat L_Direction[3] = {-_board_size_x/2.0, -_board_size_y/2.0, -(_board_size_x+_board_size_y)/4.0};;
     lights.push_back(new Spot(GL_LIGHT0, L_Location,
                 L_Diffuse, L_Ambient, L_Specular,
                 L_Direction, L_EXPONENT, L_CUTOFF));
