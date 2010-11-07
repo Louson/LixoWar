@@ -12,9 +12,12 @@
 
 class Wheel : public Drawable{
 public :
-	Wheel(GLfloat _x, GLfloat _y, GLfloat _direction[2], GLfloat moto_size, GLint _sens);
+	Wheel(GLfloat _dx, GLfloat _dy, GLfloat _direction[2], GLfloat moto_size, GLint _sens);
+    void setMotoPos(GLfloat _x, GLfloat _y);
 	void draw();
 private :
+	GLfloat dx;
+	GLfloat dy;
 	GLfloat x;
 	GLfloat y;
 	GLfloat direction[2];

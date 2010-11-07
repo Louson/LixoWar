@@ -10,32 +10,38 @@ Moto::Moto(GLfloat start_x, GLfloat start_y, GLfloat start_d[2], GLfloat _moto_s
     x(start_x),
     y(start_y),
     moto_size(_moto_size),
-    wheelNW(start_x + (start_d[0]-start_d[1]/2.0)*_moto_size,
-            start_y + (start_d[0]/2.0+start_d[1])*_moto_size, start_d, _moto_size,  -1),
+    wheelNW((start_d[0]-start_d[1]/2.0)*_moto_size,
+            (start_d[0]/2.0+start_d[1])*_moto_size, start_d, _moto_size,  -1),
 
-    wheelNE(start_x + (start_d[0]+start_d[1]/2.0)*_moto_size,
-            start_y + (-start_d[0]/2.0+start_d[1])*_moto_size, start_d, _moto_size, 1),
+    wheelNE((start_d[0]+start_d[1]/2.0)*_moto_size,
+            (-start_d[0]/2.0+start_d[1])*_moto_size, start_d, _moto_size, 1),
 
-    wheelSE(start_x + (-start_d[0]+start_d[1]/2.0)*_moto_size,
-            start_y + (-start_d[0]/2.0-start_d[1])*_moto_size, start_d, _moto_size, 1),
+    wheelSE((-start_d[0]+start_d[1]/2.0)*_moto_size,
+            (start_d[0]/2.0-start_d[1])*_moto_size, start_d, _moto_size, 1),
 
-    wheelSW(start_x + (-start_d[0]-start_d[1]/2.0)*_moto_size,
-            start_y + (start_d[0]/2.0-start_d[1])*_moto_size, start_d, _moto_size,  -1)
+    wheelSW((-start_d[0]-start_d[1]/2.0)*_moto_size,
+            (start_d[0]/2.0-start_d[1])*_moto_size, start_d, _moto_size,  -1)
 {
     if (start_d[0]*start_d[1])
         throw(std::range_error("Direction initiale du véhicule impossible"));
 
     direction[0] = start_d[0];
     direction[1] = start_d[1];
+    setCam();
 }
 
 
 void Moto::draw() {
-
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, MotoAmbient);
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MotoDiffuse);
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, MotoSpecular);
     glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, MotoShininess);
+
+    wheelNW.setMotoPos(x,y);
+    wheelNE.setMotoPos(x,y);
+    wheelSE.setMotoPos(x,y);
+    wheelSW.setMotoPos(x,y);
+
     wheelNW.draw();
     wheelNE.draw();
     wheelSE.draw();
@@ -46,7 +52,6 @@ void Moto::draw() {
     glRotatef(-90, direction[1], direction[0], 0);
     glutWireCone(moto_size/3, moto_size*2, 20, 30);
     glPopMatrix();
-
 }
 
 void Moto::setCam() {
