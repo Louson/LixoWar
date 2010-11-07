@@ -7,22 +7,22 @@
 
 using namespace std;
 
-GLfloat BoardEmission[3] = {0.0, 0.0, 0.0};
-GLfloat BoardDiffuse[3] = {0, 0.3, 0.3};
-GLfloat BoardAmbient[3] = {0.4, 0.4, 0.4};
-GLfloat BoardSpecular[3] = {0, 0, 0};
+GLfloat BoardEmission[4] = {0.0, 0.0, 0.0, 0.0};
+GLfloat BoardDiffuse[4] = {0, 0.3, 0.3, 0.0};
+GLfloat BoardAmbient[4] = {0.4, 0.4, 0.4, 0.0};
+GLfloat BoardSpecular[4] = {0, 0, 0, 0.0};
 GLfloat BoardShininess = 20;
 
-GLfloat SideEmission[3] = {0.0, 0.0, 0.0};
-GLfloat SideDiffuse[3] = {0, 0, 0.3};
-GLfloat SideAmbient[3] = {0.0, 0.0, 0.0};
-GLfloat SideSpecular[3] = {0, 0, 0};
+GLfloat SideEmission[4] = {0.0, 0.0, 0.0, 0.0};
+GLfloat SideDiffuse[4] = {0, 0, 0.3, 0.0};
+GLfloat SideAmbient[4] = {0.0, 0.0, 0.0, 0.0};
+GLfloat SideSpecular[4] = {0, 0, 0, 0.0};
 GLfloat SideShininess = 20;
 
-GLfloat LineEmission[3] = {0.0, 0.0, 0.0};
-GLfloat LineDiffuse[3] = {0.3, 0.7, 0.7};
-GLfloat LineAmbient[3] = {0.0, 0.0, 0.0};
-GLfloat LineSpecular[3] = {0, 0, 0};
+GLfloat LineEmission[4] = {0.0, 0.0, 0.0, 0.0};
+GLfloat LineDiffuse[4] = {0.3, 0.7, 0.7, 0.0};
+GLfloat LineAmbient[4] = {0.0, 0.0, 0.0, 0.0};
+GLfloat LineSpecular[4] = {0, 0, 0, 0.0};
 GLfloat LineShininess = 20;
 
 
