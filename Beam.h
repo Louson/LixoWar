@@ -9,6 +9,7 @@
 
 class Beam : public Drawable {
 public :
+	Beam();
 	Beam(GLfloat _x, GLfloat _y, GLfloat _ante_dir[2], GLfloat _post_dir[2], GLint _num_moto);
 	void draw();
 private:

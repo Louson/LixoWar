@@ -57,8 +57,9 @@ Game::Game(int _opponent_number,
 }
 
 void Game::draw(){
-    for(std::vector<Drawable *>::iterator it = graph_elements.begin(); it < graph_elements.end();it++)
-        (*it) -> draw();
+	for(std::vector<Drawable *>::iterator it = graph_elements.begin(); it < graph_elements.end();it++) {
+		(*it) -> draw();
+	}
 }
 
 Game::~Game(){

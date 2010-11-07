@@ -12,6 +12,7 @@
 #include "Camera_Persp.h"
 #include "Light.h"
 #include "Wall.h"
+#include "Beam.h"
 
 #define L_LOCATION {5000.0, 5000.0, 5000.0}
 #define L_DIRECTION {-2500.0, -2500.0, -5000.0}
@@ -36,7 +37,9 @@ class Game: public Drawable{
         Camera_Ortho * pt_cam_ortho;
         Camera_Persp * pt_cam_persp;
         Camera * pt_cam_active;
-
+	
+	Beam beam;
+	
         std::vector<Moto*> tab_motos;
         Moto * pt_player;
 

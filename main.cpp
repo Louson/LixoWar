@@ -51,7 +51,7 @@ int main(int argc, char ** argv){
 		       side_x, side_y,
 		       quality_x, quality_y,
 		       d_line_x, d_line_y,
-               moto_size);
+		       moto_size);
 
     glutMainLoop();
     delete pt_game;
