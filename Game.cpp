@@ -11,11 +11,20 @@
 
 #define SKY_PIC "Images/ciel.ppm"
 
-Game::Game(int _opponent_number,
-        GLfloat _board_size_x,GLfloat _board_size_y,
-        GLfloat _quality_x, GLfloat _quality_y,
-        GLfloat _d_lines_x, GLfloat _d_lines_y, int _moto_size):
+Game::Game(
+        int _opponent_number,
+        int _board_size_x, 
+        int _board_size_y,
+        GLfloat _quality_x, 
+        GLfloat _quality_y,
+        GLfloat _d_lines_x, 
+        GLfloat _d_lines_y, 
+        int _moto_size
+        ) throw (ExceptionWrongBoardSize) :
     opponentNumber(_opponent_number),
+
+    board_size_x(_board_size_x),
+    board_size_y(_board_size_y),
 
     board(_board_size_x, _board_size_y,
             _quality_x, _quality_y,
@@ -24,7 +33,8 @@ Game::Game(int _opponent_number,
             string(SKY_PIC).c_str()),
     wall(2*_board_size_x, 2*_board_size_y)
 {
-    int nb_cases=(_board_size_x*_board_size_y/(_moto_size/2.0));
+    if(board_size_x < MIN_SIZE_BOARD || board_size_y < MIN_SIZE_BOARD)
+        throw ExceptionWrongBoardSize(); 
 
     /* motos */
     GLfloat m_direction[2] ={0.0, 1.0};
@@ -39,15 +49,22 @@ Game::Game(int _opponent_number,
 
     /* drawing elements */
     for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
-	    graph_elements.push_back(*it);
+        graph_elements.push_back(*it);
     graph_elements.push_back(&board);
     graph_elements.push_back(&sky);
     graph_elements.push_back(&wall);
 
-    /* Beams */
-    pt_beam_matrix = (PtBeam**) new PtBeam[nb_cases];
+    /* presence matrix */
+    presence_matrix = new bool * [board_size_x];
+    for(int i=0; i<board_size_x; i++)
+        presence_matrix[i] = NULL;
+    for(int i=0; i<board_size_x; i++)
+        presence_matrix[i] = new bool[board_size_y];
+    for(int i=0; i<board_size_x; i++)
+        for(int j=0; j<board_size_y; j++)
+            presence_matrix[i][j] = false;
 
-    /* light */
+        /* light */
     GLfloat L_Location[3] = {_board_size_x/2.0, _board_size_y/2.0, (_board_size_x+_board_size_y)/4.0};
     GLfloat L_Diffuse[4] = L_DIFFUSE;
     GLfloat L_Ambient[4] = L_AMBIENT;
@@ -70,9 +87,13 @@ void Game::draw(){
 Game::~Game(){
     for(std::vector<Light*>::iterator it = lights.begin(); it < lights.end();it++)
         delete *it;
+
     for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
         delete *it;
-    delete pt_beam_matrix;
+
+    for(int i=0; i<board_size_x; i++)
+        delete [] presence_matrix[i];
+    delete [] presence_matrix;
 }
 
 void Game::setPerspCam(){
@@ -107,6 +128,8 @@ void Game::motoMov(enum MOV mov){
             break;
         case LEFT:
             x = -1;
+            turn = true;
+            break;
         case RIGHT:
             x = 1;
             turn = true;

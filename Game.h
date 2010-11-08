@@ -19,6 +19,8 @@
 #define L_EXPONENT 2
 #define L_CUTOFF 70
 
+#define MIN_SIZE_BOARD 1
+
 enum MOV{UP, DOWN, LEFT, RIGHT};
 
 class Game: public Drawable{
@@ -29,6 +31,7 @@ class Game: public Drawable{
         int opponentNumber;
 
         /* graphic components */
+        int board_size_x, board_size_y;
         Board board;
         Sky sky;
         Wall wall;
@@ -42,19 +45,22 @@ class Game: public Drawable{
         std::vector<Moto*> tab_motos;
         Moto * pt_player;
 
-	/* Matrice de cases pointant vers un rayon, ou non */
-	PtBeam **pt_beam_matrix;
+        /* Board object presence matrix */
+        bool ** presence_matrix;
 
         std::vector<Drawable*> graph_elements;
 
         void activeCam(void);
 
     public:
+        class ExceptionWrongBoardSize:public std::exception{};
         Game(int _opponent_number,
-                GLfloat _board_size_x,GLfloat _board_size_y,
+                int _board_size_x, int _board_size_y,
                 GLfloat quality_x, GLfloat quality_y,
-                GLfloat d_line_x, GLfloat d_line_y, int _moto_size);
+                GLfloat d_line_x, GLfloat d_line_y, int _moto_size) throw (ExceptionWrongBoardSize);
         ~Game();
+
+
         void draw();
 
         void motoMov(enum MOV);

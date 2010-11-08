@@ -41,13 +41,24 @@ void Moto::draw() {
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, MotoSpecular);
     glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, MotoShininess);
 
-    wheelNW.setMotoPos(x, y, direction);
-    wheelNE.setMotoPos(x, y, direction);
-    wheelSE.setMotoPos(x, y, direction);
-    wheelSW.setMotoPos(x, y, direction);
+    wheelNW.setPos(x+-moto_size/2*(-direction[0]+direction[1]),
+            y+moto_size/3*(direction[0]+direction[1]),
+            direction);
 
-    //    wheelNW.draw();
-    //    wheelNE.draw();
+    wheelNE.setPos(x+moto_size/2*(direction[0]+direction[1]),
+            y+moto_size/3*(-direction[0]+direction[1]),
+            direction);
+
+    wheelSE.setPos(x+moto_size/2*(-direction[0]+direction[1]),
+            y+-moto_size*(direction[0]+direction[1]),
+            direction);
+
+    wheelSW.setPos(x+-moto_size/2*(direction[0]+direction[1]),
+            y+-moto_size*(-direction[0]+direction[1]),
+            direction);
+
+    wheelNW.draw();
+    wheelNE.draw();
     wheelSE.draw();
     wheelSW.draw();
 
@@ -105,9 +116,8 @@ void Moto::move(int dx, bool turn ){
         y += dx*direction[1];
     }else{
         /* if dx == 1 turn to right else, turn to left */
-        temp = -dx*direction[1];
-        direction[1] = dx*direction[0];
+        temp = dx*direction[1];
+        direction[1] = -dx*direction[0];
         direction[0] = temp;
-        cout << direction[0] << " " << direction[1]<<endl;
     }
 }

@@ -23,7 +23,7 @@ class File{
 
     public:
 
-        class ExceptionBadPath:public std::exception {};
+        class ExceptionBadPath:public std::exception{};
         class ExceptionParamInexistent:public std::exception{};
 
         File(const char * path) throw(ExceptionBadPath);
