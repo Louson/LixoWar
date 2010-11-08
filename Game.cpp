@@ -24,6 +24,8 @@ Game::Game(int _opponent_number,
             string(SKY_PIC).c_str()),
     wall(2*_board_size_x, 2*_board_size_y)
 {
+    int nb_cases=(_board_size_x*_board_size_y/(_moto_size/2.0));
+
     /* motos */
     GLfloat m_direction[2] ={0.0, 1.0};
     GLfloat x_init=0;
@@ -37,10 +39,13 @@ Game::Game(int _opponent_number,
 
     /* drawing elements */
     for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
-        graph_elements.push_back(*it);
+	    graph_elements.push_back(*it);
     graph_elements.push_back(&board);
     graph_elements.push_back(&sky);
     graph_elements.push_back(&wall);
+
+    /* Beams */
+    pt_beam_matrix = (PtBeam**) new PtBeam[nb_cases];
 
     /* light */
     GLfloat L_Location[3] = {_board_size_x/2.0, _board_size_y/2.0, (_board_size_x+_board_size_y)/4.0};
@@ -67,6 +72,7 @@ Game::~Game(){
         delete *it;
     for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
         delete *it;
+    delete pt_beam_matrix;
 }
 
 void Game::setPerspCam(){

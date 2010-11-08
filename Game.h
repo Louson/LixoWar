@@ -12,7 +12,7 @@
 #include "Camera_Persp.h"
 #include "Light.h"
 #include "Wall.h"
-#include "Beam.h"
+#include "PtBeam.h"
 
 #define L_LOCATION {5000.0, 5000.0, 5000.0}
 #define L_DIRECTION {-2500.0, -2500.0, -5000.0}
@@ -24,6 +24,7 @@ enum MOV{UP, DOWN, LEFT, RIGHT};
 class Game: public Drawable{
 
     private:
+
         /* game logistic */
         int opponentNumber;
 
@@ -38,10 +39,11 @@ class Game: public Drawable{
         Camera_Persp * pt_cam_persp;
         Camera * pt_cam_active;
 	
-	Beam beam;
-	
         std::vector<Moto*> tab_motos;
         Moto * pt_player;
+
+	/* Matrice de cases pointant vers un rayon, ou non */
+	PtBeam **pt_beam_matrix;
 
         std::vector<Drawable*> graph_elements;
 

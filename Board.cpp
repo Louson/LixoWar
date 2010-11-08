@@ -9,7 +9,7 @@ using namespace std;
 
 GLfloat BoardEmission[4] = {0.0, 0.0, 0.0, 0.0};
 GLfloat BoardDiffuse[4] = {0, 0.3, 0.3, 0.0};
-GLfloat BoardAmbient[4] = {0.4, 0.4, 0.4, 0.0};
+GLfloat BoardAmbient[4] = {0.3, 0.3, 0.3, 0.0};
 GLfloat BoardSpecular[4] = {0, 0, 0, 0.0};
 GLfloat BoardShininess = 20;
 
