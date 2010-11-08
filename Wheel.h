@@ -12,8 +12,8 @@
 
 class Wheel : public Drawable{
 public :
-	Wheel(GLfloat _dx, GLfloat _dy, GLfloat _direction[2], GLfloat moto_size, GLint _sens);
-    void setMotoPos(GLfloat _x, GLfloat _y);
+	Wheel(GLfloat _dx, GLfloat _dy, GLfloat _direction[2], GLfloat moto_size, bool right);
+    void setMotoPos(GLfloat _x, GLfloat _y, GLfloat _direction[2]);
 	void draw();
 private :
 	GLfloat dx;

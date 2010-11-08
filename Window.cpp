@@ -52,6 +52,12 @@ void Window::display() {
                 pt_game->setOrthoCam();
                 break;
         }
+        glBegin(GL_LINES);
+        glVertex3i(0,0,0);
+        glVertex3i(100,100,0);
+        glEnd();
+
+
         pt_game -> draw();
     }
     glFlush();

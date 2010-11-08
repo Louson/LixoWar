@@ -29,7 +29,7 @@ public :
 	Camera_Persp * getPtCam();
 	void activateCam_ext();
 	Camera_Ortho * getPtCam_ext();
-    void move(int dx, int dy);
+    void move(int dx, bool turn = false);
 private :
 	GLfloat x;
 	GLfloat y;
@@ -43,8 +43,6 @@ private :
 	Wheel wheelNE;
 	Wheel wheelSE;
 	Wheel wheelSW;
-
-	void drawCube(void);
 };
 
 #endif

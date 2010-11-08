@@ -26,10 +26,11 @@ Game::Game(int _opponent_number,
 {
     /* motos */
     GLfloat m_direction[2] ={0.0, 1.0};
-    GLfloat x_init=70;
+    GLfloat x_init=0;
     GLfloat y_init=0;
 
     pt_player = new Moto(x_init, y_init, m_direction, (GLfloat) _moto_size);
+
     pt_cam_persp = pt_player->getPtCam();
     pt_cam_ortho = pt_player->getPtCam_ext();
     tab_motos.push_back(pt_player);
@@ -57,9 +58,8 @@ Game::Game(int _opponent_number,
 }
 
 void Game::draw(){
-	for(std::vector<Drawable *>::iterator it = graph_elements.begin(); it < graph_elements.end();it++) {
-		(*it) -> draw();
-	}
+    for(std::vector<Drawable *>::iterator it = graph_elements.begin(); it < graph_elements.end();it++)
+        (*it) -> draw();
 }
 
 Game::~Game(){
@@ -89,8 +89,9 @@ void Game::zoomOrthoCam(int gradient){
     pt_cam_ortho -> zoom(gradient);
 }
 
-void Game::motoMov(enum MOV mov){ cout << mov << endl;
-    int x=0, y=0;
+void Game::motoMov(enum MOV mov){
+    int x=0;
+    bool turn = false;
     switch(mov){
         case UP:
             x=1;
@@ -99,11 +100,11 @@ void Game::motoMov(enum MOV mov){ cout << mov << endl;
             x=-1;
             break;
         case LEFT:
-            y=-1;
-            break;
+            x = -1;
         case RIGHT:
-            y=1;
+            x = 1;
+            turn = true;
             break;
     }
-    pt_player->move(y,x);
+    pt_player->move(x, turn);
 }
