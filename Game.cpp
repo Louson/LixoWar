@@ -43,7 +43,7 @@ Game::Game(
 
         pt_player = new Moto(x_init, y_init, m_direction, (GLfloat) _moto_size);
 
-        pt_cam_persp = pt_player->getPtCam();
+        pt_cam_persp = pt_player->getPtCamPersp();
         pt_cam_ortho = pt_player->getPtCamOrtho();
         tab_motos.push_back(pt_player);
 

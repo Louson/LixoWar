@@ -29,20 +29,20 @@ void Moto::draw() {
         glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, MotoSpecular);
         glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, MotoShininess);
 
-        wheelNW.setPos(x+-moto_size*FRONT_WHEELS_DISTANCE_RATIO*(-direction[0]+direction[1]),
-                        y+moto_size/3*(direction[0]+direction[1]),
+        wheelNW.setPos(x+-moto_size*FRONT_WHEELS_DISTANCE_RATIO*(direction[1]),
+                        y+moto_size/3*(direction[1]),
                         direction);
 
-        wheelNE.setPos(x+moto_size*FRONT_WHEELS_DISTANCE_RATIO*(direction[0]+direction[1]),
-                        y+moto_size/3*(-direction[0]+direction[1]),
+        wheelNE.setPos(x+moto_size*FRONT_WHEELS_DISTANCE_RATIO*(direction[1]),
+                        y+moto_size/3*(direction[1]),
                         direction);
 
-        wheelSE.setPos(x+moto_size*BACK_WHEELS_DISTANCE_RATIO*(-direction[0]+direction[1]),
-                        y+-moto_size*(direction[0]+direction[1]),
+        wheelSE.setPos(x+moto_size*BACK_WHEELS_DISTANCE_RATIO*(direction[1]),
+                        y+-moto_size*(direction[1]),
                         direction);
 
-        wheelSW.setPos(x+-moto_size*BACK_WHEELS_DISTANCE_RATIO*(direction[0]+direction[1]),
-                        y+-moto_size*(-direction[0]+direction[1]),
+        wheelSW.setPos(x+-moto_size*BACK_WHEELS_DISTANCE_RATIO*(direction[1]),
+                        y+-moto_size*(direction[1]),
                         direction);
 
         wheelNW.draw();
