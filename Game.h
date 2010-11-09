@@ -24,9 +24,7 @@
 enum MOV{UP, DOWN, LEFT, RIGHT};
 
 class Game: public Drawable{
-
     private:
-
         /* game logistic */
         int opponentNumber;
 
@@ -40,7 +38,6 @@ class Game: public Drawable{
 
         Camera_Ortho * pt_cam_ortho;
         Camera_Persp * pt_cam_persp;
-        Camera * pt_cam_active;
 	
         std::vector<Moto*> tab_motos;
         Moto * pt_player;
@@ -50,7 +47,7 @@ class Game: public Drawable{
 
         std::vector<Drawable*> graph_elements;
 
-        void activeCam(void);
+        void resetLight(void);
 
     public:
         class ExceptionWrongBoardSize:public std::exception{};
@@ -60,16 +57,15 @@ class Game: public Drawable{
                 GLfloat d_line_x, GLfloat d_line_y, int _moto_size) throw (ExceptionWrongBoardSize);
         ~Game();
 
-
         void draw();
 
+        /* actions */
         void motoMov(enum MOV);
-
-        void setPerspCam(void);
-
-        /* Ortho Camera */
-        void setOrthoCam(void);
         void zoomOrthoCam(int);
+
+        /* Cameras */
+        void activatePerspCam(void);
+        void activateOrthoCam(void);
 };
 
 #endif

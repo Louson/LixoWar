@@ -4,12 +4,11 @@
 
 using namespace std;
 
-Wheel::Wheel(GLfloat _x, GLfloat _y, GLfloat _direction[2], GLfloat moto_size, bool right) :
+Wheel::Wheel(GLfloat moto_size, bool right) :
     r_base(moto_size/R_BASE_RATIO),
     height(moto_size/HEIGHT_RATIO)
 {
     sens = right ? 1 : -1;
-    setPos(_x, _y, direction);
 }
 
 void Wheel::setPos(GLfloat _x, GLfloat _y, GLfloat _direction[2]){

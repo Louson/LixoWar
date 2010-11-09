@@ -42,21 +42,20 @@ void Window::display() {
         switch(i){
             case(NORMAL_VIEWPORT):
                 glViewport(0, 0, window_width, window_height);
-                pt_game->setPerspCam();
+                pt_game->activatePerspCam();
                 break;
             case(MAP_VIEWPORT):
                 glViewport(window_width*MAP_VIEWPORT_POS_RATIO, 
                         window_height*MAP_VIEWPORT_POS_RATIO,
                         window_width*MAP_VIEWPORT_SIZE_RATIO-MAP_VIEWPORT_PIXEL_DEP,
                         window_height*MAP_VIEWPORT_SIZE_RATIO-MAP_VIEWPORT_PIXEL_DEP);
-                pt_game->setOrthoCam();
+                pt_game->activateOrthoCam();
                 break;
         }
         glBegin(GL_LINES);
         glVertex3i(0,0,0);
         glVertex3i(100,100,0);
         glEnd();
-
 
         pt_game -> draw();
     }
