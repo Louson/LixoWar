@@ -37,7 +37,7 @@ Game::Game(
                 throw ExceptionWrongBoardSize(); 
 
         /* motos */
-        GLfloat m_direction[2] ={0.0, 1.0};
+        GLfloat m_direction[2] ={1.0, 0.0};
         GLfloat x_init=0;
         GLfloat y_init=0;
 
