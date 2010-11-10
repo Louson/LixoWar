@@ -15,7 +15,7 @@
 #define D_LINE_Y 25
 #define OPPONENT_NUMBER 1
 
-#define MOTO_SIZE 2
+#define MOTO_SIZE 1
 /* Camera height */
 #define H_CAM 10
 

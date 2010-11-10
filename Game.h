@@ -20,23 +20,25 @@
 #define L_EXPONENT 2
 #define L_CUTOFF 70
 
-#define MIN_SIZE_BOARD 1
+#define MIN_SIZE_BOARD  1
 
 #define SPEED_INCREMENT 1
 
-/* projection settings */
-#define VIEW_DIST       200000.0
-#define FOVY            100
 
-#define PROJ_SIZE 50
-#define PERSP_HEIGHT 3
+/* cameras settings */
+#define VIEW_DIST               200000.0
+#define FOVY                    100
+#define PERSP_HEIGHT            3
+#define MOTO_COEF               2
+#define REF_HEIGHT              2 
+#define PROJ_SIZE               50
 
 enum MOV{UP, DOWN, LEFT, RIGHT};
 
 typedef struct moto_struct {
         int x;
         int y;
-        int direction[2];
+        int angle;
         Moto * pt_moto;
 } MOTO_STRUCT;
 
@@ -57,7 +59,8 @@ class Game: public Drawable{
         Camera_Persp cam_persp;
 	
         std::vector<Moto*> tab_motos;
-        
+        int moto_size;
+
         MOTO_STRUCT player;
 
         /* Board object presence matrix */

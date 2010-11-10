@@ -13,12 +13,12 @@
 class Wheel : public Drawable{
     public :
         Wheel(GLfloat moto_size, bool right);
-        void setPos(GLfloat _x, GLfloat _y, GLfloat _direction[2]);
+        void setPos(GLfloat _x, GLfloat _y, int);
         void draw();
     private :
         GLfloat x;
         GLfloat y;
-        GLfloat direction[2];
+        int angle;
         GLfloat r_base;
         GLfloat height;
         GLint sens;

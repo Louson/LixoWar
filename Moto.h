@@ -23,12 +23,13 @@ class Moto : public Drawable{
 public :
 	Moto(GLfloat moto_size);
 	void draw();
-	void setPos(int _x, int _y, int direction[2]);
+	void setPos(int _x, int _y, int _angle);
 
 private :
 	GLfloat x;
 	GLfloat y;
-	GLfloat direction[2];
+
+    GLint angle;
 
 	GLfloat moto_size;
 

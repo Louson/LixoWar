@@ -1,3 +1,4 @@
+#include <cmath>
 #include <iostream>
 #include "Wheel.h"
 #include "Moto.h"
@@ -11,17 +12,16 @@ Wheel::Wheel(GLfloat moto_size, bool right) :
     sens = right ? 1 : -1;
 }
 
-void Wheel::setPos(GLfloat _x, GLfloat _y, GLfloat _direction[2]){
+void Wheel::setPos(GLfloat _x, GLfloat _y, int _angle){
     x = _x;
     y = _y;
-    direction[0] = _direction[0];
-    direction[1] = _direction[1];
+    angle = _angle;
 }
 
 void Wheel::draw() {
     glPushMatrix();
-    glTranslatef(x, y, 0.0);
-    glRotatef(sens*90, direction[0], direction[1] , 0.0);
+    glTranslatef(x, y, r_base);
+    glRotatef(sens*90, cos(angle*M_PI/180), sin(angle*M_PI/180), 0);
     glutSolidCone(r_base,
             height,
             N_RINGS,

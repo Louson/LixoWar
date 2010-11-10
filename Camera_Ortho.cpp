@@ -33,6 +33,5 @@ void Camera_Ortho::activate() {
 void Camera_Ortho::zoom(GLfloat _gradient){
         if(xmin + (gradient+_gradient) * 16/9 > ZOOM_MAX)
                 return;
-        std::cout<<xmin + gradient +_gradient*16/9<<std::endl;
         gradient += _gradient;
 }

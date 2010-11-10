@@ -9,7 +9,7 @@
 #include "Light.h"
 #include "Spot.h"
 
-#define SKY_PIC "Images/ciel.ppm"
+const char * SKY_PIC = "Images/ciel.ppm";
 
 Game::Game(
                 int _opponent_number,
@@ -30,16 +30,16 @@ Game::Game(
                         _quality_x, _quality_y,
                         _d_lines_x, _d_lines_y),
         sky(2*_board_size_x, 2*_board_size_y,
-                        string(SKY_PIC).c_str()),
-        wall(2*_board_size_x, 2*_board_size_y)
+                        SKY_PIC),
+        wall(2*_board_size_x, 2*_board_size_y),
+        moto_size(_moto_size)
 {
         if(board_size_x < MIN_SIZE_BOARD || board_size_y < MIN_SIZE_BOARD)
                 throw ExceptionWrongBoardSize(); 
 
         /* motos */
         player.x = player.y = 0;
-        player.direction[0] = 1.0;
-        player.direction[1] = 0;
+        player.angle = 0;
         player.pt_moto = new Moto(_moto_size);
 
         /* drawing elements */
@@ -75,7 +75,7 @@ Game::Game(
 
 void Game::draw(){
 
-        player.pt_moto->setPos(player.x, player.y, player.direction);
+        player.pt_moto->setPos(player.x, player.y, player.angle);
 
         for(std::vector<Drawable *>::iterator it = graph_elements.begin(); it < graph_elements.end();it++)
                 if(*it) (*it) -> draw();
@@ -117,32 +117,37 @@ void Game::zoomOrthoCam(int gradient){
 }
 
 void Game::motoMov(enum MOV mov){
-        int temp;
+        /* the comportement of negative modulo is undefined !!! */
+        /* the cast is here to prevent overflow */
         switch(mov){
                 case UP:
-                        player.x += SPEED_INCREMENT*player.direction[0];
-                        player.y += SPEED_INCREMENT*player.direction[1];
+                        player.x += SPEED_INCREMENT*((int) cos(((float)player.angle)*M_PI/180.0));
+                        player.y += SPEED_INCREMENT*((int) sin(((float)player.angle)*M_PI/180.0));
                         break;
                 case DOWN:
-                        player.x -= SPEED_INCREMENT*player.direction[0];
-                        player.y -= SPEED_INCREMENT*player.direction[1];
+                        player.x -= SPEED_INCREMENT*((int) cos(player.angle*M_PI/180));
+                        player.y -= SPEED_INCREMENT*((int) sin(player.angle*M_PI/180));
                         break;
                 case LEFT:
-                        temp = -player.direction[1];
-                        player.direction[1] = player.direction[0];
-                        player.direction[0] = temp;
+                        player.angle = (player.angle + 90) % 360;
                         break;
                 case RIGHT:
-                        temp = player.direction[1];
-                        player.direction[1] = -player.direction[0];
-                        player.direction[0] = temp;
+                        player.angle = (player.angle + 270) % 360;
                         break;
         }
 }
 
 void Game::setPerspCam() {
-        cam_persp.set_position(player.x-1*MOTO_SIZE*player.direction[0], player.y-1*MOTO_SIZE*player.direction[1], PERSP_HEIGHT*MOTO_SIZE,
-                        player.x+1.5*MOTO_SIZE*player.direction[0], player.y+1.5*MOTO_SIZE*player.direction[1], MOTO_SIZE,
+        cam_persp.set_position(
+                        /* cam pos */
+                        player.x-MOTO_COEF*moto_size*cos(player.angle*M_PI/180), 
+                        player.y-MOTO_COEF*moto_size*sin(player.angle*M_PI/180), 
+                        PERSP_HEIGHT*moto_size,
+                        /* ref point */
+                         player.x,//+4*MOTO_COEF*moto_size*cos(player.angle*M_PI/180), 
+                        player.y,//+4*MOTO_COEF*moto_size*sin(player.angle*M_PI/180), 
+                        REF_HEIGHT*moto_size,
+                        /* up vector */
                         0, 0, 1);
         cam_persp.set_view(FOVY, SCREEN_RATIO, 0.05, VIEW_DIST);
 }
