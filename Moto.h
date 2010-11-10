@@ -30,14 +30,13 @@ static const GLfloat MotoShininess = 120;
 
 class Moto : public Drawable{
 public :
-	Moto(GLfloat start_x, GLfloat start_y, GLfloat start_d[2], GLfloat moto_size);
+	Moto(GLfloat moto_size);
 	void draw();
 	Camera_Persp * getPtCamPersp();
 	Camera_Ortho * getPtCamOrtho();
         void move(int dx, bool turn = false);
   	
 	void setPos(GLfloat x, GLfloat y, int direction[2]);
-
 
 	void setOrthoCam(void);
 	void setPerspCam(void);

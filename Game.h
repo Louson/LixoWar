@@ -14,12 +14,20 @@
 #include "Wall.h"
 #include "PtBeam.h"
 
+/* lights */
 #define L_LOCATION {5000.0, 5000.0, 5000.0}
 #define L_DIRECTION {-2500.0, -2500.0, -5000.0}
 #define L_EXPONENT 2
 #define L_CUTOFF 70
 
 #define MIN_SIZE_BOARD 1
+
+typedef struct moto_struct {
+        int x;
+        int y;
+        int direction[2];
+        Moto * pt_moto;
+} MOTO_STRUCT;
 
 enum MOV{UP, DOWN, LEFT, RIGHT};
 
@@ -40,7 +48,8 @@ class Game: public Drawable{
         Camera_Persp * pt_cam_persp;
 	
         std::vector<Moto*> tab_motos;
-        Moto * pt_player;
+        
+        MOTO_STRUCT player;
 
         /* Board object presence matrix */
         bool ** presence_matrix;

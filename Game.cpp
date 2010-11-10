@@ -37,15 +37,14 @@ Game::Game(
                 throw ExceptionWrongBoardSize(); 
 
         /* motos */
-        GLfloat m_direction[2] ={1.0, 0.0};
-        GLfloat x_init=0;
-        GLfloat y_init=0;
+        player.x = player.y = 0;
+        player.direction[0] = 1.0;
+        player.direction[1] = 0;
+        player.pt_moto =  new Moto(_moto_size);
 
-        pt_player = new Moto(x_init, y_init, m_direction, (GLfloat) _moto_size);
-
-        pt_cam_persp = pt_player->getPtCamPersp();
-        pt_cam_ortho = pt_player->getPtCamOrtho();
-        tab_motos.push_back(pt_player);
+        pt_cam_persp = player.pt_moto->getPtCamPersp();
+        pt_cam_ortho = player.pt_moto->getPtCamOrtho();
+        tab_motos.push_back(player.pt_moto);
 
         /* drawing elements */
         for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
@@ -95,13 +94,13 @@ Game::~Game(){
 }
 
 void Game::activatePerspCam(){
-        pt_player->setPerspCam();
+        player.pt_moto->setPerspCam();
         pt_cam_persp->activate();
         resetLight();
 }
 
 void Game::activateOrthoCam(){
-        pt_player->setOrthoCam();
+        player.pt_moto->setOrthoCam();
         pt_cam_ortho->activate();
         resetLight();
 }
@@ -134,5 +133,5 @@ void Game::motoMov(enum MOV mov){
                         turn = true;
                         break;
         }
-        pt_player->move(x, turn);
+        player.pt_moto->move(x, turn);
 }

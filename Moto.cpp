@@ -6,22 +6,23 @@
 #include "Config.h"
 #include "Moto.h"
 
-Moto::Moto(GLfloat start_x, GLfloat start_y, GLfloat start_d[2], GLfloat _moto_size):
-        x(start_x),
-        y(start_y),
+Moto::Moto(GLfloat _moto_size):
         moto_size(_moto_size),
 
         wheelNW(_moto_size, false),
         wheelNE(_moto_size, true),
         wheelSE(_moto_size, true),
         wheelSW(_moto_size, false)
-{
-        if (start_d[0]*start_d[1])
+{}
+
+void Moto::setPos(GLfloat x, GLfloat y, int _direction[2]){
+if (_direction[0]*_direction[1])
                 throw(std::range_error("Direction initiale du véhicule impossible"));
 
-        direction[0] = start_d[0];
-        direction[1] = start_d[1];
+        direction[0] = _direction[0];
+        direction[1] = _direction[1];
 }
+
 
 void Moto::draw() {
 
