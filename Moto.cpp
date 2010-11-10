@@ -41,12 +41,16 @@ void Moto::draw() {
                                 -moto_size*FRONT_WHEELS_H_DISTANCE_RATIO*direction[0]),
                         direction);
 
-        wheelSE.setPos(x+moto_size*BACK_WHEELS_H_DISTANCE_RATIO*(direction[1]),
-                        y+-moto_size*(direction[1]),
+        wheelSE.setPos(x+(moto_size*BACK_WHEELS_H_DISTANCE_RATIO*direction[1]+
+                                -moto_size*direction[0]),
+                        y+(-moto_size*direction[1]+
+                                -moto_size*BACK_WHEELS_H_DISTANCE_RATIO*direction[0]),
                         direction);
 
-        wheelSW.setPos(x+-moto_size*BACK_WHEELS_H_DISTANCE_RATIO*(direction[1]),
-                        y+-moto_size*(direction[1]),
+        wheelSW.setPos(x+(-moto_size*BACK_WHEELS_H_DISTANCE_RATIO*direction[1]+
+                                -moto_size*direction[0]),
+                        y+(-moto_size*direction[1]+
+                                moto_size*BACK_WHEELS_H_DISTANCE_RATIO*direction[0]),
                         direction);
 
         wheelNW.draw();
