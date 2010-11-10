@@ -3,26 +3,26 @@
 #include <cstdlib>
 #include <iostream>
 
+#include "Game.h"
 #include "Config.h"
 #include "Moto.h"
 
 Moto::Moto(GLfloat _moto_size):
         moto_size(_moto_size),
-
         wheelNW(_moto_size, false),
         wheelNE(_moto_size, true),
         wheelSE(_moto_size, true),
         wheelSW(_moto_size, false)
 {}
 
-void Moto::setPos(GLfloat x, GLfloat y, int _direction[2]){
-if (_direction[0]*_direction[1])
+void Moto::setPos(int _x, int _y, int _direction[2]){
+        if (_direction[0]*_direction[1])
                 throw(std::range_error("Direction initiale du véhicule impossible"));
-
+        x = _x;
+        y = _y;
         direction[0] = _direction[0];
         direction[1] = _direction[1];
 }
-
 
 void Moto::draw() {
 
@@ -66,47 +66,4 @@ void Moto::draw() {
         glRotatef(90, -direction[1], direction[0], 0);
         glutWireCone(moto_size/3, moto_size*2, 20, 30);
         glPopMatrix(); 
-}
-
-void Moto::setPerspCam() {
-        cam_persp.set_position(x-1*MOTO_SIZE*direction[0], y-1*MOTO_SIZE*direction[1], PERSP_HEIGHT*MOTO_SIZE,
-                        x+1.5*MOTO_SIZE*direction[0], y+1.5*MOTO_SIZE*direction[1], MOTO_SIZE,
-                        0, 0, 1);
-        cam_persp.set_view(FOVY, SCREEN_RATIO, 0.05, VIEW_DIST);
-}
-
-void Moto::setOrthoCam() {
-        cam_ortho.set_position(x, y, H_CAM, /*Cam position */
-                        x, y, 0, /* ref point position */
-                        1, 0, 0); /* up vector */
-        cam_ortho.set_view(-SCREEN_RATIO*PROJ_SIZE, /* left */
-                        SCREEN_RATIO*PROJ_SIZE, /* right */
-                        /* Y */ -PROJ_SIZE, /* Down */
-                        PROJ_SIZE, /* up */
-                        0.5*H_CAM, /* Z near */
-                        1.5*H_CAM); /*Z far */
-}
-
-Camera_Persp * Moto::getPtCamPersp(){
-        return &cam_persp;
-}
-
-Camera_Ortho * Moto::getPtCamOrtho(){
-        return &cam_ortho;
-}
-  
-void Moto::move(int dx, bool turn ){
-        int temp;
-        /* we need to do some adjustements about the
-         * direction of the moto when we use the keys
-         */
-        if(!turn){
-                x += dx*direction[0];
-                y += dx*direction[1];
-        }else{
-                /* if dx == 1 turn to right else, turn to left */
-                temp = dx*direction[1];
-                direction[1] = -dx*direction[0];
-                direction[0] = temp;
-        }
 }

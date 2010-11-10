@@ -40,15 +40,12 @@ Game::Game(
         player.x = player.y = 0;
         player.direction[0] = 1.0;
         player.direction[1] = 0;
-        player.pt_moto =  new Moto(_moto_size);
-
-        pt_cam_persp = player.pt_moto->getPtCamPersp();
-        pt_cam_ortho = player.pt_moto->getPtCamOrtho();
-        tab_motos.push_back(player.pt_moto);
+        player.pt_moto = new Moto(_moto_size);
 
         /* drawing elements */
         for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
                 graph_elements.push_back(*it);
+        graph_elements.push_back(player.pt_moto);
         graph_elements.push_back(&board);
         graph_elements.push_back(&sky);
         graph_elements.push_back(&wall);
@@ -77,8 +74,11 @@ Game::Game(
 }
 
 void Game::draw(){
+
+        player.pt_moto->setPos(player.x, player.y, player.direction);
+
         for(std::vector<Drawable *>::iterator it = graph_elements.begin(); it < graph_elements.end();it++)
-                (*it) -> draw();
+                if(*it) (*it) -> draw();
 }
 
 Game::~Game(){
@@ -88,20 +88,22 @@ Game::~Game(){
         for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
                 delete *it;
 
+        delete player.pt_moto;
+
         for(int i=0; i<board_size_x; i++)
                 delete [] presence_matrix[i];
         delete [] presence_matrix;
 }
 
 void Game::activatePerspCam(){
-        player.pt_moto->setPerspCam();
-        pt_cam_persp->activate();
+        setPerspCam();
+        cam_persp.activate();
         resetLight();
 }
 
 void Game::activateOrthoCam(){
-        player.pt_moto->setOrthoCam();
-        pt_cam_ortho->activate();
+        setOrthoCam();
+        cam_ortho.activate();
         resetLight();
 }
 
@@ -111,27 +113,48 @@ void Game::resetLight(){
 }
 
 void Game::zoomOrthoCam(int gradient){
-        pt_cam_ortho -> zoom(gradient);
+        cam_ortho.zoom(gradient);
 }
 
 void Game::motoMov(enum MOV mov){
-        int x=0;
-        bool turn = false;
+        int temp;
         switch(mov){
                 case UP:
-                        x=1;
+                        player.x += SPEED_INCREMENT*player.direction[0];
+                        player.y += SPEED_INCREMENT*player.direction[1];
                         break;
                 case DOWN:
-                        x=-1;
+                        player.x -= SPEED_INCREMENT*player.direction[0];
+                        player.y -= SPEED_INCREMENT*player.direction[1];
                         break;
                 case LEFT:
-                        x = -1;
-                        turn = true;
+                        temp = -player.direction[1];
+                        player.direction[1] = player.direction[0];
+                        player.direction[0] = temp;
                         break;
                 case RIGHT:
-                        x = 1;
-                        turn = true;
+                        temp = player.direction[1];
+                        player.direction[1] = -player.direction[0];
+                        player.direction[0] = temp;
                         break;
         }
-        player.pt_moto->move(x, turn);
+}
+
+void Game::setPerspCam() {
+        cam_persp.set_position(player.x-1*MOTO_SIZE*player.direction[0], player.y-1*MOTO_SIZE*player.direction[1], PERSP_HEIGHT*MOTO_SIZE,
+                        player.x+1.5*MOTO_SIZE*player.direction[0], player.y+1.5*MOTO_SIZE*player.direction[1], MOTO_SIZE,
+                        0, 0, 1);
+        cam_persp.set_view(FOVY, SCREEN_RATIO, 0.05, VIEW_DIST);
+}
+
+void Game::setOrthoCam() {
+        cam_ortho.set_position(player.x, player.y, H_CAM, /*Cam position */
+                        player.x, player.y, 0, /* ref point position */
+                        1, 0, 0); /* up vector */
+        cam_ortho.set_view(-SCREEN_RATIO*PROJ_SIZE, /* left */
+                        SCREEN_RATIO*PROJ_SIZE, /* right */
+                        /* Y */ -PROJ_SIZE, /* Down */
+                        PROJ_SIZE, /* up */
+                        0.5*H_CAM, /* Z near */
+                        1.5*H_CAM); /*Z far */
 }

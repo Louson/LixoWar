@@ -3,8 +3,6 @@
 
 #include <GL/glut.h>
 
-#include "Camera_Persp.h"
-#include "Camera_Ortho.h"
 #include "Drawable.h"
 #include "Wheel.h"
 
@@ -16,13 +14,6 @@
 #define BACK_WHEELS_H_DISTANCE_RATIO    1/2
 #define FRONT_WHEELS_W_DISTANCE_RATIO   1/3
 
-/* projection settings */
-#define VIEW_DIST       200000.0
-#define FOVY            100
-
-#define PROJ_SIZE 50
-#define PERSP_HEIGHT 3
-
 static const GLfloat MotoDiffuse[3] = {0.1, 0.2, 0.4};
 static const GLfloat MotoAmbient[3] = {0.2, 0.2, 0.2};
 static const GLfloat MotoSpecular[3] = {1.0, 0.0, 0.0};
@@ -32,21 +23,12 @@ class Moto : public Drawable{
 public :
 	Moto(GLfloat moto_size);
 	void draw();
-	Camera_Persp * getPtCamPersp();
-	Camera_Ortho * getPtCamOrtho();
-        void move(int dx, bool turn = false);
-  	
-	void setPos(GLfloat x, GLfloat y, int direction[2]);
-
-	void setOrthoCam(void);
-	void setPerspCam(void);
+	void setPos(int _x, int _y, int direction[2]);
 
 private :
 	GLfloat x;
 	GLfloat y;
 	GLfloat direction[2];
-	Camera_Persp cam_persp;
-	Camera_Ortho cam_ortho;
 
 	GLfloat moto_size;
 

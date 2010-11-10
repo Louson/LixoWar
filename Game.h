@@ -22,14 +22,23 @@
 
 #define MIN_SIZE_BOARD 1
 
+#define SPEED_INCREMENT 1
+
+/* projection settings */
+#define VIEW_DIST       200000.0
+#define FOVY            100
+
+#define PROJ_SIZE 50
+#define PERSP_HEIGHT 3
+
+enum MOV{UP, DOWN, LEFT, RIGHT};
+
 typedef struct moto_struct {
         int x;
         int y;
         int direction[2];
         Moto * pt_moto;
 } MOTO_STRUCT;
-
-enum MOV{UP, DOWN, LEFT, RIGHT};
 
 class Game: public Drawable{
     private:
@@ -44,8 +53,8 @@ class Game: public Drawable{
 
         std::vector<Light *> lights;
 
-        Camera_Ortho * pt_cam_ortho;
-        Camera_Persp * pt_cam_persp;
+        Camera_Ortho cam_ortho;
+        Camera_Persp cam_persp;
 	
         std::vector<Moto*> tab_motos;
         
@@ -57,6 +66,8 @@ class Game: public Drawable{
         std::vector<Drawable*> graph_elements;
 
         void resetLight(void);
+        void setOrthoCam(void);
+        void setPerspCam(void);
 
     public:
         class ExceptionWrongBoardSize:public std::exception{};
