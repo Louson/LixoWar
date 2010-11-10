@@ -35,7 +35,11 @@ public :
 	Camera_Persp * getPtCamPersp();
 	Camera_Ortho * getPtCamOrtho();
         void move(int dx, bool turn = false);
-        void setOrthoCam(void);
+  	
+	void setPos(GLfloat x, GLfloat y, int direction[2]);
+
+
+	void setOrthoCam(void);
 	void setPerspCam(void);
 
 private :
@@ -52,5 +56,4 @@ private :
 	Wheel wheelSE;
 	Wheel wheelSW;
 };
-
 #endif
