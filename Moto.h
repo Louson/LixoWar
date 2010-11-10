@@ -15,6 +15,7 @@
 #define FRONT_WHEELS_H_DISTANCE_RATIO   1/4
 #define BACK_WHEELS_H_DISTANCE_RATIO    1/2
 #define FRONT_WHEELS_W_DISTANCE_RATIO   1/3
+
 /* projection settings */
 #define VIEW_DIST       200000.0
 #define FOVY            100

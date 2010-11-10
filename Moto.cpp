@@ -24,6 +24,7 @@ Moto::Moto(GLfloat start_x, GLfloat start_y, GLfloat start_d[2], GLfloat _moto_s
 }
 
 void Moto::draw() {
+
         glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, MotoAmbient);
         glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MotoDiffuse);
         glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, MotoSpecular);
@@ -63,7 +64,7 @@ void Moto::draw() {
         glTranslatef(x-moto_size*direction[0], y-moto_size*direction[1], 0);
         glRotatef(90, -direction[1], direction[0], 0);
         glutWireCone(moto_size/3, moto_size*2, 20, 30);
-        glPopMatrix();
+        glPopMatrix(); 
 }
 
 void Moto::setPerspCam() {
@@ -76,7 +77,7 @@ void Moto::setPerspCam() {
 void Moto::setOrthoCam() {
         cam_ortho.set_position(x, y, H_CAM, /*Cam position */
                         x, y, 0, /* ref point position */
-                        direction[0], direction[1], 0); /* up vector */
+                        1, 0, 0); /* up vector */
         cam_ortho.set_view(-SCREEN_RATIO*PROJ_SIZE, /* left */
                         SCREEN_RATIO*PROJ_SIZE, /* right */
                         /* Y */ -PROJ_SIZE, /* Down */
