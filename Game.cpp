@@ -37,6 +37,8 @@ Game::Game(
         if(board_size_x < MIN_SIZE_BOARD || board_size_y < MIN_SIZE_BOARD)
                 throw ExceptionWrongBoardSize(); 
 
+        action = -1;
+
         /* motos */
         player.x = player.y = 0;
         player.angle = 0;
@@ -79,6 +81,30 @@ void Game::draw(){
 
         for(std::vector<Drawable *>::iterator it = graph_elements.begin(); it < graph_elements.end();it++)
                 if(*it) (*it) -> draw();
+
+        switch(action){
+                case -1:
+                        /* no action to do */
+                        break;
+                case 0:
+                        if(player.angle % 90 != 0){
+                                player.angle = (player.angle + 10) % 360;
+                                usleep(ACTION_SLOWDOWN);
+                                glutPostRedisplay();
+                        }else
+                                action = -1;
+                        break;
+                case 1:
+                        if(player.angle % 90 != 0){
+                                player.angle = (player.angle + 350) % 360;
+                                usleep(ACTION_SLOWDOWN);
+                                glutPostRedisplay();
+                        }else
+                                action = -1;
+                        break;
+                default:
+                        break;
+        }
 }
 
 Game::~Game(){
@@ -129,10 +155,12 @@ void Game::motoMov(enum MOV mov){
                         player.y -= SPEED_INCREMENT*((int) sin(player.angle*M_PI/180));
                         break;
                 case LEFT:
-                        player.angle = (player.angle + 90) % 360;
+                        player.angle = (player.angle + 10) % 360;
+                        action = 0;
                         break;
                 case RIGHT:
-                        player.angle = (player.angle + 270) % 360;
+                        player.angle = (player.angle + 350) % 360;
+                        action = 1;
                         break;
         }
 }
@@ -144,7 +172,7 @@ void Game::setPerspCam() {
                         player.y-MOTO_COEF*moto_size*sin(player.angle*M_PI/180), 
                         PERSP_HEIGHT*moto_size,
                         /* ref point */
-                         player.x,//+4*MOTO_COEF*moto_size*cos(player.angle*M_PI/180), 
+                        player.x,//+4*MOTO_COEF*moto_size*cos(player.angle*M_PI/180), 
                         player.y,//+4*MOTO_COEF*moto_size*sin(player.angle*M_PI/180), 
                         REF_HEIGHT*moto_size,
                         /* up vector */

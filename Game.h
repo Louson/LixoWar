@@ -24,6 +24,7 @@
 
 #define SPEED_INCREMENT 1
 
+#define ACTION_SLOWDOWN 1000
 
 /* cameras settings */
 #define VIEW_DIST               200000.0
@@ -72,6 +73,8 @@ class Game: public Drawable{
         void setOrthoCam(void);
         void setPerspCam(void);
 
+        int action; 
+        
     public:
         class ExceptionWrongBoardSize:public std::exception{};
         Game(int _opponent_number,
