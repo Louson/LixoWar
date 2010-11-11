@@ -83,24 +83,24 @@ void Game::draw(){
                 if(*it) (*it) -> draw();
 
         switch(action){
-                case -1:
+                case NOTHING:
                         /* no action to do */
                         break;
-                case 0:
+                case TURN_LEFT:
                         if(player.angle % 90 != 0){
                                 player.angle = (player.angle + ROTATION_INCREMENT) % 360;
                                 usleep(ACTION_SLOWDOWN);
                                 glutPostRedisplay();
                         }else
-                                action = -1;
+                                action = NOTHING;
                         break;
-                case 1:
+                case TURN_RIGHT:
                         if(player.angle % 90 != 0){
                                 player.angle = (player.angle + 360 - ROTATION_INCREMENT) % 360;
                                 usleep(ACTION_SLOWDOWN);
                                 glutPostRedisplay();
                         }else
-                                action = -1;
+                                action = NOTHING;
                         break;
                 default:
                         break;
@@ -156,11 +156,11 @@ void Game::motoMov(enum MOV mov){
                         break;
                 case LEFT:
                         player.angle = (player.angle + ROTATION_INCREMENT) % 360;
-                        action = 0;
+                        action = TURN_LEFT;
                         break;
                 case RIGHT:
                         player.angle = (player.angle + 360 - ROTATION_INCREMENT) % 360;
-                        action = 1;
+                        action = TURN_RIGHT;
                         break;
         }
 }

@@ -34,7 +34,9 @@
 #define REF_HEIGHT              2 
 #define PROJ_SIZE               50
 
-enum MOV{UP, DOWN, LEFT, RIGHT};
+enum MOV {UP, DOWN, LEFT, RIGHT};
+
+enum ACTIONS {NOTHING=-1, TURN_RIGHT, TURN_LEFT};
 
 typedef struct moto_struct {
         int x;
@@ -42,6 +44,14 @@ typedef struct moto_struct {
         int angle;
         Moto * pt_moto;
 } MOTO_STRUCT;
+
+typedef struct light {
+        GLfloat location[3]; 
+        GLfloat diffuse[4];
+        GLfloat ambient[4];
+        GLfloat specular[4]; 
+        GLfloat direction[3];
+} LIGHT;
 
 class Game: public Drawable{
     private:
