@@ -24,8 +24,8 @@
 
 #define SPEED_INCREMENT 1
 
-#define ACTION_SLOWDOWN 1000
-
+#define ACTION_SLOWDOWN         100
+#define ROTATION_INCREMENT      2
 /* cameras settings */
 #define VIEW_DIST               200000.0
 #define FOVY                    100

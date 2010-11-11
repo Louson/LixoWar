@@ -88,7 +88,7 @@ void Game::draw(){
                         break;
                 case 0:
                         if(player.angle % 90 != 0){
-                                player.angle = (player.angle + 10) % 360;
+                                player.angle = (player.angle + ROTATION_INCREMENT) % 360;
                                 usleep(ACTION_SLOWDOWN);
                                 glutPostRedisplay();
                         }else
@@ -96,7 +96,7 @@ void Game::draw(){
                         break;
                 case 1:
                         if(player.angle % 90 != 0){
-                                player.angle = (player.angle + 350) % 360;
+                                player.angle = (player.angle + 360 - ROTATION_INCREMENT) % 360;
                                 usleep(ACTION_SLOWDOWN);
                                 glutPostRedisplay();
                         }else
@@ -155,11 +155,11 @@ void Game::motoMov(enum MOV mov){
                         player.y -= SPEED_INCREMENT*((int) sin(player.angle*M_PI/180));
                         break;
                 case LEFT:
-                        player.angle = (player.angle + 10) % 360;
+                        player.angle = (player.angle + ROTATION_INCREMENT) % 360;
                         action = 0;
                         break;
                 case RIGHT:
-                        player.angle = (player.angle + 350) % 360;
+                        player.angle = (player.angle + 360 - ROTATION_INCREMENT) % 360;
                         action = 1;
                         break;
         }
