@@ -3,6 +3,14 @@
 
 #include <GL/glut.h>
 
+typedef struct light {
+        GLfloat location[3]; 
+        GLfloat diffuse[4];
+        GLfloat ambient[4];
+        GLfloat specular[4]; 
+        GLfloat direction[3];
+} LIGHT;
+
 class Light {
     protected :
         GLenum N_LIGHT;

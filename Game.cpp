@@ -148,6 +148,8 @@ void Game::zoomOrthoCam(int gradient){
 void Game::motoMov(enum MOV mov){
         /* the comportement of negative modulo is undefined !!! */
         /* the cast is here to prevent overflow */
+	Beam *beam = new Beam(player);
+
         switch(mov){
 	case UP:
 		player.x += SPEED_INCREMENT*((int) cos(((float)player.angle)*M_PI/180.0));

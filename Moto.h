@@ -29,7 +29,7 @@ private :
 	GLfloat x;
 	GLfloat y;
 
-    GLint angle;
+	GLint angle;
 
 	GLfloat moto_size;
 
@@ -38,4 +38,12 @@ private :
 	Wheel wheelSE;
 	Wheel wheelSW;
 };
+
+typedef struct moto_struct {
+        int x;
+        int y;
+        int angle;
+        Moto * pt_moto;
+} MOTO_STRUCT;
+
 #endif

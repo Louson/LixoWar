@@ -25,6 +25,14 @@ GLfloat shininess_P3 = 20;
 
 Beam::Beam() {}
 
+Beam::Beam(MOTO_STRUCT moto) :
+	x(moto.x), y(moto.y) {
+	ante_dir[0] = cos(((float)moto.angle)*M_PI/180.0);
+	ante_dir[1] = sin(((float)moto.angle)*M_PI/180.0);
+	post_dir[0] = cos(((float)moto.angle)*M_PI/180.0);
+	post_dir[1] = sin(((float)moto.angle)*M_PI/180.0);
+}
+
 Beam::Beam(GLfloat _x, GLfloat _y, GLfloat _ante_angle, GLfloat _post_angle, GLint _num_moto) :
 	x(_x), y(_y) {
 	ante_dir[0] = cos(((float)_ante_angle)*M_PI/180.0);

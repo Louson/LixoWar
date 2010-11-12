@@ -2,6 +2,7 @@
 #define  _BEAM_H
 
 #include <GL/glut.h>
+#include "Moto.h"
 #include "Drawable.h"
 #include "Color.h"
 
@@ -10,6 +11,7 @@
 class Beam : public Drawable {
 public :
 	Beam();
+	Beam(MOTO_STRUCT moto);
 	Beam(GLfloat _x, GLfloat _y, GLfloat _ante_angle, GLfloat _post_angle, GLint _num_moto);
 	void draw();
 private:
