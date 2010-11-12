@@ -21,6 +21,8 @@ void Moto::setPos(int _x, int _y, int _angle){
 }
 
 void Moto::draw() {
+	glMatrixMode(GL_MODELVIEW);
+        
         GLfloat val_sin = sin(angle*M_PI/180);
         GLfloat val_cos = cos(angle*M_PI/180);
 

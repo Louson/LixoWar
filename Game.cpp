@@ -63,15 +63,30 @@ Game::Game(
                         presence_matrix[i][j] = false;
 
         /* light */
-        GLfloat L_Location[3] = {_board_size_x/2.0, _board_size_y/2.0, (_board_size_x+_board_size_y)/4.0};
-        GLfloat L_Diffuse[4] = L_DIFFUSE;
-        GLfloat L_Ambient[4] = L_AMBIENT;
-        GLfloat L_Specular[4] = L_SPECULAR;
-        GLfloat L_Direction[3] = {-_board_size_x/2.0, -_board_size_y/2.0, -(_board_size_x+_board_size_y)/4.0};;
-        lights.push_back(new Spot(GL_LIGHT0, L_Location,
-                                L_Diffuse, L_Ambient, L_Specular,
-                                L_Direction, L_EXPONENT, L_CUTOFF));
-
+        LIGHT spot_sky;
+        spot_sky.location[0] = _board_size_x/2.0;
+        spot_sky.location[1] = _board_size_y/2.0;
+        spot_sky.location[2] = (_board_size_x+_board_size_y)/4.0;
+        
+        spot_sky.diffuse[0] = 1.0;
+        spot_sky.diffuse[1] = 1.0;
+        spot_sky.diffuse[2] = 1.0;
+        
+        spot_sky.ambient[0] = 0.01;
+        spot_sky.ambient[1] = 0.01;
+        spot_sky.ambient[2] = 0.01;
+        
+        spot_sky.specular[0] = 1.0;
+        spot_sky.specular[1] = 1.0;
+        spot_sky.specular[2] = 1.0;
+        
+        spot_sky.direction[0] = -_board_size_x/2.0;
+        spot_sky.direction[1] = -_board_size_y/2.0;
+        spot_sky.direction[2] = -(_board_size_x+_board_size_y)/4.0;
+        
+        spot_sky.diffuse[3] = spot_sky.ambient[3] = spot_sky.specular[3] = 1.0;
+        
+       lights.push_back(new Spot(&spot_sky, L_EXPONENT, L_CUTOFF));
         resetLight();
 }
 
@@ -177,8 +192,8 @@ void Game::setPerspCam() {
                         player.y-MOTO_COEF*moto_size*sin(player.angle*M_PI/180), 
                         PERSP_HEIGHT*moto_size,
                         /* ref point */
-                        player.x,//+4*MOTO_COEF*moto_size*cos(player.angle*M_PI/180), 
-                        player.y,//+4*MOTO_COEF*moto_size*sin(player.angle*M_PI/180), 
+                        player.x,
+                        player.y,
                         REF_HEIGHT*moto_size,
                         /* up vector */
                         0, 0, 1);

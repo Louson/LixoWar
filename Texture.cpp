@@ -47,7 +47,6 @@ void Texture::readPPM(const char* _path) {
     /* lecture of magic number */
     fread(magic, 2, sizeof(char), fp);
     magic[2]='\0';
-    cout << "magic = " << magic << endl;
     if ( magic[0] != 'P' || magic[1] != '6') {
         throw invalid_argument("Texture image isn't .ppm");
     }
@@ -58,7 +57,6 @@ void Texture::readPPM(const char* _path) {
     while(i < 3) {
         fgets(buff, 100, fp);
         if (buff[0] == '#') continue;
-        //cout << i<<endl;
         switch(i) {
             case 0 :
                 i += sscanf(buff, "%d %d %d",
@@ -72,12 +70,10 @@ void Texture::readPPM(const char* _path) {
                 i += sscanf(buff, "%d", &max_color_value);
                 break;
             default :
-                cout<<i<<"default"<<endl;
                 i=3;
                 break;
         }
     }
-    cout<<"width="<<width<<", height="<<height<<", col="<<max_color_value<<endl;
 
     if (width<0) {
         throw invalid_argument("Texture's image is width negative");

@@ -12,13 +12,16 @@ typedef struct light {
 } LIGHT;
 
 class Light {
-    protected :
-        GLenum N_LIGHT;
-        GLfloat Color_Diffuse[4];
-        GLfloat Color_Ambient[4];
-        GLfloat Color_Specular[4];
-    public:
-        virtual void init() = 0;
+        private:
+                static int light_number;
+                void setLight(void);
+        protected :
+                int light;
+                GLfloat diffuse[4];
+                GLfloat ambient[4];
+                GLfloat specular[4];
+        public:
+                Light();
+                virtual void init() = 0;
 };
-
 #endif
