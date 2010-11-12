@@ -8,7 +8,7 @@ using namespace std;
 class Texture {
 public:
 	Texture(const char* _path);
-    ~Texture();
+	~Texture();
 	void readPPM(const char* path);
 	void activate();
     void disable();

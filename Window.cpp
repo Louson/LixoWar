@@ -96,6 +96,10 @@ void Window::init(){
     glShadeModel(GL_SMOOTH);
     glEnable(GL_LIGHTING);
 
+    /* Transparency */
+//     glEnable(GL_BLEND);
+//     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     /**
      * Graphics settings
      */

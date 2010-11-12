@@ -74,6 +74,8 @@ class Game: public Drawable{
 
         MOTO_STRUCT player;
 
+	std::vector<Beam *> beams;
+
         /* Board object presence matrix */
         bool ** presence_matrix;
 

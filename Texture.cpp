@@ -8,6 +8,10 @@ Texture::Texture(const char* _path) {
     readPPM(_path);
 }
 
+Texture::~Texture(){
+    delete image;
+}
+
 void Texture::disable() {
     glDisable(GL_TEXTURE_2D);
 }
@@ -95,8 +99,4 @@ void Texture::readPPM(const char* _path) {
     fread(image, width*height*3, sizeof(char), fp);
 
     fclose(fp);	
-}
-
-Texture::~Texture(){
-    delete image;
 }

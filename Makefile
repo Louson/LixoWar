@@ -20,8 +20,7 @@ Moto.o\
 Wheel.o\
 Game.o\
 Color.o\
-Beam.o\
-PtBeam.o
+Beam.o
 
 all: $(PROJECT_NAME)
 

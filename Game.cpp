@@ -114,6 +114,9 @@ Game::~Game(){
         for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
                 delete *it;
 
+        for(std::vector<Beam*>::iterator it = beams.begin();it<beams.end();it++)
+                delete *it;
+
         delete player.pt_moto;
 
         for(int i=0; i<board_size_x; i++)
@@ -146,22 +149,22 @@ void Game::motoMov(enum MOV mov){
         /* the comportement of negative modulo is undefined !!! */
         /* the cast is here to prevent overflow */
         switch(mov){
-                case UP:
-                        player.x += SPEED_INCREMENT*((int) cos(((float)player.angle)*M_PI/180.0));
-                        player.y += SPEED_INCREMENT*((int) sin(((float)player.angle)*M_PI/180.0));
-                        break;
-                case DOWN:
-                        player.x -= SPEED_INCREMENT*((int) cos(player.angle*M_PI/180));
-                        player.y -= SPEED_INCREMENT*((int) sin(player.angle*M_PI/180));
-                        break;
-                case LEFT:
-                        player.angle = (player.angle + ROTATION_INCREMENT) % 360;
-                        action = TURN_LEFT;
-                        break;
-                case RIGHT:
-                        player.angle = (player.angle + 360 - ROTATION_INCREMENT) % 360;
-                        action = TURN_RIGHT;
-                        break;
+	case UP:
+		player.x += SPEED_INCREMENT*((int) cos(((float)player.angle)*M_PI/180.0));
+		player.y += SPEED_INCREMENT*((int) sin(((float)player.angle)*M_PI/180.0));
+		break;
+	case DOWN:
+		player.x -= SPEED_INCREMENT*((int) cos(player.angle*M_PI/180));
+		player.y -= SPEED_INCREMENT*((int) sin(player.angle*M_PI/180));
+		break;
+	case LEFT:
+		player.angle = (player.angle + ROTATION_INCREMENT) % 360;
+		action = TURN_LEFT;
+		break;
+	case RIGHT:
+		player.angle = (player.angle + 360 - ROTATION_INCREMENT) % 360;
+		action = TURN_RIGHT;
+		break;
         }
 }
 

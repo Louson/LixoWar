@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 
 #include "Beam.h"
 
@@ -24,12 +25,12 @@ GLfloat shininess_P3 = 20;
 
 Beam::Beam() {}
 
-Beam::Beam(GLfloat _x, GLfloat _y, GLfloat _ante_dir[2], GLfloat _post_dir[2], GLint _num_moto) :
+Beam::Beam(GLfloat _x, GLfloat _y, GLfloat _ante_angle, GLfloat _post_angle, GLint _num_moto) :
 	x(_x), y(_y) {
-	for (int i=0 ; i<2 ; i++) {
-		ante_dir[i] = _ante_dir[i];
-		post_dir[i] = _post_dir[i];
-	}
+	ante_dir[0] = cos(((float)_ante_angle)*M_PI/180.0);
+	ante_dir[1] = sin(((float)_ante_angle)*M_PI/180.0);
+	post_dir[0] = cos(((float)_post_angle)*M_PI/180.0);
+	post_dir[1] = sin(((float)_post_angle)*M_PI/180.0);
 
 	switch (_num_moto) {
 	case 1 :
