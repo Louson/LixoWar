@@ -70,12 +70,14 @@ void Board::draw() {
 				sideColor.active();
 				glPointSize(1.0);
 				glBegin(GL_QUADS);
+				glNormal3f(-1.0, 0.0, 0.0);
 				glVertex3f(linev/side_x-1, v[0][1]+j*s_y, 0.0);
 				glVertex3f(linev/side_x-1, v[0][1]+(j+1)*s_y, 0.0);
 				glVertex3f(linev/side_x-1, v[0][1]+(j+1)*s_y, B_DEPTH);
 				glVertex3f(linev/side_x-1, v[0][1]+j*s_y, B_DEPTH);
 				glEnd();
 				glBegin(GL_QUADS);
+				glNormal3f(1.0, 0.0, 0.0);
 				glVertex3f(linev/side_x+1, v[0][1]+j*s_y, 0.0);
 				glVertex3f(linev/side_x+1, v[0][1]+(j+1)*s_y, 0.0);
 				glVertex3f(linev/side_x+1, v[0][1]+(j+1)*s_y, B_DEPTH);
@@ -83,6 +85,7 @@ void Board::draw() {
 				glEnd();
 				lineColor.active();
 				glBegin(GL_QUADS);
+				glNormal3f(0.0, 0.0, 1.0);
 				glVertex3f(linev/side_x-1, v[0][1]+j*s_y, 0.0);
 				glVertex3f(linev/side_x-1, v[0][1]+(j+1)*s_y, 0.0);
 				glVertex3f(linev/side_x+1, v[0][1]+(j+1)*s_y, 0.0);
@@ -96,12 +99,14 @@ void Board::draw() {
 			/* Lignes // (Ox) */
 			sideColor.active();
 			glBegin(GL_QUADS);
+			glNormal3f(0.0, -1.0, 0.0);
 			glVertex3f(v[0][0]+1-i*s_x, lineh/side_y-1, 0.0);
 			glVertex3f(v[0][0]-1-(i+1)*s_x, lineh/side_y-1, 0.0);
 			glVertex3f(v[0][0]-1-(i+1)*s_x, lineh/side_y-1, B_DEPTH);
 			glVertex3f(v[0][0]+1-i*s_x, lineh/side_y-1, B_DEPTH);
 			glEnd();
 			glBegin(GL_QUADS);
+			glNormal3f(0.0, 1.0, 0.0);
 			glVertex3f(v[0][0]+1-i*s_x, lineh/side_y+1, 0.0);
 			glVertex3f(v[0][0]-1-(i+1)*s_x, lineh/side_y+1, 0.0);
 			glVertex3f(v[0][0]-1-(i+1)*s_x, lineh/side_y+1, B_DEPTH);
@@ -109,6 +114,7 @@ void Board::draw() {
 			glEnd();
 			lineColor.active();
 			glBegin(GL_QUADS);
+			glNormal3f(0.0, 0.0, 1.0);
 			glVertex3f(v[0][0]+1-i*s_x, lineh/side_y-1, 0.0);
 			glVertex3f(v[0][0]-1-(i+1)*s_x, lineh/side_y-1, 0.0);
 			glVertex3f(v[0][0]-1-(i+1)*s_x, lineh/side_y+1, 0.0);
@@ -133,7 +139,7 @@ void Board::draw() {
 		for (int j=0; j<quality_y; j++) {
 			boardColor.active();
 			glBegin(GL_QUADS);
-			glNormal3fv(n);
+			glNormal3f(0.0, 0.0, 1.0);
 			glVertex3f(v[3][0]+i*s_x, v[3][1]+j*s_y, B_DEPTH);
 			glVertex3f(v[3][0]+(i+1)*s_x, v[3][1]+j*s_y, B_DEPTH);
 			glVertex3f(v[3][0]+(i+1)*s_x, v[3][1]+(j+1)*s_y, B_DEPTH);
