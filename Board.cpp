@@ -29,28 +29,6 @@ const GLfloat LineShininess = 20;
 /**
  * Constructeurs
  */
-//Board::Board(GLfloat x, GLfloat y,
-//	     GLfloat d_line_x, GLfloat d_line_y):
-//boardColor(BoardEmission, BoardAmbient, BoardDiffuse, BoardSpecular, BoardShininess),
-//	sideColor(SideEmission, SideAmbient, SideDiffuse, SideSpecular, SideShininess),
-//	lineColor(LineEmission, LineAmbient, LineDiffuse, LineSpecular, LineShininess)
-//{
-//
-//cout << "asdf"<<endl;
-//	if (x < 2*d_line_x || y < 2*d_line_y) {
-//		throw(range_error("Dimensions insuffisantes"));
-//	}
-//	side_x = x;
-//	side_y = y;
-//	d_lines_x = d_line_x;
-//	d_lines_y = d_line_y;
-//	set_normal(0, 0, 1);
-//	set_vertex(0,  x/2, -y/2, 0);
-//	set_vertex(1,  x/2,  y/2, 0);
-//	set_vertex(2, -x/2,  y/2, 0);
-//	set_vertex(3, -x/2, -y/2, 0);
-//}
-
 Board::Board(GLfloat x, GLfloat y,
 	     GLfloat q_x, GLfloat q_y,
 	     GLfloat d_line_x, GLfloat d_line_y):
@@ -110,28 +88,28 @@ void Board::draw() {
   		glVertex3f(linev/side_x+1, v[0][1], 0.0);
  		glEnd();
 	}
-	for (int i=d_lines_y ; i<=side_y-d_lines_y ; i+=d_lines_y) {
+	for (int i=0 ; i<=side_y ; i+=d_lines_y) {
 		lineh = i*v[0][1]+(side_y-i)*v[1][1];
 		/* Lignes // (Ox) */
 	sideColor.active();
 		glBegin(GL_QUADS);
-		glVertex3f(v[0][0], lineh/side_y-1, 0.0);
-		glVertex3f(v[3][0], lineh/side_y-1, 0.0);
-		glVertex3f(v[3][0], lineh/side_y-1, B_DEPTH);
-		glVertex3f(v[0][0], lineh/side_y-1, B_DEPTH);
+		glVertex3f(v[0][0]+1, lineh/side_y-1, 0.0);
+		glVertex3f(v[3][0]-1, lineh/side_y-1, 0.0);
+		glVertex3f(v[3][0]-1, lineh/side_y-1, B_DEPTH);
+		glVertex3f(v[0][0]+1, lineh/side_y-1, B_DEPTH);
 		glEnd();
 		glBegin(GL_QUADS);
-		glVertex3f(v[0][0], lineh/side_y+1, 0.0);
-		glVertex3f(v[3][0], lineh/side_y+1, 0.0);
-		glVertex3f(v[3][0], lineh/side_y+1, B_DEPTH);
-		glVertex3f(v[0][0], lineh/side_y+1, B_DEPTH);
+		glVertex3f(v[0][0]+1, lineh/side_y+1, 0.0);
+		glVertex3f(v[3][0]-1, lineh/side_y+1, 0.0);
+		glVertex3f(v[3][0]-1, lineh/side_y+1, B_DEPTH);
+		glVertex3f(v[0][0]+1, lineh/side_y+1, B_DEPTH);
 		glEnd();
 	lineColor.active();
 		glBegin(GL_QUADS);
-		glVertex3f(v[0][0], lineh/side_y-1, 0.0);
-		glVertex3f(v[3][0], lineh/side_y-1, 0.0);
-		glVertex3f(v[3][0], lineh/side_y+1, 0.0);
-		glVertex3f(v[0][0], lineh/side_y+1, 0.0);
+		glVertex3f(v[0][0]+1, lineh/side_y-1, 0.0);
+		glVertex3f(v[3][0]-1, lineh/side_y-1, 0.0);
+		glVertex3f(v[3][0]-1, lineh/side_y+1, 0.0);
+		glVertex3f(v[0][0]+1, lineh/side_y+1, 0.0);
 		glEnd();
 		glPointSize(1.0);
 	}
