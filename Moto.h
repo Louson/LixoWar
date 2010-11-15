@@ -37,9 +37,10 @@ private :
 };
 
 typedef struct moto_struct {
-        int x;
-        int y;
+        double x;
+        double y;
         int angle;
+        float speed;
         Moto * pt_moto;
 } MOTO_STRUCT;
 

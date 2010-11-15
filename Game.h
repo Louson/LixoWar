@@ -23,7 +23,7 @@
 
 #define MIN_SIZE_BOARD  1
 
-#define SPEED_INCREMENT 1
+#define SPEED_INCREMENT 0.01
 
 #define ACTION_SLOWDOWN         0
 #define ROTATION_INCREMENT      2

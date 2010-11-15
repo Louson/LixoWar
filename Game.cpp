@@ -44,6 +44,7 @@ Game::Game(
         /* motos */
         player.x = player.y = 0;
         player.angle = 0;
+        player.speed = 0;
         player.pt_moto = new Moto(_moto_size);
 
         /* drawing elements */
@@ -112,7 +113,10 @@ Game::Game(
 }
 
 void Game::draw(){
-
+ 
+        player.x += player.speed*((int) cos(((float)player.angle)*M_PI/180.0));
+        player.y += player.speed*((int) sin(((float)player.angle)*M_PI/180.0));
+        
         player.pt_moto->setPos(player.x, player.y, player.angle);
 
         for(std::vector<Drawable *>::iterator it = graph_elements.begin(); it < graph_elements.end();it++)
@@ -134,13 +138,13 @@ void Game::draw(){
                         if(player.angle % 90 != 0){
                                 player.angle = (player.angle + 360 - ROTATION_INCREMENT) % 360;
                                 usleep(ACTION_SLOWDOWN);
-                                glutPostRedisplay();
                         }else
                                 action = NOTHING;
                         break;
                 default:
                         break;
         }
+                                glutPostRedisplay();
 }
 
 Game::~Game(){
@@ -184,15 +188,13 @@ void Game::zoomOrthoCam(int gradient){
 void Game::motoMov(enum MOV mov){
         /* the comportement of negative modulo is undefined !!! */
         /* the cast is here to prevent overflow */
-
+        
         switch(mov){
                 case UP:
-                        player.x += SPEED_INCREMENT*((int) cos(((float)player.angle)*M_PI/180.0));
-                        player.y += SPEED_INCREMENT*((int) sin(((float)player.angle)*M_PI/180.0));
+                        player.speed += SPEED_INCREMENT;
                         break;
                 case DOWN:
-                        player.x -= SPEED_INCREMENT*((int) cos(player.angle*M_PI/180));
-                        player.y -= SPEED_INCREMENT*((int) sin(player.angle*M_PI/180));
+                        player.speed -= SPEED_INCREMENT;
                         break;
                 case LEFT:
                         player.angle = (player.angle + ROTATION_INCREMENT) % 360;
