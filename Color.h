@@ -5,15 +5,14 @@
 
 class Color {
 public :
-	Color();
-	Color(GLfloat _emission[4], GLfloat _ambient[4], GLfloat _diffuse[4],
-	      GLfloat _specular[4],GLfloat _shininess);
+	Color(const GLfloat _emission[4], const GLfloat _ambient[4], const GLfloat _diffuse[4],
+	      const GLfloat _specular[4], const GLfloat _shininess);
 	void active();
 private :
-	GLfloat emission[3];
-	GLfloat ambient[3];
-	GLfloat diffuse[3];
-	GLfloat specular[3];
+	GLfloat emission[4];
+	GLfloat ambient[4];
+	GLfloat diffuse[4];
+	GLfloat specular[4];
 	GLfloat shininess;
 	GLenum type;
 };

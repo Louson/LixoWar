@@ -5,32 +5,35 @@
 
 using namespace std;
 
-GLfloat emission_P1[4] = {0.3, 0.0, 0.0, 0.5};
-GLfloat ambient_P1[4] = {0.0, 0.0, 0.0, 0.0};
-GLfloat diffuse_P1[4]= {0.0, 0.0, 0.0, 0.0};
-GLfloat specular_P1[4]= {0.0, 0.0, 0.0, 0.0};
-GLfloat shininess_P1 = 20;
+const GLfloat emission_P1[4] = {0.3, 0.0, 0.0, 0.5};
+const GLfloat ambient_P1[4] = {0.0, 0.0, 0.0, 0.0};
+const GLfloat diffuse_P1[4]= {0.0, 0.0, 0.0, 0.0};
+const GLfloat specular_P1[4]= {0.0, 0.0, 0.0, 0.0};
+const GLfloat shininess_P1 = 20;
 
-GLfloat emission_P2[4]= {0.0, 0.0, 0.0, 0.0};
-GLfloat ambient_P2[4]= {0.0, 0.0, 0.0, 0.0};
-GLfloat diffuse_P2[4]= {0.0, 0.0, 0.0, 0.0};
-GLfloat specular_P2[4]= {0.0, 0.0, 0.0, 0.0};
-GLfloat shininess_P2 = 20;
+const GLfloat emission_P2[4]= {0.0, 0.0, 0.0, 0.0};
+const GLfloat ambient_P2[4]= {0.0, 0.0, 0.0, 0.0};
+const GLfloat diffuse_P2[4]= {0.0, 0.0, 0.0, 0.0};
+const GLfloat specular_P2[4]= {0.0, 0.0, 0.0, 0.0};
+const GLfloat shininess_P2 = 20;
 
-GLfloat emission_P3[4]= {0.0, 0.0, 0.0, 0.0};
-GLfloat ambient_P3[4]= {0.0, 0.0, 0.0, 0.0};
-GLfloat diffuse_P3[4]= {0.0, 0.0, 0.0, 0.0};
-GLfloat specular_P3[4]= {0.0, 0.0, 0.0, 0.0};
-GLfloat shininess_P3 = 20;
-
-Beam::Beam() {}
+const GLfloat emission_P3[4]= {0.0, 0.0, 0.0, 0.0};
+const GLfloat ambient_P3[4]= {0.0, 0.0, 0.0, 0.0};
+const GLfloat diffuse_P3[4]= {0.0, 0.0, 0.0, 0.0};
+const GLfloat specular_P3[4]= {0.0, 0.0, 0.0, 0.0};
+const GLfloat shininess_P3 = 20;
 
 Beam::Beam(MOTO_STRUCT moto) :
-	x(moto.x), y(moto.y) {
+	x(moto.x), y(moto.y)
+{
 	ante_dir[0] = cos(((float)moto.angle)*M_PI/180.0);
 	ante_dir[1] = sin(((float)moto.angle)*M_PI/180.0);
 	post_dir[0] = cos(((float)moto.angle)*M_PI/180.0);
 	post_dir[1] = sin(((float)moto.angle)*M_PI/180.0);
+}
+
+Beam::~Beam(){
+        delete color;
 }
 
 Beam::Beam(GLfloat _x, GLfloat _y, GLfloat _ante_angle, GLfloat _post_angle, GLint _num_moto) :
@@ -42,7 +45,7 @@ Beam::Beam(GLfloat _x, GLfloat _y, GLfloat _ante_angle, GLfloat _post_angle, GLi
 
 	switch (_num_moto) {
 	case 1 :
-		color = Color(emission_P1, ambient_P1, diffuse_P1, specular_P1, shininess_P1);
+		color = new Color(emission_P1, ambient_P1, diffuse_P1, specular_P1, shininess_P1);
 		break;
 	case 2 :
 		break;
@@ -56,7 +59,7 @@ Beam::Beam(GLfloat _x, GLfloat _y, GLfloat _ante_angle, GLfloat _post_angle, GLi
 void Beam::draw() {
 	GLfloat ante_diff = (ante_dir[0] - ante_dir[1])/2.0;
 	GLfloat post_diff = (post_dir[0] - post_dir[1])/2.0;
-	color.active();
+	color->active();
 	glBegin(GL_QUADS); {
 		glVertex3f(x+ ante_diff, y-ante_diff, 0.0);
 		glVertex3f(x, y, H_BEAM);

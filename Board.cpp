@@ -7,49 +7,57 @@
 
 using namespace std;
 
-GLfloat BoardEmission[4] = {0.0, 0.0, 0.0, 0.0};
-GLfloat BoardDiffuse[4] = {0, 0.3, 0.3, 0.0};
-GLfloat BoardAmbient[4] = {0.3, 0.3, 0.3, 0.0};
-GLfloat BoardSpecular[4] = {0, 0, 0, 0.0};
-GLfloat BoardShininess = 20;
+const GLfloat BoardEmission[] = {0.0, 0.0, 0.0, 1};
+const GLfloat BoardDiffuse[] = {125.0/255, 145.0/255, 0, 1.0};
+const GLfloat BoardAmbient[] = {125.0/255, 145.0/255, 0, 1.0};
+const GLfloat BoardSpecular[] = {0, 0, 0, 1};
+const GLfloat BoardShininess = 20;
 
-GLfloat SideEmission[4] = {0.0, 0.0, 0.0, 0.0};
-GLfloat SideDiffuse[4] = {0, 0, 0.3, 0.0};
-GLfloat SideAmbient[4] = {0.0, 0.0, 0.0, 0.0};
-GLfloat SideSpecular[4] = {0, 0, 0, 0.0};
-GLfloat SideShininess = 20;
+const GLfloat SideEmission[] = {0.0, 0.0, 0.0, 1};
+const GLfloat SideDiffuse[] = {201.0/255, 222.0/255, 85.0/255, 1};
+const GLfloat SideAmbient[] = {201.0/255, 222.0/255, 85.0/255, 1};
+const GLfloat SideSpecular[] = {0, 0, 0, 1};
+const GLfloat SideShininess = 20;
 
-GLfloat LineEmission[4] = {0.0, 0.0, 0.0, 0.0};
-GLfloat LineDiffuse[4] = {0.3, 0.7, 0.7, 0.0};
-GLfloat LineAmbient[4] = {0.0, 0.0, 0.0, 0.0};
-GLfloat LineSpecular[4] = {0, 0, 0, 0.0};
-GLfloat LineShininess = 20;
+const GLfloat LineEmission[4] = {0.0, 0.0, 0.0, 1};
+const GLfloat LineDiffuse[4] = {1, 1, 157.0/255, 1};
+const GLfloat LineAmbient[4] = {1, 1, 157.0/255, 1};
+const GLfloat LineSpecular[4] = {53.0/255, 66.0/255, 66.0/255, 1};
+const GLfloat LineShininess = 20;
 
 
 /**
  * Constructeurs
  */
-Board::Board(GLfloat x, GLfloat y,
-	     GLfloat d_line_x, GLfloat d_line_y) {
-
-	if (x < 2*d_line_x || y < 2*d_line_y) {
-		throw(range_error("Dimensions insuffisantes"));
-	}
-	side_x = x;
-	side_y = y;
-	d_lines_x = d_line_x;
-	d_lines_y = d_line_y;
-	set_normal(0, 0, 1);
-	set_vertex(0,  x/2, -y/2, 0);
-	set_vertex(1,  x/2,  y/2, 0);
-	set_vertex(2, -x/2,  y/2, 0);
-	set_vertex(3, -x/2, -y/2, 0);
-}
+//Board::Board(GLfloat x, GLfloat y,
+//	     GLfloat d_line_x, GLfloat d_line_y):
+//boardColor(BoardEmission, BoardAmbient, BoardDiffuse, BoardSpecular, BoardShininess),
+//	sideColor(SideEmission, SideAmbient, SideDiffuse, SideSpecular, SideShininess),
+//	lineColor(LineEmission, LineAmbient, LineDiffuse, LineSpecular, LineShininess)
+//{
+//
+//cout << "asdf"<<endl;
+//	if (x < 2*d_line_x || y < 2*d_line_y) {
+//		throw(range_error("Dimensions insuffisantes"));
+//	}
+//	side_x = x;
+//	side_y = y;
+//	d_lines_x = d_line_x;
+//	d_lines_y = d_line_y;
+//	set_normal(0, 0, 1);
+//	set_vertex(0,  x/2, -y/2, 0);
+//	set_vertex(1,  x/2,  y/2, 0);
+//	set_vertex(2, -x/2,  y/2, 0);
+//	set_vertex(3, -x/2, -y/2, 0);
+//}
 
 Board::Board(GLfloat x, GLfloat y,
 	     GLfloat q_x, GLfloat q_y,
-	     GLfloat d_line_x, GLfloat d_line_y) {
-
+	     GLfloat d_line_x, GLfloat d_line_y):
+	boardColor(BoardEmission, BoardAmbient, BoardDiffuse, BoardSpecular, BoardShininess),
+	sideColor(SideEmission, SideAmbient, SideDiffuse, SideSpecular, SideShininess),
+	lineColor(LineEmission, LineAmbient, LineDiffuse, LineSpecular, LineShininess)
+{
 	if (x < 2*d_line_x || y < 2*d_line_y) {
 		throw(range_error("Dimensions insuffisantes"));
 	}
@@ -64,9 +72,6 @@ Board::Board(GLfloat x, GLfloat y,
 	set_vertex(1,  x/2,  y/2, 0);
 	set_vertex(2, -x/2,  y/2, 0);
 	set_vertex(3, -x/2, -y/2, 0);
-	boardColor = Color(BoardEmission, BoardAmbient, BoardDiffuse, BoardSpecular, BoardShininess);
-	sideColor = Color(SideEmission, SideAmbient, SideDiffuse, SideSpecular, SideShininess);
-	lineColor = Color(LineEmission, LineAmbient, LineDiffuse, LineSpecular, LineShininess);
 }
 
 /**
@@ -78,16 +83,6 @@ void Board::draw() {
 	GLfloat s_y = side_y/quality_y;
 
 	GLfloat fog_color[4] = {0.70, 0.70, 0.70, 1.0};
-
-	/* Test de sphere */
-// //	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, BoardColor);
-// 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, BoardAmbient);
-// 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, BoardDiffuse);;
-// 	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, BoardSpecular);
-// 	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, BoardShininess);
-// 	glColor3f(1.0, 0, 0);
-//  	gluSphere(gluNewQuadric(), 5000, 32, 32);
-	/******************/
 
 	/* Lines' drawing */
 	for (int i=0 ; i<=side_x ; i+=d_lines_x) {

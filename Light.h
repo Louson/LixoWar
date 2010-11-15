@@ -9,6 +9,10 @@ typedef struct light {
         GLfloat ambient[4];
         GLfloat specular[4]; 
         GLfloat direction[3];
+        
+        GLfloat constant_attenuation;
+        GLfloat linear_attenuation;
+        GLfloat quadratic_attenuation;
 } LIGHT;
 
 class Light {
@@ -21,7 +25,7 @@ class Light {
                 GLfloat ambient[4];
                 GLfloat specular[4];
         public:
-                Light();
+                Light(LIGHT *);
                 virtual void init() = 0;
 };
 #endif

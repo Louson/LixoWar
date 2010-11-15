@@ -1,11 +1,7 @@
 #include "Color.h"
 
-Color::Color() {
-	type = GL_FRONT_AND_BACK;
-}
-
-Color::Color(GLfloat _emission[4], GLfloat _ambient[4], GLfloat _diffuse[4],
-	     GLfloat _specular[4],GLfloat _shininess) : shininess(_shininess) {
+Color::Color(const GLfloat _emission[4], const GLfloat _ambient[4], const GLfloat _diffuse[4],
+	     const GLfloat _specular[4], const GLfloat _shininess) : shininess(_shininess) {
 	type = GL_FRONT_AND_BACK;
 	for (int i=0 ; i<4 ; i++) {
 		emission[i] = _emission[i];

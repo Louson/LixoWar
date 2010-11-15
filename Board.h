@@ -10,23 +10,23 @@
 /**
  * Ambient détermine la couleur qui sera réfléchie
  */
-extern GLfloat BoardEmission[4];
-extern GLfloat BoardDiffuse[4];
-extern GLfloat BoardAmbient[4];
-extern GLfloat BoardSpecular[4];
-extern GLfloat BoardShininess;
-
-extern GLfloat SideEmission[4];
-extern GLfloat SideDiffuse[4];
-extern GLfloat SideAmbient[4];
-extern GLfloat SideSpecular[4];
-extern GLfloat SideShininess;
-
-extern GLfloat LineEmission[4];
-extern GLfloat LineDiffuse[4];
-extern GLfloat LineAmbient[4];
-extern GLfloat LineSpecular[4];
-extern GLfloat LineShininess;
+//extern GLfloat BoardEmission[4];
+//extern GLfloat BoardDiffuse[4];
+//extern GLfloat BoardAmbient[4];
+//extern GLfloat BoardSpecular[4];
+//extern GLfloat BoardShininess;
+//
+//extern GLfloat SideEmission[4];
+//extern GLfloat SideDiffuse[4];
+//extern GLfloat SideAmbient[4];
+//extern GLfloat SideSpecular[4];
+//extern GLfloat SideShininess;
+//
+//extern GLfloat LineEmission[4];
+//extern GLfloat LineDiffuse[4];
+//extern GLfloat LineAmbient[4];
+//extern GLfloat LineSpecular[4];
+//extern GLfloat LineShininess;
 
 
 class Board : public Plan{

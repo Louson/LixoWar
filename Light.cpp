@@ -7,8 +7,11 @@
 
 int Light::light_number = 0;
 
-Light::Light(){
+Light::Light(LIGHT * pt_light){
         setLight();
+        glLightf(light, GL_QUADRATIC_ATTENUATION, pt_light->quadratic_attenuation);
+        glLightf(light, GL_LINEAR_ATTENUATION, pt_light->linear_attenuation);
+        glLightf(light, GL_CONSTANT_ATTENUATION, pt_light->constant_attenuation);
 }
 
 void Light::setLight(void){

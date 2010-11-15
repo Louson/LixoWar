@@ -1,6 +1,8 @@
 #include "Located_Light.h"
 
-Located_Light::Located_Light(LIGHT * light){
+Located_Light::Located_Light(LIGHT * light):
+        Light(light)
+{
 	for (int i=0 ; i < 4 ; i++) {
 		location[i] = light->location[i];
 		diffuse[i] = light->diffuse[i];

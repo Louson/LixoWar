@@ -28,7 +28,7 @@
 #define ROTATION_INCREMENT      2
 /* cameras settings */
 #define VIEW_DIST               200000.0
-#define FOVY                    100
+#define FOVY                    90
 #define PERSP_HEIGHT            3
 #define MOTO_COEF               2
 #define REF_HEIGHT              2 

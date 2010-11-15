@@ -10,8 +10,8 @@
 
 class Beam : public Drawable {
 public :
-	Beam();
 	Beam(MOTO_STRUCT moto);
+        ~Beam();
 	Beam(GLfloat _x, GLfloat _y, GLfloat _ante_angle, GLfloat _post_angle, GLint _num_moto);
 	void draw();
 private:
@@ -19,7 +19,7 @@ private:
 	GLfloat y;
 	GLfloat ante_dir[2];
 	GLfloat post_dir[2];
-	Color color;
+	Color * color;
 };
 
 #endif
