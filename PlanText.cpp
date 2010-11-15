@@ -1,13 +1,21 @@
 #include "PlanText.h"
 
-PlanText::PlanText(Texture & _ref_text):
-    ref_texture(_ref_text)
+const GLfloat WallEmission[] = {0.2, 0.2, 0.2, 1};
+const GLfloat WallDiffuse[] = {1, 1, 1, 1};
+const GLfloat WallAmbient[] = {1, 1, 1, 1};
+const GLfloat WallSpecular[] = {1, 1, 1, 1};
+const GLfloat WallShininess = 70;
+
+PlanText::PlanText(Texture & _ref_text, Color & _color):
+        ref_texture(_ref_text),
+        color(_color)
 {
 }
 
 void PlanText::draw(){
     /* Sky's drawing */
     ref_texture.activate();
+    color.active();
     glBegin(GL_QUADS); 
     {
         glNormal3fv(n);

@@ -1,5 +1,6 @@
 #include <GL/glut.h>
 #include <iostream>
+#include <stdexcept>
 
 #include <iostream>
 
@@ -41,6 +42,7 @@ void Light::setLight(void){
                         light = GL_LIGHT7;
                         break;
                 default:
+                        throw std::range_error("Invalid number of light");
                         break;
         }
         light_number++;

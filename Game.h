@@ -14,17 +14,18 @@
 #include "Wall.h"
 #include "PtBeam.h"
 
+#define WALL_SIZE       10000
+
 /* lights */
-#define L_LOCATION {5000.0, 5000.0, 5000.0}
-#define L_DIRECTION {-2500.0, -2500.0, -5000.0}
-#define L_EXPONENT 2.0
-#define L_CUTOFF 90
+#define L_EXPONENT      2.0
+#define L_CUTOFF        180
+#define H_SPOT          5
 
 #define MIN_SIZE_BOARD  1
 
 #define SPEED_INCREMENT 1
 
-#define ACTION_SLOWDOWN         100
+#define ACTION_SLOWDOWN         0
 #define ROTATION_INCREMENT      2
 /* cameras settings */
 #define VIEW_DIST               200000.0
@@ -45,6 +46,8 @@ class Game: public Drawable{
 
         /* graphic components */
         int board_size_x, board_size_y;
+        int d_line_x, d_line_y;
+
         Board board;
         Sky sky;
         Wall wall;

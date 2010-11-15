@@ -6,7 +6,14 @@
 #include "Game.h"
 #include "Moto.h"
 
+static const GLfloat MotoEmission[] = {0.01, 0.02, 0.04, 1};
+static const GLfloat MotoDiffuse[] = {0.1, 0.2, 0.4, 1};
+static const GLfloat MotoAmbient[] = {0.2, 0.2, 0.2, 1};
+static const GLfloat MotoSpecular[] = {1.0, 0.0, 0.0, 1};
+static const GLfloat MotoShininess = 120;
+
 Moto::Moto(GLfloat _moto_size):
+        color(MotoEmission, MotoAmbient, MotoDiffuse, MotoSpecular, MotoShininess),
         moto_size(_moto_size),
         wheelNW(_moto_size, false),
         wheelNE(_moto_size, true),
@@ -25,11 +32,7 @@ void Moto::draw() {
         
         GLfloat val_sin = sin(angle*M_PI/180);
         GLfloat val_cos = cos(angle*M_PI/180);
-
-        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, MotoAmbient);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MotoDiffuse);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, MotoSpecular);
-        glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, MotoShininess);
+        color.active();
 
         wheelNW.setPos(x+(-moto_size*FRONT_WHEELS_H_DISTANCE_RATIO*val_sin+
                                 moto_size*FRONT_WHEELS_W_DISTANCE_RATIO*val_cos),

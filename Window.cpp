@@ -6,6 +6,7 @@
 
 #include "Window.h"
 #include "Game.h"
+#include "Color.h"
 
 extern Game * pt_game;
 
@@ -52,6 +53,9 @@ void Window::display() {
                 pt_game->activateOrthoCam();
                 break;
         }
+
+        Color color;
+        color.active();
         glBegin(GL_LINES);
         glVertex3i(0,0,0);
         glVertex3i(100,100,0);
@@ -95,6 +99,9 @@ void Window::init(){
      */
     glShadeModel(GL_SMOOTH);
     glEnable(GL_LIGHTING);
+
+    GLfloat ambientLight[4] = {0.5, 0.5, 0.5, 1.0}; 
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
 
     /* Transparency */
 //     glEnable(GL_BLEND);

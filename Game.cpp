@@ -25,13 +25,15 @@ Game::Game(
 
         board_size_x(_board_size_x),
         board_size_y(_board_size_y),
+        d_line_x(_d_lines_x),
+        d_line_y(_d_lines_y),
 
         board(_board_size_x, _board_size_y,
                         _quality_x, _quality_y,
                         _d_lines_x, _d_lines_y),
         sky(2*_board_size_x, 2*_board_size_y,
                         SKY_PIC),
-        wall(2*_board_size_x, 2*_board_size_y),
+        wall(2*WALL_SIZE, 2*WALL_SIZE),
         moto_size(_moto_size)
 {
         if(board_size_x < MIN_SIZE_BOARD || board_size_y < MIN_SIZE_BOARD)
@@ -48,9 +50,9 @@ Game::Game(
         for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
                 graph_elements.push_back(*it);
         graph_elements.push_back(player.pt_moto);
-        graph_elements.push_back(&board);
-        graph_elements.push_back(&sky);
         graph_elements.push_back(&wall);
+        graph_elements.push_back(&board);
+        //graph_elements.push_back(&sky);
 
         /* presence matrix */
         presence_matrix = new bool * [board_size_x];
@@ -64,35 +66,49 @@ Game::Game(
 
         /* light */
         LIGHT spot_sky;
-       
+
         spot_sky.diffuse[0] = 1;
         spot_sky.diffuse[1] = 1;
         spot_sky.diffuse[2] = 1;
-        
+
         spot_sky.ambient[0] = 0;
         spot_sky.ambient[1] = 0;
         spot_sky.ambient[2] = 0;
-        
+
         spot_sky.specular[0] = 1;
         spot_sky.specular[1] = 1;
         spot_sky.specular[2] = 1;
- 
-        spot_sky.location[0] = 0;//_board_size_x/2.0;
-        spot_sky.location[1] = 0;//_board_size_y/2.0;
-        spot_sky.location[2] = 3;//H_SKY/5; //(_board_size_x+_board_size_y)/4.0;
-        
-        spot_sky.direction[0] = 0;//-_board_size_x/2.0;
-        spot_sky.direction[1] = 0;//-_board_size_y/2.0;
-        spot_sky.direction[2] = -1;//-(_board_size_x+_board_size_y)/4.0;
-        
-        spot_sky.diffuse[3] = spot_sky.ambient[3] = spot_sky.specular[3] = 1.0;
-       
-        spot_sky.constant_attenuation = 0.1;
-        spot_sky.linear_attenuation = 0;
-        spot_sky.quadratic_attenuation = 0.01;
 
+        spot_sky.location[0] = 0;
+        spot_sky.location[1] = 0;
+        spot_sky.location[2] = H_SPOT;
+
+        spot_sky.direction[0] = 0;
+        spot_sky.direction[1] = 0;
+        spot_sky.direction[2] = -1;
+
+        spot_sky.diffuse[3] = spot_sky.ambient[3] = spot_sky.specular[3] = 1.0;
+
+        spot_sky.constant_attenuation = 0.0005;
+        spot_sky.linear_attenuation = 0;
+        spot_sky.quadratic_attenuation = 0.001;
+
+        int x_delta = board_size_x/d_line_x/4.0;
+        int y_delta = board_size_y/d_line_y/4.0;
+        
         lights.push_back(new Spot(&spot_sky, L_EXPONENT, L_CUTOFF));
-        resetLight();
+        spot_sky.location[0] = x_delta*d_line_x;
+        spot_sky.location[1] = y_delta*d_line_y;
+        lights.push_back(new Spot(&spot_sky, L_EXPONENT, L_CUTOFF));
+        spot_sky.location[0] = -x_delta*d_line_x;
+        spot_sky.location[1] = y_delta*d_line_y;
+        lights.push_back(new Spot(&spot_sky, L_EXPONENT, L_CUTOFF));
+        spot_sky.location[0] = -x_delta*d_line_x;
+        spot_sky.location[1] = -y_delta*d_line_y;
+        lights.push_back(new Spot(&spot_sky, L_EXPONENT, L_CUTOFF));
+        spot_sky.location[0] = x_delta*d_line_x;
+        spot_sky.location[1] = -y_delta*d_line_y;
+        lights.push_back(new Spot(&spot_sky, L_EXPONENT, L_CUTOFF));
 }
 
 void Game::draw(){
@@ -170,22 +186,22 @@ void Game::motoMov(enum MOV mov){
         /* the cast is here to prevent overflow */
 
         switch(mov){
-	case UP:
-		player.x += SPEED_INCREMENT*((int) cos(((float)player.angle)*M_PI/180.0));
-		player.y += SPEED_INCREMENT*((int) sin(((float)player.angle)*M_PI/180.0));
-		break;
-	case DOWN:
-		player.x -= SPEED_INCREMENT*((int) cos(player.angle*M_PI/180));
-		player.y -= SPEED_INCREMENT*((int) sin(player.angle*M_PI/180));
-		break;
-	case LEFT:
-		player.angle = (player.angle + ROTATION_INCREMENT) % 360;
-		action = TURN_LEFT;
-		break;
-	case RIGHT:
-		player.angle = (player.angle + 360 - ROTATION_INCREMENT) % 360;
-		action = TURN_RIGHT;
-		break;
+                case UP:
+                        player.x += SPEED_INCREMENT*((int) cos(((float)player.angle)*M_PI/180.0));
+                        player.y += SPEED_INCREMENT*((int) sin(((float)player.angle)*M_PI/180.0));
+                        break;
+                case DOWN:
+                        player.x -= SPEED_INCREMENT*((int) cos(player.angle*M_PI/180));
+                        player.y -= SPEED_INCREMENT*((int) sin(player.angle*M_PI/180));
+                        break;
+                case LEFT:
+                        player.angle = (player.angle + ROTATION_INCREMENT) % 360;
+                        action = TURN_LEFT;
+                        break;
+                case RIGHT:
+                        player.angle = (player.angle + 360 - ROTATION_INCREMENT) % 360;
+                        action = TURN_RIGHT;
+                        break;
         }
 }
 

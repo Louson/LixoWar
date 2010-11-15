@@ -60,8 +60,6 @@ void Board::draw() {
 	GLfloat s_x = side_x/quality_x;
 	GLfloat s_y = side_y/quality_y;
 
-	GLfloat fog_color[4] = {0.70, 0.70, 0.70, 1.0};
-
 	for (int j=0; j<quality_y; j++)
 			/* Lines' drawing */
 			for (int k=0 ; k<=side_x ; k+=d_lines_x) {
@@ -122,20 +120,9 @@ void Board::draw() {
 			glEnd();
 			glPointSize(1.0);
 		}
-		
-
-		/* Fog settings */
-// 	glEnable(GL_FOG);
-// 	glHint(GL_FOG_HINT, GL_NICEST);
-// 	glFogi(GL_FOG, GL_LINEAR);
-// 	glFogfv(GL_FOG_COLOR, fog_color);
-// 	glFogf(GL_FOG_START, 1.0);
-// 	glFogf(GL_FOG_END, 1.5);
-// 	glFogf(GL_FOG_DENSITY, 0.35);
-
-
-			/* Board's drawing */
-	for (int i=0; i<quality_x; i++)
+        
+        /* Board's drawing */
+        for (int i=0; i<quality_x; i++)
 		for (int j=0; j<quality_y; j++) {
 			boardColor.active();
 			glBegin(GL_QUADS);
@@ -146,7 +133,5 @@ void Board::draw() {
 			glVertex3f(v[3][0]+i*s_x, v[3][1]+(j+1)*s_y, B_DEPTH);
 			glEnd();
 		}
-	
-	glDisable(GL_FOG);
 	
 }
