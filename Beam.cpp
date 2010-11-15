@@ -56,6 +56,11 @@ Beam::Beam(GLfloat _x, GLfloat _y, GLfloat _ante_angle, GLfloat _post_angle, GLi
 	}
 }
 
+void Beam::setPostAngle(int angle) {
+	post_dir[0] = cos(((float)angle)*M_PI/180.0);
+	post_dir[1] = sin(((float)angle)*M_PI/180.0);
+}
+
 void Beam::draw() {
 	GLfloat ante_diff = (ante_dir[0] - ante_dir[1])/2.0;
 	GLfloat post_diff = (post_dir[0] - post_dir[1])/2.0;

@@ -62,60 +62,63 @@ void Board::draw() {
 
 	GLfloat fog_color[4] = {0.70, 0.70, 0.70, 1.0};
 
-	/* Lines' drawing */
-	for (int i=0 ; i<=side_x ; i+=d_lines_x) {
-		linev = i*v[3][0]+(side_x-i)*v[0][0];
-		/* Lignes // (Oy) */
-	sideColor.active();
-		glPointSize(1.0);
- 		glBegin(GL_QUADS);
- 		glVertex3f(linev/side_x-1, v[0][1], 0.0);
- 		glVertex3f(linev/side_x-1, v[1][1], 0.0);
-  		glVertex3f(linev/side_x-1, v[1][1], B_DEPTH);
-  		glVertex3f(linev/side_x-1, v[0][1], B_DEPTH);
- 		glEnd();
- 		glBegin(GL_QUADS);
- 		glVertex3f(linev/side_x+1, v[0][1], 0.0);
- 		glVertex3f(linev/side_x+1, v[1][1], 0.0);
-  		glVertex3f(linev/side_x+1, v[1][1], B_DEPTH);
-  		glVertex3f(linev/side_x+1, v[0][1], B_DEPTH);
- 		glEnd();
-	lineColor.active();
- 		glBegin(GL_QUADS);
- 		glVertex3f(linev/side_x-1, v[0][1], 0.0);
- 		glVertex3f(linev/side_x-1, v[1][1], 0.0);
-  		glVertex3f(linev/side_x+1, v[1][1], 0.0);
-  		glVertex3f(linev/side_x+1, v[0][1], 0.0);
- 		glEnd();
-	}
-	for (int i=0 ; i<=side_y ; i+=d_lines_y) {
-		lineh = i*v[0][1]+(side_y-i)*v[1][1];
-		/* Lignes // (Ox) */
-	sideColor.active();
-		glBegin(GL_QUADS);
-		glVertex3f(v[0][0]+1, lineh/side_y-1, 0.0);
-		glVertex3f(v[3][0]-1, lineh/side_y-1, 0.0);
-		glVertex3f(v[3][0]-1, lineh/side_y-1, B_DEPTH);
-		glVertex3f(v[0][0]+1, lineh/side_y-1, B_DEPTH);
-		glEnd();
-		glBegin(GL_QUADS);
-		glVertex3f(v[0][0]+1, lineh/side_y+1, 0.0);
-		glVertex3f(v[3][0]-1, lineh/side_y+1, 0.0);
-		glVertex3f(v[3][0]-1, lineh/side_y+1, B_DEPTH);
-		glVertex3f(v[0][0]+1, lineh/side_y+1, B_DEPTH);
-		glEnd();
-	lineColor.active();
-		glBegin(GL_QUADS);
-		glVertex3f(v[0][0]+1, lineh/side_y-1, 0.0);
-		glVertex3f(v[3][0]-1, lineh/side_y-1, 0.0);
-		glVertex3f(v[3][0]-1, lineh/side_y+1, 0.0);
-		glVertex3f(v[0][0]+1, lineh/side_y+1, 0.0);
-		glEnd();
-		glPointSize(1.0);
-	}
+	for (int j=0; j<quality_y; j++)
+			/* Lines' drawing */
+			for (int k=0 ; k<=side_x ; k+=d_lines_x) {
+				linev = k*v[3][0]+(side_x-k)*v[0][0];
+				/* Lignes // (Oy) */
+				sideColor.active();
+				glPointSize(1.0);
+				glBegin(GL_QUADS);
+				glVertex3f(linev/side_x-1, v[0][1]+j*s_y, 0.0);
+				glVertex3f(linev/side_x-1, v[0][1]+(j+1)*s_y, 0.0);
+				glVertex3f(linev/side_x-1, v[0][1]+(j+1)*s_y, B_DEPTH);
+				glVertex3f(linev/side_x-1, v[0][1]+j*s_y, B_DEPTH);
+				glEnd();
+				glBegin(GL_QUADS);
+				glVertex3f(linev/side_x+1, v[0][1]+j*s_y, 0.0);
+				glVertex3f(linev/side_x+1, v[0][1]+(j+1)*s_y, 0.0);
+				glVertex3f(linev/side_x+1, v[0][1]+(j+1)*s_y, B_DEPTH);
+				glVertex3f(linev/side_x+1, v[0][1]+j*s_y, B_DEPTH);
+				glEnd();
+				lineColor.active();
+				glBegin(GL_QUADS);
+				glVertex3f(linev/side_x-1, v[0][1]+j*s_y, 0.0);
+				glVertex3f(linev/side_x-1, v[0][1]+(j+1)*s_y, 0.0);
+				glVertex3f(linev/side_x+1, v[0][1]+(j+1)*s_y, 0.0);
+				glVertex3f(linev/side_x+1, v[0][1]+j*s_y, 0.0);
+				glEnd();
+			}
 
+	for (int i=0; i<quality_x; i++)
+		for (int k=0 ; k<=side_y ; k+=d_lines_y) {
+			lineh = k*v[0][1]+(side_y-k)*v[1][1];
+			/* Lignes // (Ox) */
+			sideColor.active();
+			glBegin(GL_QUADS);
+			glVertex3f(v[0][0]+1-i*s_x, lineh/side_y-1, 0.0);
+			glVertex3f(v[0][0]-1-(i+1)*s_x, lineh/side_y-1, 0.0);
+			glVertex3f(v[0][0]-1-(i+1)*s_x, lineh/side_y-1, B_DEPTH);
+			glVertex3f(v[0][0]+1-i*s_x, lineh/side_y-1, B_DEPTH);
+			glEnd();
+			glBegin(GL_QUADS);
+			glVertex3f(v[0][0]+1-i*s_x, lineh/side_y+1, 0.0);
+			glVertex3f(v[0][0]-1-(i+1)*s_x, lineh/side_y+1, 0.0);
+			glVertex3f(v[0][0]-1-(i+1)*s_x, lineh/side_y+1, B_DEPTH);
+			glVertex3f(v[0][0]+1-i*s_x, lineh/side_y+1, B_DEPTH);
+			glEnd();
+			lineColor.active();
+			glBegin(GL_QUADS);
+			glVertex3f(v[0][0]+1-i*s_x, lineh/side_y-1, 0.0);
+			glVertex3f(v[0][0]-1-(i+1)*s_x, lineh/side_y-1, 0.0);
+			glVertex3f(v[0][0]-1-(i+1)*s_x, lineh/side_y+1, 0.0);
+			glVertex3f(v[0][0]+1-i*s_x, lineh/side_y+1, 0.0);
+			glEnd();
+			glPointSize(1.0);
+		}
+		
 
-	/* Fog settings */
+		/* Fog settings */
 // 	glEnable(GL_FOG);
 // 	glHint(GL_FOG_HINT, GL_NICEST);
 // 	glFogi(GL_FOG, GL_LINEAR);
@@ -125,10 +128,10 @@ void Board::draw() {
 // 	glFogf(GL_FOG_DENSITY, 0.35);
 
 
-	/* Board's drawing */
-	boardColor.active();
+			/* Board's drawing */
 	for (int i=0; i<quality_x; i++)
 		for (int j=0; j<quality_y; j++) {
+			boardColor.active();
 			glBegin(GL_QUADS);
 			glNormal3fv(n);
 			glVertex3f(v[3][0]+i*s_x, v[3][1]+j*s_y, B_DEPTH);
@@ -139,5 +142,5 @@ void Board::draw() {
 		}
 	
 	glDisable(GL_FOG);
-
+	
 }

@@ -13,6 +13,7 @@ public :
 	Beam(MOTO_STRUCT moto);
         ~Beam();
 	Beam(GLfloat _x, GLfloat _y, GLfloat _ante_angle, GLfloat _post_angle, GLint _num_moto);
+	void setPostAngle(int angle);
 	void draw();
 private:
 	GLfloat x;
