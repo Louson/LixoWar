@@ -17,8 +17,8 @@
 /* lights */
 #define L_LOCATION {5000.0, 5000.0, 5000.0}
 #define L_DIRECTION {-2500.0, -2500.0, -5000.0}
-#define L_EXPONENT 2
-#define L_CUTOFF 70
+#define L_EXPONENT 2.0
+#define L_CUTOFF 90
 
 #define MIN_SIZE_BOARD  1
 

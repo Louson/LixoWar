@@ -10,20 +10,20 @@ using namespace std;
 const GLfloat BoardEmission[] = {0.0, 0.0, 0.0, 1};
 const GLfloat BoardDiffuse[] = {125.0/255, 145.0/255, 0, 1.0};
 const GLfloat BoardAmbient[] = {125.0/255, 145.0/255, 0, 1.0};
-const GLfloat BoardSpecular[] = {0, 0, 0, 1};
-const GLfloat BoardShininess = 20;
+const GLfloat BoardSpecular[] = {1, 1, 1, 1,};
+const GLfloat BoardShininess = 70;
 
 const GLfloat SideEmission[] = {0.0, 0.0, 0.0, 1};
 const GLfloat SideDiffuse[] = {201.0/255, 222.0/255, 85.0/255, 1};
 const GLfloat SideAmbient[] = {201.0/255, 222.0/255, 85.0/255, 1};
 const GLfloat SideSpecular[] = {0, 0, 0, 1};
-const GLfloat SideShininess = 20;
+const GLfloat SideShininess = 70;
 
 const GLfloat LineEmission[4] = {0.0, 0.0, 0.0, 1};
 const GLfloat LineDiffuse[4] = {1, 1, 157.0/255, 1};
 const GLfloat LineAmbient[4] = {1, 1, 157.0/255, 1};
-const GLfloat LineSpecular[4] = {53.0/255, 66.0/255, 66.0/255, 1};
-const GLfloat LineShininess = 20;
+const GLfloat LineSpecular[4] = {0, 0, 0, 1};
+const GLfloat LineShininess = 70;
 
 
 /**

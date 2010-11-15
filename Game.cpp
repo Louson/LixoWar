@@ -64,10 +64,7 @@ Game::Game(
 
         /* light */
         LIGHT spot_sky;
-        spot_sky.location[0] = _board_size_x/2.0;
-        spot_sky.location[1] = _board_size_y/2.0;
-        spot_sky.location[2] = H_SKY;  //CAM(_board_size_x+_board_size_y)/4.0;
-        
+       
         spot_sky.diffuse[0] = 1;
         spot_sky.diffuse[1] = 1;
         spot_sky.diffuse[2] = 1;
@@ -76,13 +73,17 @@ Game::Game(
         spot_sky.ambient[1] = 0;
         spot_sky.ambient[2] = 0;
         
-        spot_sky.specular[0] = 0.0;
-        spot_sky.specular[1] = 0.0;
-        spot_sky.specular[2] = 0.0;
+        spot_sky.specular[0] = 1;
+        spot_sky.specular[1] = 1;
+        spot_sky.specular[2] = 1;
+ 
+        spot_sky.location[0] = 0;//_board_size_x/2.0;
+        spot_sky.location[1] = 0;//_board_size_y/2.0;
+        spot_sky.location[2] = 3;//H_SKY/5; //(_board_size_x+_board_size_y)/4.0;
         
-        spot_sky.direction[0] = -_board_size_x/2.0;
-        spot_sky.direction[1] = -_board_size_y/2.0;
-        spot_sky.direction[2] = -(_board_size_x+_board_size_y)/4.0;
+        spot_sky.direction[0] = 0;//-_board_size_x/2.0;
+        spot_sky.direction[1] = 0;//-_board_size_y/2.0;
+        spot_sky.direction[2] = -1;//-(_board_size_x+_board_size_y)/4.0;
         
         spot_sky.diffuse[3] = spot_sky.ambient[3] = spot_sky.specular[3] = 1.0;
        
