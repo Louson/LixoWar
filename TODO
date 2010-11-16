@@ -11,6 +11,7 @@
 * accélération utile ?
 * tirer sur les voitures enemies ?
 * cam qui se déplace
+* gl offset pour combattre le z-buffer fighting
 
 ==== FAIT ====
 * empecher de retourner la carte
