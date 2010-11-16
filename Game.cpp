@@ -233,3 +233,15 @@ void Game::setOrthoCam() {
                         0.5*H_CAM, /* Z near */
                         1.5*H_CAM); /*Z far */
 }
+
+void Game::cameraStart() {
+	GLfloat taux = H_CAM/TAN_FINISH;
+	for (int i=0 ; i<SUB_STEP ; i++) {
+		GLfloat angle = player.angle + 2*i*M_PI/(float)SUB_STEP;
+		cam_persp.set_position(player.x + X_START*cos(angle), player.y + H_CAM*sin(angle), H_CAM*(1-exp(-cos(angle)/taux)),
+				       player.x, player.y, 0.0,
+				       1.0, 1.0 ,1.0);
+		cam_persp.activate();
+		resetLight();
+	}
+}
