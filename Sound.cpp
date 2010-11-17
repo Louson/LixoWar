@@ -1,24 +1,32 @@
 #include <iostream>
+#include <stdexcept>
+#include <iostream>
 
 #include "Sound.h"
 
 Sound::Sound() {
-	FMOD_System_Create(&sys);
-	FMOD_System_Init(sys, NB_CANAL, FMOD_INIT_NORMAL, NULL);
+	result = FMOD::System_Create(&system);
+	system->setOutput(FMOD_OUTPUTTYPE_ALSA);
+	system->init(32, FMOD_INIT_NORMAL, 0); 
+
+	if (result != FMOD_OK) {
+		throw std::runtime_error("Error in the sound creation");
+	}
 }
 
 Sound::~Sound() {
-	FMOD_System_Release(sys);
+	system->release();
+	sound->release();
 }
 
-void Sound::lecture(void) {
+void Sound::play(void) {
 #ifdef STREAM_MODE
 	/* Pour un flux (lecture en live) */
-	FMOD_System_CreateStream(sys, "Sounds/music.mp3", FMOD_HARDWARE | FMOD_LOOP_OFF | FMOD_2D, 0, &sound);
+	system->createStream("./Sounds/music.mp3", FMOD_SOFTWARE, 0, &sound);
 #endif
 #ifdef SOUND_MODE
 	/* Pour un son (lecture en tampon) */
-	FMOD_System_CreateSound(sys, "Sounds/music.mp3", FMOD_HARDWARE | FMOD_LOOP_OFF | FMOD_2D, 0, &sound);
+	system->createSound("./Sounds/music.mp3", FMOD_SOFTWARE, 0, &sound);
 #endif
-	FMOD_System_PlaySound(sys, FMOD_CHANNEL_FREE, sound, 0, &channel);
+	system->playSound(FMOD_CHANNEL_FREE, sound, 0, &channel);
 }

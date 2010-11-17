@@ -18,12 +18,12 @@ class Sound {
 public:
         Sound();
         ~Sound();
-	void lecture(void);
+	void play(void);
 private:
-    	FMOD_SYSTEM  *sys;
-	FMOD_SOUND   *sound;
-	FMOD_CHANNEL *channel;
-
+	FMOD::System *system;
+	FMOD::Sound *sound;
+	FMOD::Channel *channel;
+	FMOD_RESULT result;
 };
 
 #endif
