@@ -36,6 +36,7 @@ Game::Game(
         wall(2*WALL_SIZE, 2*WALL_SIZE),
         moto_size(_moto_size)
 {
+	sound.lecture();
         if(board_size_x < MIN_SIZE_BOARD || board_size_y < MIN_SIZE_BOARD)
                 throw ExceptionWrongBoardSize(); 
 

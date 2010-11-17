@@ -1,5 +1,6 @@
 #ifndef _GAME_H
 #define _GAME_H
+#include "Sound.h"
 
 #include <vector>
 
@@ -78,6 +79,8 @@ class Game: public Drawable{
         void setPerspCam(void);
 
         int action; 
+
+	Sound sound;
         
     public:
         class ExceptionWrongBoardSize:public std::exception{};

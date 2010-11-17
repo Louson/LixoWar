@@ -1,7 +1,6 @@
 PROJECT_NAME = lixo_war
 CC = g++
 CFLAGS =  -Wall -L/usr/X11R6/lib -lglut -lGLU -lm -lGL -lX11 -g
-LINK= /usr/local/lib/libfmodex32.so
 
 OBJECTS = Plan.o\
 Texture.o\
@@ -24,12 +23,13 @@ Color.o\
 Beam.o\
 Light.o\
 Beam.o\
-Sound.o
+Sound.o\
+fmod/lib/libfmodex.so
 
 all: $(PROJECT_NAME)
 
 $(PROJECT_NAME): main.o $(OBJECTS)
-	$(CC) $^ -o $@ $(CFLAGS) $(LINK)
+	$(CC) $^ -o $@ $(CFLAGS)
 
 %.o: %.cpp %.h
 	$(CC) $< -c -o $@ $(CFLAGS)
