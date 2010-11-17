@@ -3,7 +3,9 @@
 
 /* #include <AL/alut.h> */
 /* #include <AL/alc.h> */
-#include <fmodex/fmod.hpp>
+#include "fmod/fmod.hpp"
+#include "fmod/fmod_errors.h"
+#include "fmod/wincompat.h"
 
 #define NB_CANAL 4
 /**
