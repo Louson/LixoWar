@@ -35,6 +35,10 @@
 #define REF_HEIGHT              2 
 #define PROJ_SIZE               50
 
+#define SUB_STEP 100
+#define X_START -100
+#define TAN_FINISH 100
+
 enum MOV {UP, DOWN, LEFT, RIGHT};
 
 enum ACTIONS {NOTHING=-1, TURN_RIGHT, TURN_LEFT};
@@ -92,6 +96,7 @@ class Game: public Drawable{
         /* Cameras */
         void activatePerspCam(void);
         void activateOrthoCam(void);
+	void cameraStart();
 };
 
 #endif
