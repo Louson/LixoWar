@@ -12,6 +12,7 @@
 * tirer sur les voitures enemies ?
 * cam qui se déplace
 * gl offset pour combattre le z-buffer fighting
+*sons : mainMusic, bipstart, vroum, vroum_up, vroum_down, boum, laugh, gameOver
 
 ==== FAIT ====
 * empecher de retourner la carte

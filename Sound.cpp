@@ -1,32 +1,73 @@
 #include <iostream>
 #include <stdexcept>
-#include <iostream>
 
 #include "Sound.h"
 
 Sound::Sound() {
 	result = FMOD::System_Create(&system);
-	system->setOutput(FMOD_OUTPUTTYPE_ALSA);
-	system->init(32, FMOD_INIT_NORMAL, 0); 
+	checkError("Error in the sound system creation");
 
-	if (result != FMOD_OK) {
-		throw std::runtime_error("Error in the sound creation");
-	}
+	result = system->setOutput(FMOD_OUTPUTTYPE_ALSA);
+	checkError("Error in the sound system setOutput");
+
+	system->init(32, FMOD_INIT_NORMAL, 0); 
+	checkError("Error in the sound system init");
+
 }
 
 Sound::~Sound() {
 	system->release();
-	sound->release();
+	mainMusic->release();
 }
 
-void Sound::play(void) {
+void Sound::checkError(std::string s) {
+#ifdef CHECK_ERRORS
+	if (result != FMOD_OK) {
+		throw std::runtime_error(s);
+	}
+#endif
+}
+
+void Sound::playMainMusic(void) {
 #ifdef STREAM_MODE
 	/* Pour un flux (lecture en live) */
-	system->createStream("./Sounds/music.mp3", FMOD_SOFTWARE, 0, &sound);
+	result = system->createStream(MAIN_MUSIC, FMOD_SOFTWARE, 0, &mainMusic);
 #endif
+
 #ifdef SOUND_MODE
 	/* Pour un son (lecture en tampon) */
-	system->createSound("./Sounds/music.mp3", FMOD_SOFTWARE, 0, &sound);
+	result = system->createSound("./Sounds/music.mp3", FMOD_SOFTWARE, 0, &mainMusic);
 #endif
-	system->playSound(FMOD_CHANNEL_FREE, sound, 0, &channel);
+	checkError("The music does not exist");
+
+	result = system->playSound(FMOD_CHANNEL_FREE, mainMusic, 0, &channelMusic);
+	checkError("The music can't be played");
+}
+
+void Sound::playVroum(void) {
+#ifdef STREAM_MODE
+	/* Pour un flux (lecture en live) */
+	result = system->createStream("./Sounds/vroum.mp3", FMOD_SOFTWARE, 0, &mainMusic);
+#endif
+
+#ifdef SOUND_MODE
+	/* Pour un son (lecture en tampon) */
+	result = system->createSound("./Sounds/vroum.mp3", FMOD_SOFTWARE, 0, &mainMusic);
+#endif
+	checkError("The music does not exist");
+		
+	result = system->playSound(FMOD_CHANNEL_FREE, mainMusic, 0, &channelFoley);
+	checkError("The music can't be played");
+}
+
+bool Sound::isMusic() {
+	bool boolean;
+	channelMusic->isPlaying(&boolean);
+	return boolean;
+}
+
+bool Sound::isFoley() {
+	bool boolean;
+	channelFoley->isPlaying(&boolean);
+	return boolean;
 }
