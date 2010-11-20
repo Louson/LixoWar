@@ -22,7 +22,9 @@
 #define L_CUTOFF        180
 #define H_SPOT          5
 
-#define MIN_SIZE_BOARD  1
+#define MIN_SIZE_BOARD  10
+#define SIZE_CASE_X 10
+#define SIZE_CASE_Y 10
 
 #define SPEED_INCREMENT 0.01
 
@@ -36,9 +38,9 @@
 #define REF_HEIGHT              2 
 #define PROJ_SIZE               50
 
-#define SUB_STEP 100
-#define X_START -100
-#define TAN_FINISH 100
+#define SUB_STEP    100
+#define X_START    -100
+#define TAN_FINISH  100
 
 enum MOV {UP, DOWN, LEFT, RIGHT};
 
@@ -46,6 +48,8 @@ enum ACTIONS {NOTHING=-1, TURN_RIGHT, TURN_LEFT};
 
 class Game: public Drawable{
     private:
+	bool win;
+
         /* game logistic */
         int opponentNumber;
 
@@ -100,6 +104,8 @@ class Game: public Drawable{
         void activatePerspCam(void);
         void activateOrthoCam(void);
 	void cameraStart();
+
+	bool has_win();
 };
 
 #endif

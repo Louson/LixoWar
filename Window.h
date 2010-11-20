@@ -25,6 +25,8 @@ namespace Window{
         void specialKeyboard(int, int ,int);
         /* used to get the dimension of the windows */
         void windowReshape(int, int);
+
+	bool has_win();
 };
 
 #endif

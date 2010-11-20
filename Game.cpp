@@ -12,17 +12,17 @@
 const char * SKY_PIC = "Images/ciel.ppm";
 
 Game::Game(
-                int _opponent_number,
-                int _board_size_x, 
-                int _board_size_y,
-                GLfloat _quality_x, 
-                GLfloat _quality_y,
-                GLfloat _d_lines_x, 
-                GLfloat _d_lines_y, 
+	int _opponent_number,
+	int _board_size_x, 
+	int _board_size_y,
+	GLfloat _quality_x, 
+	GLfloat _quality_y,
+	GLfloat _d_lines_x, 
+	GLfloat _d_lines_y, 
                 int _moto_size
-          ) throw (ExceptionWrongBoardSize) :
+	) throw (ExceptionWrongBoardSize) :
         opponentNumber(_opponent_number),
-
+	
         board_size_x(_board_size_x),
         board_size_y(_board_size_y),
         d_line_x(_d_lines_x),
@@ -57,13 +57,15 @@ Game::Game(
         //graph_elements.push_back(&sky);
 
         /* presence matrix */
-        presence_matrix = new bool * [board_size_x];
-        for(int i=0; i<board_size_x; i++)
+	int x_dim = board_size_x/SIZE_CASE_X;
+	int y_dim = board_size_y/SIZE_CASE_Y;
+        presence_matrix = new bool * [x_dim];
+        for(int i=0; i<x_dim; i++)
                 presence_matrix[i] = NULL;
-        for(int i=0; i<board_size_x; i++)
-                presence_matrix[i] = new bool[board_size_y];
-        for(int i=0; i<board_size_x; i++)
-                for(int j=0; j<board_size_y; j++)
+        for(int i=0; i<x_dim; i++)
+                presence_matrix[i] = new bool[y_dim];
+        for(int i=0; i<x_dim; i++)
+                for(int j=0; j<y_dim; j++)
                         presence_matrix[i][j] = false;
 
         /* light */
@@ -97,7 +99,7 @@ Game::Game(
 
         int x_delta = board_size_x/d_line_x/4.0;
         int y_delta = board_size_y/d_line_y/4.0;
-        
+
         lights.push_back(new Spot(&spot_sky, L_EXPONENT, L_CUTOFF));
         spot_sky.location[0] = x_delta*d_line_x;
         spot_sky.location[1] = y_delta*d_line_y;
@@ -115,10 +117,15 @@ Game::Game(
 
 void Game::draw(){
  
-        player.x += player.speed*((int) cos(((float)player.angle)*M_PI/180.0));
-        player.y += player.speed*((int) sin(((float)player.angle)*M_PI/180.0));
-        
-        player.pt_moto->setPos(player.x, player.y, player.angle);
+	player.x += SIZE_CASE_X*player.speed*((int) cos(((float)player.angle)*M_PI/180.0));
+	player.y += SIZE_CASE_Y*player.speed*((int) sin(((float)player.angle)*M_PI/180.0));
+
+//  	if (presence_matrix[(int)((player.x+board_size_x/2.0)/SIZE_CASE_X)][(int)((player.y+board_size_y/2.0)/SIZE_CASE_Y)]) {
+//  		win = false;
+// 		cout << "Wow wow wow stop" <<endl;
+//  	}
+
+	player.pt_moto->setPos(player.x, player.y, player.angle);
 
         for(std::vector<Drawable *>::iterator it = graph_elements.begin(); it < graph_elements.end();it++)
                 if(*it) (*it) -> draw();
@@ -145,7 +152,7 @@ void Game::draw(){
                 default:
                         break;
         }
-                                glutPostRedisplay();
+	glutPostRedisplay();
 }
 
 Game::~Game(){
@@ -160,7 +167,7 @@ Game::~Game(){
 
         delete player.pt_moto;
 
-        for(int i=0; i<board_size_x; i++)
+        for(int i=0; i<board_size_x/SIZE_CASE_X; i++)
                 delete [] presence_matrix[i];
         delete [] presence_matrix;
 }
@@ -245,4 +252,8 @@ void Game::cameraStart() {
 		cam_persp.activate();
 		resetLight();
 	}
+}
+
+bool Game::has_win() {
+	return win;
 }
