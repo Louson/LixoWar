@@ -117,13 +117,13 @@ Game::Game(
 
 void Game::draw(){
  
-	player.x += SIZE_CASE_X*player.speed*((int) cos(((float)player.angle)*M_PI/180.0));
-	player.y += SIZE_CASE_Y*player.speed*((int) sin(((float)player.angle)*M_PI/180.0));
+	player.x += player.speed*((int) cos(((float)player.angle)*M_PI/180.0));
+	player.y += player.speed*((int) sin(((float)player.angle)*M_PI/180.0));
 
-//  	if (presence_matrix[(int)((player.x+board_size_x/2.0)/SIZE_CASE_X)][(int)((player.y+board_size_y/2.0)/SIZE_CASE_Y)]) {
-//  		win = false;
-// 		cout << "Wow wow wow stop" <<endl;
-//  	}
+ 	if (presence_matrix[(int)((player.x+board_size_x/2.0)/SIZE_CASE_X)][(int)((player.y+board_size_y/2.0)/SIZE_CASE_Y)]) {
+ 		win = false;
+		cout << "Wow wow wow stop" <<endl;
+ 	}
 
 	player.pt_moto->setPos(player.x, player.y, player.angle);
 
