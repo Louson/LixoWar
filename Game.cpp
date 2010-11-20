@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <assert.h>
 
 #include "Game.h"
 #include "Drawable.h"
@@ -57,8 +58,8 @@ Game::Game(
         //graph_elements.push_back(&sky);
 
         /* presence matrix */
-	int x_dim = board_size_x/SIZE_CASE_X;
-	int y_dim = board_size_y/SIZE_CASE_Y;
+	int x_dim = board_size_x/SIZE_CASE_X+1;
+	int y_dim = board_size_y/SIZE_CASE_Y+1;
         presence_matrix = new bool * [x_dim];
         for(int i=0; i<x_dim; i++)
                 presence_matrix[i] = NULL;
@@ -124,6 +125,7 @@ void Game::draw(){
  		win = false;
 		cout << "Wow wow wow stop" <<endl;
  	}
+	assert((int)(player.y+board_size_y/2.0)<board_size_y+SIZE_CASE_Y);
 
 	player.pt_moto->setPos(player.x, player.y, player.angle);
 
@@ -167,7 +169,7 @@ Game::~Game(){
 
         delete player.pt_moto;
 
-        for(int i=0; i<board_size_x/SIZE_CASE_X; i++)
+        for(int i=0; i<board_size_x/SIZE_CASE_X+1; i++)
                 delete [] presence_matrix[i];
         delete [] presence_matrix;
 }
