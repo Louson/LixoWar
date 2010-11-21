@@ -58,8 +58,8 @@ Game::Game(
         //graph_elements.push_back(&sky);
 
         /* presence matrix */
-	int x_dim = board_size_x/SIZE_CASE_X+1;
-	int y_dim = board_size_y/SIZE_CASE_Y+1;
+	int x_dim = board_size_x/SIZE_CASE_X;
+	int y_dim = board_size_y/SIZE_CASE_Y;
         presence_matrix = new bool * [x_dim];
         for(int i=0; i<x_dim; i++)
                 presence_matrix[i] = NULL;
@@ -121,14 +121,16 @@ void Game::draw(){
 	player.x += player.speed*((int) cos(((float)player.angle)*M_PI/180.0));
 	player.y += player.speed*((int) sin(((float)player.angle)*M_PI/180.0));
 
+	assert(player.x<=board_size_x/2.0);
+	assert(player.x>=-board_size_x/2.0);
+	assert(player.y<=board_size_y/2.0);
+	assert(player.y>=-board_size_y/2.0);
+
  	if (presence_matrix[(int)((player.x+board_size_x/2.0)/SIZE_CASE_X)][(int)((player.y+board_size_y/2.0)/SIZE_CASE_Y)]) {
  		win = false;
 		cout << "Wow wow wow stop" <<endl;
  	}
 	cout << "x="<<player.x <<"y="<<player.y<<endl;
-
-	assert((int)(player.y+board_size_y/2.0)<board_size_y+SIZE_CASE_Y);
-	assert(player.y+board_size_y/2.0>=0);
 
 	player.pt_moto->setPos(player.x, player.y, player.angle);
 
@@ -172,7 +174,7 @@ Game::~Game(){
 
         delete player.pt_moto;
 
-        for(int i=0; i<board_size_x/SIZE_CASE_X+1; i++)
+        for(int i=0; i<board_size_x/SIZE_CASE_X; i++)
                 delete [] presence_matrix[i];
         delete [] presence_matrix;
 }
