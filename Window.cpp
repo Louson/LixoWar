@@ -121,8 +121,8 @@ void Window::init(){
 }
 
 void Window::keyboard(unsigned char cara,int x, int y){
-// 	if (!has_win())
-// 		glutLeaveMainLoop();
+ 	if (!has_win())
+ 		glutLeaveMainLoop();
 	switch((int) cara){
         case KEY_ESC:
 		glutLeaveMainLoop();

@@ -53,6 +53,11 @@ private:
 	Color boardColor;
 	Color sideColor;
 	Color lineColor;
+
+	void drawEastLine(int j);
+	void drawWestLine(int j);
+	void drawNorthLine(int j);
+	void drawSouthLine(int j);
 };
 
 #endif

@@ -20,7 +20,7 @@ Game::Game(
 	GLfloat _quality_y,
 	GLfloat _d_lines_x, 
 	GLfloat _d_lines_y, 
-                int _moto_size
+	int _moto_size
 	) throw (ExceptionWrongBoardSize) :
         opponentNumber(_opponent_number),
 	
@@ -125,7 +125,10 @@ void Game::draw(){
  		win = false;
 		cout << "Wow wow wow stop" <<endl;
  	}
+	cout << "x="<<player.x <<"y="<<player.y<<endl;
+
 	assert((int)(player.y+board_size_y/2.0)<board_size_y+SIZE_CASE_Y);
+	assert(player.y+board_size_y/2.0>=0);
 
 	player.pt_moto->setPos(player.x, player.y, player.angle);
 
