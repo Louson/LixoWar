@@ -130,7 +130,6 @@ void Game::draw(){
  		win = false;
 		cout << "Wow wow wow stop" <<endl;
  	}
-	cout << "x="<<player.x <<"y="<<player.y<<endl;
 
 	player.pt_moto->setPos(player.x, player.y, player.angle);
 
