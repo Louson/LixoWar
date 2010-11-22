@@ -145,6 +145,7 @@ void Game::draw(){
 		Beam *beam;
  		GLfloat x = SIZE_CASE_X*(presence_x-1)-board_size_x/2.0;
  		GLfloat y = SIZE_CASE_Y*(presence_y-1)-board_size_y/2.0;
+
 		beam = new Beam(x, y, player.angle, player.angle, 1);
 		beams.push_back(beam);
 		graph_elements.push_back(beam);

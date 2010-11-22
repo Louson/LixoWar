@@ -69,38 +69,38 @@ void Beam::draw() {
 
 	glBegin(GL_QUADS); {
 		glNormal3i(0,0,1);
-		glVertex3f(x-SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, 2);
-		glVertex3f(x+SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, 2);
-		glVertex3f(x+SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, 2);
-		glVertex3f(x-SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, 2);
+		glVertex3f(x-SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, H_BEAM);
+		glVertex3f(x+SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, H_BEAM);
+		glVertex3f(x+SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, H_BEAM);
+		glVertex3f(x-SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, H_BEAM);
 	}glEnd();
 	glBegin(GL_QUADS); {
 		glNormal3i(0,-1,0);
-		glVertex3f(x-SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, 2);
-		glVertex3f(x+SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, 2);
+		glVertex3f(x-SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, H_BEAM);
+		glVertex3f(x+SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, H_BEAM);
 		glVertex3f(x+SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, 0);
 		glVertex3f(x-SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, 0);
 	}glEnd();
 	glBegin(GL_QUADS); {
 		glNormal3i(0,1,0);
-		glVertex3f(x-SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, 2);
-		glVertex3f(x+SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, 2);
+		glVertex3f(x-SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, H_BEAM);
+		glVertex3f(x+SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, H_BEAM);
 		glVertex3f(x+SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, 0);
 		glVertex3f(x-SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, 0);
 	}glEnd();	
 	glBegin(GL_QUADS); {
 		glNormal3i(1,0,0);
-		glVertex3f(x+SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, 2);
+		glVertex3f(x+SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, H_BEAM);
 		glVertex3f(x+SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, 0);
 		glVertex3f(x+SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, 0);
-		glVertex3f(x+SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, 2);
+		glVertex3f(x+SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, H_BEAM);
 	}glEnd();	
 	glBegin(GL_QUADS); {
 		glNormal3i(-1,0,0);
-		glVertex3f(x-SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, 2);
+		glVertex3f(x-SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, H_BEAM);
 		glVertex3f(x-SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, 0);
 		glVertex3f(x-SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, 0);
-		glVertex3f(x-SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, 2);
+		glVertex3f(x-SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, H_BEAM);
 	}glEnd();
 
 
