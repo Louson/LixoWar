@@ -1,4 +1,3 @@
-//#include <fmodex/fmod.hpp>
 #include <string>
 #include <iostream>
 #include <cstdlib>
@@ -55,6 +54,12 @@ int main(int argc, char ** argv){
 		       moto_size);
 
     glutMainLoop();
+    if (Window::has_won()) {
+	    cout << "CONGRATULATIONS" << endl;
+    } else if (Window::has_lost()) {
+	    cout << "GAME OVER, LOSER" << endl;
+    } else cout << "DRAW" << endl;
+
     delete pt_game;
     return EXIT_SUCCESS;
 }

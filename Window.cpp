@@ -30,6 +30,9 @@ void Window::create(const char * window_name, int * argc, char ** argv){
  * use Functor with glut/freeglut
  */
 void Window::display() {
+	if (has_lost()) {
+		glutLeaveMainLoop();
+	}
 	assert(pt_game!=NULL);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0,0,0,0);
@@ -82,6 +85,8 @@ void Window::init(){
 	glutReshapeFunc(&Window::windowReshape);
 	glutSpecialFunc(&Window::specialKeyboard);
 
+	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
+
 	/* Use Depth Buffering */
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_NORMALIZE);
@@ -121,7 +126,7 @@ void Window::init(){
 }
 
 void Window::keyboard(unsigned char cara,int x, int y){
- 	if (!has_lost())
+ 	if (has_lost())
  		glutLeaveMainLoop();
 	switch((int) cara){
         case KEY_ESC:

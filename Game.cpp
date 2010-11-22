@@ -22,7 +22,10 @@ Game::Game(
 	GLfloat _d_lines_y, 
 	int _moto_size
 	) throw (ExceptionWrongBoardSize) :
-        opponentNumber(_opponent_number),
+	
+	win(false), lose(false),
+
+	opponentNumber(_opponent_number),
 	
         board_size_x(_board_size_x),
         board_size_y(_board_size_y),
@@ -36,6 +39,7 @@ Game::Game(
                         SKY_PIC),
         wall(2*WALL_SIZE, 2*WALL_SIZE),
         moto_size(_moto_size)
+
 {
 	sound.playMainMusic();
         if(board_size_x < MIN_SIZE_BOARD || board_size_y < MIN_SIZE_BOARD)

@@ -1,5 +1,5 @@
 ==== À FAIRE ====
-* brouillar
+* brouillard
 * reflexion de la moto ?
 * cel-shading ?
 * antialiassing
@@ -12,7 +12,9 @@
 * tirer sur les voitures enemies ?
 * cam qui se déplace
 * gl offset pour combattre le z-buffer fighting
-*sons : mainMusic, bipstart, vroum, vroum_up, vroum_down, boum, laugh, gameOver
+* sons : mainMusic, bipstart, vroum, vroum_up, vroum_down, boum, laugh, gameOver
+
+* PROBLEME dans delete pt_game du main
 
 ==== FAIT ====
 * empecher de retourner la carte
