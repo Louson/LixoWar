@@ -2,6 +2,7 @@
 #include <cmath>
 
 #include "Beam.h"
+#include "Game.h"
 
 using namespace std;
 
@@ -65,29 +66,68 @@ void Beam::draw() {
 	GLfloat ante_diff = (ante_dir[0] - ante_dir[1])/2.0;
 	GLfloat post_diff = (post_dir[0] - post_dir[1])/2.0;
 	color->active();
-	glBegin(GL_QUADS); {
-		glVertex3f(x+ ante_diff, y-ante_diff, 0.0);
-		glVertex3f(x, y, H_BEAM);
-		glVertex3f(x-ante_dir[0], y-ante_dir[1], H_BEAM);
-		glVertex3f(x-ante_dir[0]-ante_dir[1]/2.0, y-ante_dir[1]-ante_dir[0]/2.0, 0.0);
-		glEnd();}
-	glBegin(GL_QUADS); {
-		glVertex3f(x-ante_diff, y+ante_diff, 0.0);
-		glVertex3f(x, y, H_BEAM);
-		glVertex3f(x-ante_dir[0], y-ante_dir[1], H_BEAM);
-		glVertex3f(x-ante_dir[0]+ante_dir[1]/2.0, y-ante_dir[1]+ante_dir[0]/2.0, 0.0);
-		glEnd();}
 
 	glBegin(GL_QUADS); {
-		glVertex3f(x-post_diff, y+post_diff, 0.0);
-		glVertex3f(x, y, H_BEAM);
-		glVertex3f(x+post_dir[0], y+post_dir[1], H_BEAM);
-		glVertex3f(x+post_dir[0]+post_dir[1]/2.0, y+post_dir[1]+post_dir[0]/2.0, 0.0);
-		glEnd();}
+		glNormal3i(0,0,1);
+		glVertex3f(x-SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, 2);
+		glVertex3f(x+SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, 2);
+		glVertex3f(x+SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, 2);
+		glVertex3f(x-SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, 2);
+	}glEnd();
 	glBegin(GL_QUADS); {
-		glVertex3f(x+post_diff, y-post_diff, 0.0);
-		glVertex3f(x, y, H_BEAM);
-		glVertex3f(x+post_dir[0], y+post_dir[1], H_BEAM);
-		glVertex3f(x+post_dir[0]-post_dir[1]/2.0, y+post_dir[1]-post_dir[0]/2.0, 0.0);
-		glEnd();}
+		glNormal3i(0,-1,0);
+		glVertex3f(x-SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, 2);
+		glVertex3f(x+SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, 2);
+		glVertex3f(x+SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, 0);
+		glVertex3f(x-SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, 0);
+	}glEnd();
+	glBegin(GL_QUADS); {
+		glNormal3i(0,1,0);
+		glVertex3f(x-SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, 2);
+		glVertex3f(x+SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, 2);
+		glVertex3f(x+SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, 0);
+		glVertex3f(x-SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, 0);
+	}glEnd();	
+	glBegin(GL_QUADS); {
+		glNormal3i(1,0,0);
+		glVertex3f(x+SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, 2);
+		glVertex3f(x+SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, 0);
+		glVertex3f(x+SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, 0);
+		glVertex3f(x+SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, 2);
+	}glEnd();	
+	glBegin(GL_QUADS); {
+		glNormal3i(-1,0,0);
+		glVertex3f(x-SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, 2);
+		glVertex3f(x-SIZE_CASE_X/2.0, y-SIZE_CASE_Y/2.0, 0);
+		glVertex3f(x-SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, 0);
+		glVertex3f(x-SIZE_CASE_X/2.0, y+SIZE_CASE_Y/2.0, 2);
+	}glEnd();
+
+
+
+// 	glBegin(GL_QUADS); {
+// 		glVertex3f(x+ ante_diff, y-ante_diff, 0.0);
+// 		glVertex3f(x, y, H_BEAM);
+// 		glVertex3f(x-ante_dir[0], y-ante_dir[1], H_BEAM);
+// 		glVertex3f(x-ante_dir[0]-ante_dir[1]/2.0, y-ante_dir[1]-ante_dir[0]/2.0, 0.0);
+// 		glEnd();}
+// 	glBegin(GL_QUADS); {
+// 		glVertex3f(x-ante_diff, y+ante_diff, 0.0);
+// 		glVertex3f(x, y, H_BEAM);
+// 		glVertex3f(x-ante_dir[0], y-ante_dir[1], H_BEAM);
+// 		glVertex3f(x-ante_dir[0]+ante_dir[1]/2.0, y-ante_dir[1]+ante_dir[0]/2.0, 0.0);
+// 		glEnd();}
+
+// 	glBegin(GL_QUADS); {
+// 		glVertex3f(x-post_diff, y+post_diff, 0.0);
+// 		glVertex3f(x, y, H_BEAM);
+// 		glVertex3f(x+post_dir[0], y+post_dir[1], H_BEAM);
+// 		glVertex3f(x+post_dir[0]+post_dir[1]/2.0, y+post_dir[1]+post_dir[0]/2.0, 0.0);
+// 		glEnd();}
+// 	glBegin(GL_QUADS); {
+// 		glVertex3f(x+post_diff, y-post_diff, 0.0);
+// 		glVertex3f(x, y, H_BEAM);
+// 		glVertex3f(x+post_dir[0], y+post_dir[1], H_BEAM);
+// 		glVertex3f(x+post_dir[0]-post_dir[1]/2.0, y+post_dir[1]-post_dir[0]/2.0, 0.0);
+// 		glEnd();}
 }

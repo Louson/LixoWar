@@ -55,9 +55,9 @@ int main(int argc, char ** argv){
 
     glutMainLoop();
     if (Window::has_won()) {
-	    cout << "CONGRATULATIONS" << endl;
+	    cout << "YOU WIN" << endl;
     } else if (Window::has_lost()) {
-	    cout << "GAME OVER, LOSER" << endl;
+	    cout << "YOU LOSE" << endl;
     } else cout << "DRAW" << endl;
 
     delete pt_game;

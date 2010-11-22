@@ -123,7 +123,6 @@ Game::Game(
 }
 
 void Game::draw(){
-
 	player.x += player.speed*((int) cos(((float)player.angle)*M_PI/180.0));
 	player.y += player.speed*((int) sin(((float)player.angle)*M_PI/180.0));
 
@@ -133,11 +132,24 @@ void Game::draw(){
 	assert(player.x>=-SIZE_CASE_X-board_size_x/2.0);
 	assert(player.y<=SIZE_CASE_Y+board_size_y/2.0);
 	assert(player.y>=-SIZE_CASE_Y-board_size_y/2.0);
+	if (presence_x != 1+(int)((player.x+board_size_x/2.0)/SIZE_CASE_X)
+	    || presence_y != 1+(int)((player.y+board_size_y/2.0)/SIZE_CASE_Y)) {
+		/* Si on se trouve sur une nouvelle case 
+		 * We draw the previous beam ;
+		 * We test the new case ;
+		 */
+		Beam *beam;
+ 		int x = SIZE_CASE_X*(presence_x-1)-board_size_x/2.0;
+ 		int y = SIZE_CASE_Y*(presence_y-1)-board_size_y/2.0;
+		beam = new Beam(x, y, player.angle, player.angle, 1);
+		beams.push_back(beam);
+		graph_elements.push_back(beam);
 
-	if (testPresence()) {
-		lose = true;
+		if (testPresence()) {
+			lose = true;
+		}
+		presence_matrix[presence_x][presence_y] = true;
 	}
-	presence_matrix[presence_x][presence_y] = true;
 
 	player.pt_moto->setPos(player.x, player.y, player.angle);
 
@@ -146,6 +158,7 @@ void Game::draw(){
 
         switch(action){
                 case NOTHING:
+
                         /* no action to do */
                         break;
                 case TURN_LEFT:
@@ -172,15 +185,11 @@ void Game::draw(){
 Game::~Game(){
         for(std::vector<Light*>::iterator it = lights.begin(); it < lights.end();it++)
                 delete *it;
-
         for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
                 delete *it;
-
         for(std::vector<Beam*>::iterator it = beams.begin();it<beams.end();it++)
                 delete *it;
-
         delete player.pt_moto;
-
         for(int i=0; i<2+board_size_x/SIZE_CASE_X; i++)
                 delete [] presence_matrix[i];
         delete [] presence_matrix;
@@ -214,7 +223,7 @@ void Game::motoMov(enum MOV mov){
         switch(mov){
                 case UP:
                         player.speed += SPEED_INCREMENT;
-                        break;
+			break;
                 case DOWN:
                         player.speed -= SPEED_INCREMENT;
                         break;
@@ -276,14 +285,11 @@ bool Game::has_lost() {
 }
 
 bool Game::testPresence() {
-	if (presence_x != 1+(int)((player.x+board_size_x/2.0)/SIZE_CASE_X)
-	    || presence_y != 1+(int)((player.y+board_size_y/2.0)/SIZE_CASE_Y)) {
 		presence_x = 1+(player.x+board_size_x/2.0)/SIZE_CASE_X;
 		presence_y = 1+(player.y+board_size_y/2.0)/SIZE_CASE_Y;
 		if (presence_matrix[presence_x][presence_y]) {
 			cout << "Wow wow wow stop" <<endl;
 			return true;
 		}
-	}
 	return false;
 }
