@@ -53,6 +53,7 @@ enum ACTIONS {NOTHING=-1, TURN_RIGHT, TURN_LEFT};
 class Game: public Drawable{
     private:
 	bool win;
+	bool lose;
 
         /* game logistic */
         int opponentNumber;
@@ -79,6 +80,8 @@ class Game: public Drawable{
 
         /* Board object presence matrix */
         bool ** presence_matrix;
+	int presence_x, presence_y;
+
 
         std::vector<Drawable*> graph_elements;
 
@@ -109,7 +112,9 @@ class Game: public Drawable{
         void activateOrthoCam(void);
 	void cameraStart();
 
-	bool has_win();
+	bool testPresence();
+	bool has_won();
+	bool has_lost();
 };
 
 #endif

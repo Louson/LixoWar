@@ -121,7 +121,7 @@ void Window::init(){
 }
 
 void Window::keyboard(unsigned char cara,int x, int y){
- 	if (!has_win())
+ 	if (!has_lost())
  		glutLeaveMainLoop();
 	switch((int) cara){
         case KEY_ESC:
@@ -162,6 +162,10 @@ void Window::specialKeyboard(int key, int x, int y){
 	glutPostRedisplay();
 }
 
-bool Window::has_win() {
-	return pt_game->has_win();
+bool Window::has_won() {
+	return pt_game->has_won();
+}
+
+bool Window::has_lost() {
+	return pt_game->has_lost();
 }

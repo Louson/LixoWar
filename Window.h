@@ -26,7 +26,8 @@ namespace Window{
         /* used to get the dimension of the windows */
         void windowReshape(int, int);
 
-	bool has_win();
+	bool has_won();
+	bool has_lost();
 };
 
 #endif
