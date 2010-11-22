@@ -1,16 +1,8 @@
 PROJECT_NAME = lixo_war
 CC = g++
-CFLAGS =  -Wall -L/usr/X11R6/lib -lglut -lGLU -lm -lGL -lX11 -g
-
-OBJECTS = Plan.o\
-Texture.o\
-Board.o\
-PlanText.o\
-Sky.o\
-Wall.o\
-Camera.o\
-Camera_Ortho.o\
-Camera_Persp.o\
+CFLAGS =  -Wall -lm -g
+LDFLAGS =  -L/usr/X11R6/lib -lglut -lGLU -lGL -lX11
+OBJECTS = main.o Plan.o Texture.o Board.o PlanText.o Sky.o Wall.o Camera.o Camera_Ortho.o Camera_Persp.o\
 Located_Light.o\
 Spot.o\
 Window.o\
@@ -28,12 +20,13 @@ fmod/lib/libfmodex.so
 
 all: $(PROJECT_NAME)
 
-$(PROJECT_NAME): main.o $(OBJECTS)
-	$(CC) $^ -o $@ $(CFLAGS)
+$(PROJECT_NAME): $(OBJECTS)
+	$(CC) $^ -o $@ $(LDFLAGS)
 
 %.o: %.cpp %.h
 	$(CC) $< -c -o $@ $(CFLAGS)
 
 clean:
-	rm *.o $(PROJECT_NAME)
+	rm -rf *.o $(PROJECT_NAME)
 
+.PHONY: clean

@@ -1,5 +1,5 @@
 /* ========================================================================================== */
-/* FMOD Ex - DSP header file. Copyright (c), Firelight Technologies Pty, Ltd. 2004-2009.      */
+/* FMOD Ex - DSP header file. Copyright (c), Firelight Technologies Pty, Ltd. 2004-2010.      */
 /*                                                                                            */
 /* Use this header if you are interested in delving deeper into the FMOD software mixing /    */
 /* DSP engine.  In this header you can find parameter structures for FMOD system reigstered   */
@@ -78,8 +78,8 @@ typedef enum
     Structure to define a parameter for a DSP unit.
 
     [REMARKS]
-    Members marked with [in] mean the variable can be written to.  The user can set the value.<br>
-    Members marked with [out] mean the variable is modified by FMOD and is for reading purposes only.  Do not change this value.<br>
+    Members marked with [r] mean the variable is modified by FMOD and is for reading purposes only.  Do not change this value.<br>
+    Members marked with [w] mean the variable can be written to.  The user can set the value.<br>
     <br>
     The step parameter tells the gui or application that the parameter has a certain granularity.<br>
     For example in the example of cutoff frequency with a range from 100.0 to 22050.0 you might only want the selection to be in 10hz increments.  For this you would simply use 10.0 as the step value.<br>
@@ -98,12 +98,12 @@ typedef enum
 */
 typedef struct FMOD_DSP_PARAMETERDESC
 {
-    float       min;                                /* [in] Minimum value of the parameter (ie 100.0). */
-    float       max;                                /* [in] Maximum value of the parameter (ie 22050.0). */
-    float       defaultval;                         /* [in] Default value of parameter. */
-    char        name[16];                           /* [in] Name of the parameter to be displayed (ie "Cutoff frequency"). */
-    char        label[16];                          /* [in] Short string to be put next to value to denote the unit type (ie "hz"). */
-    const char *description;                        /* [in] Description of the parameter to be displayed as a help item / tooltip for this parameter. */
+    float       min;                                /* [w] Minimum value of the parameter (ie 100.0). */
+    float       max;                                /* [w] Maximum value of the parameter (ie 22050.0). */
+    float       defaultval;                         /* [w] Default value of parameter. */
+    char        name[16];                           /* [w] Name of the parameter to be displayed (ie "Cutoff frequency"). */
+    char        label[16];                          /* [w] Short string to be put next to value to denote the unit type (ie "hz"). */
+    const char *description;                        /* [w] Description of the parameter to be displayed as a help item / tooltip for this parameter. */
 } FMOD_DSP_PARAMETERDESC;
 
 
@@ -114,8 +114,8 @@ typedef struct FMOD_DSP_PARAMETERDESC
     When creating a DSP unit, declare one of these and provide the relevant callbacks and name for FMOD to use when it creates and uses a DSP unit of this type.
 
     [REMARKS]
-    Members marked with [in] mean the variable can be written to.  The user can set the value.<br>
-    Members marked with [out] mean the variable is modified by FMOD and is for reading purposes only.  Do not change this value.<br>
+    Members marked with [r] mean the variable is modified by FMOD and is for reading purposes only.  Do not change this value.<br>
+    Members marked with [w] mean the variable can be written to.  The user can set the value.<br>
     <br>
     There are 2 different ways to change a parameter in this architecture.<br>
     One is to use DSP::setParameter / DSP::getParameter.  This is platform independant and is dynamic, so new unknown plugins can have their parameters enumerated and used.<br>
@@ -131,23 +131,23 @@ typedef struct FMOD_DSP_PARAMETERDESC
 */
 typedef struct FMOD_DSP_DESCRIPTION
 {
-    char                         name[32];           /* [in] Name of the unit to be displayed in the network. */
-    unsigned int                 version;            /* [in] Plugin writer's version number. */
-    int                          channels;           /* [in] Number of channels.  Use 0 to process whatever number of channels is currently in the network.  >0 would be mostly used if the unit is a unit that only generates sound. */
-    FMOD_DSP_CREATECALLBACK      create;             /* [in] Create callback.  This is called when DSP unit is created.  Can be null. */
-    FMOD_DSP_RELEASECALLBACK     release;            /* [in] Release callback.  This is called just before the unit is freed so the user can do any cleanup needed for the unit.  Can be null. */
-    FMOD_DSP_RESETCALLBACK       reset;              /* [in] Reset callback.  This is called by the user to reset any history buffers that may need resetting for a filter, when it is to be used or re-used for the first time to its initial clean state.  Use to avoid clicks or artifacts. */
-    FMOD_DSP_READCALLBACK        read;               /* [in] Read callback.  Processing is done here.  Can be null. */
-    FMOD_DSP_SETPOSITIONCALLBACK setposition;        /* [in] Set position callback.  This is called if the unit wants to update its position info but not process data, or reset a cursor position internally if it is reading data from a certain source.  Can be null. */
+    char                         name[32];           /* [w] Name of the unit to be displayed in the network. */
+    unsigned int                 version;            /* [w] Plugin writer's version number. */
+    int                          channels;           /* [w] Number of channels.  Use 0 to process whatever number of channels is currently in the network.  >0 would be mostly used if the unit is a unit that only generates sound. */
+    FMOD_DSP_CREATECALLBACK      create;             /* [w] Create callback.  This is called when DSP unit is created.  Can be null. */
+    FMOD_DSP_RELEASECALLBACK     release;            /* [w] Release callback.  This is called just before the unit is freed so the user can do any cleanup needed for the unit.  Can be null. */
+    FMOD_DSP_RESETCALLBACK       reset;              /* [w] Reset callback.  This is called by the user to reset any history buffers that may need resetting for a filter, when it is to be used or re-used for the first time to its initial clean state.  Use to avoid clicks or artifacts. */
+    FMOD_DSP_READCALLBACK        read;               /* [w] Read callback.  Processing is done here.  Can be null. */
+    FMOD_DSP_SETPOSITIONCALLBACK setposition;        /* [w] Set position callback.  This is called if the unit wants to update its position info but not process data, or reset a cursor position internally if it is reading data from a certain source.  Can be null. */
 
-    int                          numparameters;      /* [in] Number of parameters used in this filter.  The user finds this with DSP::getNumParameters */
-    FMOD_DSP_PARAMETERDESC      *paramdesc;          /* [in] Variable number of parameter structures. */
-    FMOD_DSP_SETPARAMCALLBACK    setparameter;       /* [in] This is called when the user calls DSP::setParameter.  Can be null. */
-    FMOD_DSP_GETPARAMCALLBACK    getparameter;       /* [in] This is called when the user calls DSP::getParameter.  Can be null. */
-    FMOD_DSP_DIALOGCALLBACK      config;             /* [in] This is called when the user calls DSP::showConfigDialog.  Can be used to display a dialog to configure the filter.  Can be null. */
-    int                          configwidth;        /* [in] Width of config dialog graphic if there is one.  0 otherwise.*/
-    int                          configheight;       /* [in] Height of config dialog graphic if there is one.  0 otherwise.*/
-    void                        *userdata;           /* [in] Optional. Specify 0 to ignore. This is user data to be attached to the DSP unit during creation.  Access via DSP::getUserData. */
+    int                          numparameters;      /* [w] Number of parameters used in this filter.  The user finds this with DSP::getNumParameters */
+    FMOD_DSP_PARAMETERDESC      *paramdesc;          /* [w] Variable number of parameter structures. */
+    FMOD_DSP_SETPARAMCALLBACK    setparameter;       /* [w] This is called when the user calls DSP::setParameter.  Can be null. */
+    FMOD_DSP_GETPARAMCALLBACK    getparameter;       /* [w] This is called when the user calls DSP::getParameter.  Can be null. */
+    FMOD_DSP_DIALOGCALLBACK      config;             /* [w] This is called when the user calls DSP::showConfigDialog.  Can be used to display a dialog to configure the filter.  Can be null. */
+    int                          configwidth;        /* [w] Width of config dialog graphic if there is one.  0 otherwise.*/
+    int                          configheight;       /* [w] Height of config dialog graphic if there is one.  0 otherwise.*/
+    void                        *userdata;           /* [w] Optional. Specify 0 to ignore. This is user data to be attached to the DSP unit during creation.  Access via DSP::getUserData. */
 } FMOD_DSP_DESCRIPTION;
 
 
@@ -158,8 +158,8 @@ typedef struct FMOD_DSP_DESCRIPTION
     DSP plugin structure that is passed into each callback.
 
     [REMARKS]
-    Members marked with [in] mean the variable can be written to.  The user can set the value.<br>
-    Members marked with [out] mean the variable is modified by FMOD and is for reading purposes only.  Do not change this value.<br>
+    Members marked with [r] mean the variable is modified by FMOD and is for reading purposes only.  Do not change this value.<br>
+    Members marked with [w] mean the variable can be written to.  The user can set the value.<br>
 
     [PLATFORMS]
     Win32, Win64, Linux, Linux64, Macintosh, Xbox360, PlayStation 2, PlayStation Portable, PlayStation 3, Wii, Solaris, iPhone
@@ -170,9 +170,9 @@ typedef struct FMOD_DSP_DESCRIPTION
 */
 struct FMOD_DSP_STATE
 {
-    FMOD_DSP      *instance;      /* [out] Handle to the DSP hand the user created.  Not to be modified.  C++ users cast to FMOD::DSP to use.  */
-    void          *plugindata;    /* [in] Plugin writer created data the output author wants to attach to this object. */
-	unsigned short speakermask;	  /* Specifies which speakers the DSP effect is active on */
+    FMOD_DSP      *instance;      /* [r] Handle to the DSP hand the user created.  Not to be modified.  C++ users cast to FMOD::DSP to use.  */
+    void          *plugindata;    /* [w] Plugin writer created data the output author wants to attach to this object. */
+	unsigned short speakermask;	  /* [w] Specifies which speakers the DSP effect is active on */
 };
 
 
