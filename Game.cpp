@@ -71,9 +71,11 @@ Game::Game(
                 presence_matrix[i] = new bool[y_dim];
         for(int i=0; i<x_dim; i++)
                 for(int j=0; j<y_dim; j++)
-                        presence_matrix[i][j] = false;
+			if(i*(x_dim-1-i)*j*(y_dim-1-j))
+				presence_matrix[i][j] = false;
+			else presence_matrix[i][j] = true;
 
-        /* light */
+	/* light */
         LIGHT spot_sky;
 
         spot_sky.diffuse[0] = 1;
@@ -124,6 +126,8 @@ void Game::draw(){
 
 	player.x += player.speed*((int) cos(((float)player.angle)*M_PI/180.0));
 	player.y += player.speed*((int) sin(((float)player.angle)*M_PI/180.0));
+
+//	cout<<"x="<<player.x<< " y="<<player.y<<endl;
 
 	assert(player.x<=SIZE_CASE_X+board_size_x/2.0);
 	assert(player.x>=-SIZE_CASE_X-board_size_x/2.0);
