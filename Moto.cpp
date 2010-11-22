@@ -21,7 +21,7 @@ Moto::Moto(GLfloat _moto_size):
         wheelSW(_moto_size, false)
 {}
 
-void Moto::setPos(float _x, float _y, int _angle){
+void Moto::setPos(GLfloat _x, GLfloat _y, int _angle){
         x = _x;
         y = _y;
         angle = _angle;

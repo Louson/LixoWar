@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cmath>
 #include <assert.h>
+#include <cstdlib>
+#include <ctime>
 
 #include "Game.h"
 #include "Drawable.h"
@@ -41,6 +43,7 @@ Game::Game(
         moto_size(_moto_size)
 
 {
+
 	sound.playMainMusic();
         if(board_size_x < MIN_SIZE_BOARD || board_size_y < MIN_SIZE_BOARD)
                 throw ExceptionWrongBoardSize(); 
@@ -48,8 +51,9 @@ Game::Game(
         action = -1;
 
         /* motos */
-        player.x = player.y = 0;
-        player.angle = 0;
+//         player.x = player.y = 0;
+//         player.angle = 0;
+	randomStart(&player.x, &player.y, &player.angle);
         player.speed = 0;
         player.pt_moto = new Moto(_moto_size);
 
@@ -62,8 +66,8 @@ Game::Game(
         //graph_elements.push_back(&sky);
 
         /* presence matrix */
-	int x_dim = 2+board_size_x/SIZE_CASE_X;
-	int y_dim = 2+board_size_y/SIZE_CASE_Y;
+	int x_dim = 2+board_size_x/(float)SIZE_CASE_X;
+	int y_dim = 2+board_size_y/(float)SIZE_CASE_Y;
         presence_matrix = new bool * [x_dim];
         for(int i=0; i<x_dim; i++)
                 presence_matrix[i] = NULL;
@@ -74,7 +78,6 @@ Game::Game(
 			if(i*(x_dim-1-i)*j*(y_dim-1-j))
 				presence_matrix[i][j] = false;
 			else presence_matrix[i][j] = true;
-
 	/* light */
         LIGHT spot_sky;
 
@@ -126,21 +129,22 @@ void Game::draw(){
 	player.x += player.speed*((int) cos(((float)player.angle)*M_PI/180.0));
 	player.y += player.speed*((int) sin(((float)player.angle)*M_PI/180.0));
 
-//	cout<<"x="<<player.x<< " y="<<player.y<<endl;
+	cout<<"x="<<player.x<< " y="<<player.y<<" px="<<presence_x<<" py="<<presence_y<<endl;
 
-	assert(player.x<=SIZE_CASE_X+board_size_x/2.0);
-	assert(player.x>=-SIZE_CASE_X-board_size_x/2.0);
-	assert(player.y<=SIZE_CASE_Y+board_size_y/2.0);
-	assert(player.y>=-SIZE_CASE_Y-board_size_y/2.0);
-	if (presence_x != 1+(int)((player.x+board_size_x/2.0)/SIZE_CASE_X)
-	    || presence_y != 1+(int)((player.y+board_size_y/2.0)/SIZE_CASE_Y)) {
+ 	assert(player.x<=2*SIZE_CASE_X+board_size_x/2.0);
+ 	assert(player.x>=-2*SIZE_CASE_X-board_size_x/2.0);
+ 	assert(player.y<=2*SIZE_CASE_Y+board_size_y/2.0);
+ 	assert(player.y>=-2*SIZE_CASE_Y-board_size_y/2.0);
+
+	if (presence_x != 1+(int)((player.x+board_size_x/2.0)/(float)SIZE_CASE_X)
+	    || presence_y != 1+(int)((player.y+board_size_y/2.0)/(float)SIZE_CASE_Y)) {
 		/* Si on se trouve sur une nouvelle case 
 		 * We draw the previous beam ;
 		 * We test the new case ;
 		 */
 		Beam *beam;
- 		int x = SIZE_CASE_X*(presence_x-1)-board_size_x/2.0;
- 		int y = SIZE_CASE_Y*(presence_y-1)-board_size_y/2.0;
+ 		GLfloat x = SIZE_CASE_X*(presence_x-1)-board_size_x/2.0;
+ 		GLfloat y = SIZE_CASE_Y*(presence_y-1)-board_size_y/2.0;
 		beam = new Beam(x, y, player.angle, player.angle, 1);
 		beams.push_back(beam);
 		graph_elements.push_back(beam);
@@ -190,7 +194,7 @@ Game::~Game(){
         for(std::vector<Beam*>::iterator it = beams.begin();it<beams.end();it++)
                 delete *it;
         delete player.pt_moto;
-        for(int i=0; i<2+board_size_x/SIZE_CASE_X; i++)
+        for(int i=0; i<2+board_size_x/(float)SIZE_CASE_X; i++)
                 delete [] presence_matrix[i];
         delete [] presence_matrix;
 }
@@ -285,11 +289,22 @@ bool Game::has_lost() {
 }
 
 bool Game::testPresence() {
-		presence_x = 1+(player.x+board_size_x/2.0)/SIZE_CASE_X;
-		presence_y = 1+(player.y+board_size_y/2.0)/SIZE_CASE_Y;
-		if (presence_matrix[presence_x][presence_y]) {
-			cout << "Wow wow wow stop" <<endl;
-			return true;
-		}
+	presence_x = 1+(player.x+board_size_x/2.0)/(float)SIZE_CASE_X;
+	presence_y = 1+(player.y+board_size_y/2.0)/(float)SIZE_CASE_Y;
+	if (presence_matrix[presence_x][presence_y]) {
+		cout << "Wow wow wow stop" <<endl;
+		return true;
+	}
 	return false;
 }
+
+void Game::randomStart(GLfloat *x, GLfloat *y, int *angle) {
+	srand((unsigned)time(0));
+
+	int x_case = (board_size_x/(float)SIZE_CASE_X)*rand()/(float)RAND_MAX;
+	int y_case = (board_size_y/(float)SIZE_CASE_Y)*rand()/(float)RAND_MAX;
+	*x = SIZE_CASE_X*x_case-board_size_x/2.0;
+	*y = SIZE_CASE_Y*y_case-board_size_y/2.0;
+	*angle = 90*((int)(4*rand()/(float) RAND_MAX) - 1);
+}
+

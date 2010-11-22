@@ -19,7 +19,7 @@ class Moto : public Drawable{
 public :
 	Moto(GLfloat moto_size);
 	void draw();
-	void setPos(float _x, float _y, int _angle);
+	void setPos(GLfloat _x, GLfloat _y, int _angle);
 
 private :
         Color color;
@@ -37,10 +37,10 @@ private :
 };
 
 typedef struct moto_struct {
-        float x;
-        float y;
+        GLfloat x;
+        GLfloat y;
         int angle;
-        float speed;
+        GLfloat speed;
         Moto * pt_moto;
 } MOTO_STRUCT;
 

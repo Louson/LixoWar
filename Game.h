@@ -115,6 +115,8 @@ class Game: public Drawable{
 	bool testPresence();
 	bool has_won();
 	bool has_lost();
+
+	void randomStart(GLfloat *x, GLfloat *y, int *angle);
 };
 
 #endif
