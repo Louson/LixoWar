@@ -92,6 +92,13 @@ class Game: public Drawable{
         int action; 
 
 	Sound sound;
+
+	void randomStart(GLfloat *x, GLfloat *y, int *angle);
+
+	int funcX(GLfloat x);
+	int funcY(GLfloat y);
+	GLfloat inverseX(int px);
+	GLfloat inverseY(int py);
         
     public:
         class ExceptionWrongBoardSize:public std::exception{};
@@ -116,7 +123,6 @@ class Game: public Drawable{
 	bool has_won();
 	bool has_lost();
 
-	void randomStart(GLfloat *x, GLfloat *y, int *angle);
 };
 
 #endif

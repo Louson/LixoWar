@@ -50,6 +50,20 @@ Game::Game(
 
         action = -1;
 
+        /* presence matrix */
+	int x_dim = 2+board_size_x/(float)SIZE_CASE_X;
+	int y_dim = 2+board_size_y/(float)SIZE_CASE_Y;
+        presence_matrix = new bool * [x_dim];
+        for(int i=0; i<x_dim; i++)
+                presence_matrix[i] = NULL;
+        for(int i=0; i<x_dim; i++)
+                presence_matrix[i] = new bool[y_dim];
+        for(int i=0; i<x_dim; i++)
+                for(int j=0; j<y_dim; j++)
+			if(i*(x_dim-1-i)*j*(y_dim-1-j))
+				presence_matrix[i][j] = false;
+			else presence_matrix[i][j] = true;
+
         /* motos */
 //         player.x = player.y = 0;
 //         player.angle = 0;
@@ -65,19 +79,7 @@ Game::Game(
         graph_elements.push_back(&board);
         //graph_elements.push_back(&sky);
 
-        /* presence matrix */
-	int x_dim = 2+board_size_x/(float)SIZE_CASE_X;
-	int y_dim = 2+board_size_y/(float)SIZE_CASE_Y;
-        presence_matrix = new bool * [x_dim];
-        for(int i=0; i<x_dim; i++)
-                presence_matrix[i] = NULL;
-        for(int i=0; i<x_dim; i++)
-                presence_matrix[i] = new bool[y_dim];
-        for(int i=0; i<x_dim; i++)
-                for(int j=0; j<y_dim; j++)
-			if(i*(x_dim-1-i)*j*(y_dim-1-j))
-				presence_matrix[i][j] = false;
-			else presence_matrix[i][j] = true;
+
 	/* light */
         LIGHT spot_sky;
 
@@ -136,16 +138,15 @@ void Game::draw(){
  	assert(player.y<=2*SIZE_CASE_Y+board_size_y/2.0);
  	assert(player.y>=-2*SIZE_CASE_Y-board_size_y/2.0);
 
-	if (presence_x != 1+(int)((player.x+board_size_x/2.0)/(float)SIZE_CASE_X)
-	    || presence_y != 1+(int)((player.y+board_size_y/2.0)/(float)SIZE_CASE_Y)) {
+	GLfloat x = inverseX(presence_x);
+	GLfloat y = inverseY(presence_y);
+	if (player.x<x-SIZE_CASE_X/2.0 || player.x>x+SIZE_CASE_X/2.0
+	    || player.y<y-SIZE_CASE_Y/2.0 || player.y>y+SIZE_CASE_Y/2.0) {
 		/* Si on se trouve sur une nouvelle case 
 		 * We draw the previous beam ;
 		 * We test the new case ;
 		 */
 		Beam *beam;
- 		GLfloat x = SIZE_CASE_X*(presence_x-1)-board_size_x/2.0;
- 		GLfloat y = SIZE_CASE_Y*(presence_y-1)-board_size_y/2.0;
-
 		beam = new Beam(x, y, player.angle, player.angle, 1);
 		beams.push_back(beam);
 		graph_elements.push_back(beam);
@@ -290,8 +291,8 @@ bool Game::has_lost() {
 }
 
 bool Game::testPresence() {
-	presence_x = 1+(player.x+board_size_x/2.0)/(float)SIZE_CASE_X;
-	presence_y = 1+(player.y+board_size_y/2.0)/(float)SIZE_CASE_Y;
+	presence_x = funcX(player.x);
+	presence_y = funcY(player.y);
 	if (presence_matrix[presence_x][presence_y]) {
 		cout << "Wow wow wow stop" <<endl;
 		return true;
@@ -302,10 +303,34 @@ bool Game::testPresence() {
 void Game::randomStart(GLfloat *x, GLfloat *y, int *angle) {
 	srand((unsigned)time(0));
 
-	int x_case = (board_size_x/(float)SIZE_CASE_X)*rand()/(float)RAND_MAX;
-	int y_case = (board_size_y/(float)SIZE_CASE_Y)*rand()/(float)RAND_MAX;
-	*x = SIZE_CASE_X*x_case-board_size_x/2.0;
-	*y = SIZE_CASE_Y*y_case-board_size_y/2.0;
+	do {
+	presence_x = 1+(board_size_x/(float)SIZE_CASE_X)*rand()/(float)RAND_MAX;
+	presence_y = 1+(board_size_y/(float)SIZE_CASE_Y)*rand()/(float)RAND_MAX;
+	} while (presence_x == funcX(board_size_x/2.0+1)
+		 || presence_x == funcX(-board_size_x/2.0-1)
+		 || presence_y == funcY(board_size_y/2.0+1)
+		 || presence_y == funcY(-board_size_y/2.0-1));
+
+	*x = inverseX(presence_x);
+	*y = inverseY(presence_y);;
 	*angle = 90*((int)(4*rand()/(float) RAND_MAX) - 1);
+
+	presence_matrix[presence_x][presence_y] = true;
 }
 
+/**
+ * Retourne la case de la matrice associé à la postition
+ */
+int Game::funcX(GLfloat x) {
+	return 1+(int)((x+board_size_x/2.0)/(float)(SIZE_CASE_X));
+}
+int Game::funcY(GLfloat y) {
+	return 1+(int)((y+board_size_y/2.0)/(float)(SIZE_CASE_Y));
+}
+
+GLfloat Game::inverseX(int px) {
+	return SIZE_CASE_X*(px-0.5)-board_size_x/2.0;
+}
+GLfloat Game::inverseY(int py) {
+	return SIZE_CASE_Y*(py-0.5)-board_size_y/2.0;
+}
