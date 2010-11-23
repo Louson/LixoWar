@@ -65,8 +65,6 @@ Game::Game(
 			else presence_matrix[i][j] = true;
 
         /* motos */
-//         player.x = player.y = 0;
-//         player.angle = 0;
 	randomStart(&player.x, &player.y, &player.angle);
         player.speed = 0;
         player.pt_moto = new Moto(_moto_size);
@@ -131,7 +129,7 @@ void Game::draw(){
 	player.x += player.speed*((int) cos(((float)player.angle)*M_PI/180.0));
 	player.y += player.speed*((int) sin(((float)player.angle)*M_PI/180.0));
 
-	cout<<"x="<<player.x<< " y="<<player.y<<" px="<<presence_x<<" py="<<presence_y<<endl;
+//	cout<<"x="<<player.x<< " y="<<player.y<<" px="<<presence_x<<" py="<<presence_y<<endl;
 
  	assert(player.x<=2*SIZE_CASE_X+board_size_x/2.0);
  	assert(player.x>=-2*SIZE_CASE_X-board_size_x/2.0);
@@ -313,8 +311,7 @@ void Game::randomStart(GLfloat *x, GLfloat *y, int *angle) {
 
 	*x = inverseX(presence_x);
 	*y = inverseY(presence_y);;
-	*angle = 90*((int)(4*rand()/(float) RAND_MAX) - 1);
-
+	*angle = 90* (int) (rand()%4 -1);
 	presence_matrix[presence_x][presence_y] = true;
 }
 
