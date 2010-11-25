@@ -66,30 +66,30 @@ void Board::draw() {
 		drawWestLine(j);
 	
 		for (int k=d_lines_x ; k<=side_x-d_lines_x ; k+=d_lines_x) {
-			linev = k*v[3][0]+(side_x-k)*v[0][0];
+			linev = v[3][0]+k;
 			/* Lignes // (Oy) */
 			sideColor.active();
 			glBegin(GL_QUADS);
 			glNormal3f(-1.0, 0.0, 0.0);
-			glVertex3f(linev/side_x-HALF_LINE_SIZE_X, v[0][1]+j*s_y, 0.0);
-			glVertex3f(linev/side_x-HALF_LINE_SIZE_X, v[0][1]+(j+1)*s_y, 0.0);
-			glVertex3f(linev/side_x-HALF_LINE_SIZE_X, v[0][1]+(j+1)*s_y, B_DEPTH);
-			glVertex3f(linev/side_x-HALF_LINE_SIZE_X, v[0][1]+j*s_y, B_DEPTH);
+			glVertex3f(linev-HALF_LINE_SIZE_X, v[0][1]+j*s_y, 0.0);
+			glVertex3f(linev-HALF_LINE_SIZE_X, v[0][1]+(j+1)*s_y, 0.0);
+			glVertex3f(linev-HALF_LINE_SIZE_X, v[0][1]+(j+1)*s_y, B_DEPTH);
+			glVertex3f(linev-HALF_LINE_SIZE_X, v[0][1]+j*s_y, B_DEPTH);
 			glEnd();
 			glBegin(GL_QUADS);
 			glNormal3f(1.0, 0.0, 0.0);
-			glVertex3f(linev/side_x+HALF_LINE_SIZE_X, v[0][1]+j*s_y, 0.0);
-			glVertex3f(linev/side_x+HALF_LINE_SIZE_X, v[0][1]+(j+1)*s_y, 0.0);
-			glVertex3f(linev/side_x+HALF_LINE_SIZE_X, v[0][1]+(j+1)*s_y, B_DEPTH);
-			glVertex3f(linev/side_x+HALF_LINE_SIZE_X, v[0][1]+j*s_y, B_DEPTH);
+			glVertex3f(linev+HALF_LINE_SIZE_X, v[0][1]+j*s_y, 0.0);
+			glVertex3f(linev+HALF_LINE_SIZE_X, v[0][1]+(j+1)*s_y, 0.0);
+			glVertex3f(linev+HALF_LINE_SIZE_X, v[0][1]+(j+1)*s_y, B_DEPTH);
+			glVertex3f(linev+HALF_LINE_SIZE_X, v[0][1]+j*s_y, B_DEPTH);
 			glEnd();
 			lineColor.active();
 			glBegin(GL_QUADS);
 			glNormal3f(0.0, 0.0, 1.0);
-			glVertex3f(linev/side_x-HALF_LINE_SIZE_X, v[0][1]+j*s_y, 0.0);
-			glVertex3f(linev/side_x-HALF_LINE_SIZE_X, v[0][1]+(j+1)*s_y, 0.0);
-			glVertex3f(linev/side_x+HALF_LINE_SIZE_X, v[0][1]+(j+1)*s_y, 0.0);
-			glVertex3f(linev/side_x+HALF_LINE_SIZE_X, v[0][1]+j*s_y, 0.0);
+			glVertex3f(linev-HALF_LINE_SIZE_X, v[0][1]+j*s_y, 0.0);
+			glVertex3f(linev-HALF_LINE_SIZE_X, v[0][1]+(j+1)*s_y, 0.0);
+			glVertex3f(linev+HALF_LINE_SIZE_X, v[0][1]+(j+1)*s_y, 0.0);
+			glVertex3f(linev+HALF_LINE_SIZE_X, v[0][1]+j*s_y, 0.0);
 			glEnd();
 		}
 	}
@@ -99,30 +99,30 @@ void Board::draw() {
 		drawSouthLine(i);
 
 		for (int k=d_lines_y ; k<=side_y-d_lines_y ; k+=d_lines_y) {
-			lineh = k*v[0][1]+(side_y-k)*v[1][1];
+			lineh = (v[0][1]+k);
 			/* Lignes // (Ox) */
 			sideColor.active();
 			glBegin(GL_QUADS);
 			glNormal3f(0.0, -1.0, 0.0);
-			glVertex3f(v[0][0]-i*s_x, lineh/side_y-HALF_LINE_SIZE_Y, 0.0);
-			glVertex3f(v[0][0]-(i+1)*s_x, lineh/side_y-HALF_LINE_SIZE_Y, 0.0);
-			glVertex3f(v[0][0]-(i+1)*s_x, lineh/side_y-HALF_LINE_SIZE_Y, B_DEPTH);
-			glVertex3f(v[0][0]-i*s_x, lineh/side_y-HALF_LINE_SIZE_Y, B_DEPTH);
+			glVertex3f(v[0][0]-i*s_x, lineh-HALF_LINE_SIZE_Y, 0.0);
+			glVertex3f(v[0][0]-(i+1)*s_x, lineh-HALF_LINE_SIZE_Y, 0.0);
+			glVertex3f(v[0][0]-(i+1)*s_x, lineh-HALF_LINE_SIZE_Y, B_DEPTH);
+			glVertex3f(v[0][0]-i*s_x, lineh-HALF_LINE_SIZE_Y, B_DEPTH);
 			glEnd();
 			glBegin(GL_QUADS);
 			glNormal3f(0.0, 1.0, 0.0);
-			glVertex3f(v[0][0]-i*s_x, lineh/side_y+HALF_LINE_SIZE_Y, 0.0);
-			glVertex3f(v[0][0]-(i+1)*s_x, lineh/side_y+HALF_LINE_SIZE_Y, 0.0);
-			glVertex3f(v[0][0]-(i+1)*s_x, lineh/side_y+HALF_LINE_SIZE_Y, B_DEPTH);
-			glVertex3f(v[0][0]-i*s_x, lineh/side_y+HALF_LINE_SIZE_Y, B_DEPTH);
+			glVertex3f(v[0][0]-i*s_x, lineh+HALF_LINE_SIZE_Y, 0.0);
+			glVertex3f(v[0][0]-(i+1)*s_x, lineh+HALF_LINE_SIZE_Y, 0.0);
+			glVertex3f(v[0][0]-(i+1)*s_x, lineh+HALF_LINE_SIZE_Y, B_DEPTH);
+			glVertex3f(v[0][0]-i*s_x, lineh+HALF_LINE_SIZE_Y, B_DEPTH);
 			glEnd();
 			lineColor.active();
 			glBegin(GL_QUADS);
 			glNormal3f(0.0, 0.0, 1.0);
-			glVertex3f(v[0][0]-i*s_x, lineh/side_y-HALF_LINE_SIZE_Y, 0.0);
-			glVertex3f(v[0][0]-(i+1)*s_x, lineh/side_y-HALF_LINE_SIZE_Y, 0.0);
-			glVertex3f(v[0][0]-(i+1)*s_x, lineh/side_y+HALF_LINE_SIZE_Y, 0.0);
-			glVertex3f(v[0][0]-i*s_x, lineh/side_y+HALF_LINE_SIZE_Y, 0.0);
+			glVertex3f(v[0][0]-i*s_x, lineh-HALF_LINE_SIZE_Y, 0.0);
+			glVertex3f(v[0][0]-(i+1)*s_x, lineh-HALF_LINE_SIZE_Y, 0.0);
+			glVertex3f(v[0][0]-(i+1)*s_x, lineh+HALF_LINE_SIZE_Y, 0.0);
+			glVertex3f(v[0][0]-i*s_x, lineh+HALF_LINE_SIZE_Y, 0.0);
 			glEnd();
 			glPointSize(1.0);
 		}
