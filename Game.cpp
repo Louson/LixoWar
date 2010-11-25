@@ -53,16 +53,41 @@ Game::Game(
         /* presence matrix */
 	int x_dim = 2+board_size_x/(float)SIZE_CASE_X;
 	int y_dim = 2+board_size_y/(float)SIZE_CASE_Y;
+	float Dx = (int)(d_line_x/SIZE_CASE_X);
+	float Dy = (int)(d_line_y/SIZE_CASE_Y);
         presence_matrix = new bool * [x_dim];
+
+	int I = Dx-2*NB_CASE_HALF_LINE_X;
+	cout<<I<<endl;
+	cout<<Dx<<endl;
+	int a = I/Dx;
+	cout<<a<<endl;
+	int b = a*Dx+NB_CASE_HALF_LINE_X;
+	int c = (a+1)*Dx-NB_CASE_HALF_LINE_X;
+	cout<<b<<endl;
+	cout<<c<<endl;
+	
+
+
         for(int i=0; i<x_dim; i++)
                 presence_matrix[i] = NULL;
         for(int i=0; i<x_dim; i++)
                 presence_matrix[i] = new bool[y_dim];
-        for(int i=0; i<x_dim; i++)
-                for(int j=0; j<y_dim; j++)
-			if(i*(x_dim-1-i)*j*(y_dim-1-j))
+        for(int i=0; i<x_dim; i++) {
+                for(int j=0; j<y_dim; j++) {
+			if(i*(x_dim-1-i)*j*(y_dim-1-j)) {
 				presence_matrix[i][j] = false;
+				if ( ((int)((i-1)/Dx)*Dx+NB_CASE_HALF_LINE_X<=i-1
+				      && i-1<(int)((i-1)/Dx+1)*Dx-NB_CASE_HALF_LINE_X)
+				     && ((int)((j-1)/Dy)*Dy+NB_CASE_HALF_LINE_Y<=j-1
+					 && j-1<(int)((j-1)/Dy+1)*Dy-NB_CASE_HALF_LINE_Y) )
+					presence_matrix[i][j] = true;
+			}
 			else presence_matrix[i][j] = true;
+			cout << presence_matrix[i][j];
+		}
+		cout << endl;
+	}
 
         /* motos */
 	randomStart(&player.x, &player.y, &player.angle);
