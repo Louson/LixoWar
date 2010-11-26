@@ -46,8 +46,8 @@ public :
 	 */
 	void draw();
 private:
-	GLfloat d_lines_x;
-	GLfloat d_lines_y;
+	GLfloat d_line_x;
+	GLfloat d_line_y;
 	GLfloat quality_x;
 	GLfloat quality_y;
 	Color boardColor;

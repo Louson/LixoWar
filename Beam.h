@@ -12,12 +12,15 @@ class Beam : public Drawable {
 public :
 	Beam(MOTO_STRUCT moto);
         ~Beam();
-	Beam(GLfloat _x, GLfloat _y, GLfloat _ante_angle, GLfloat _post_angle, GLint _num_moto);
+	Beam(GLfloat _x, GLfloat _y, GLfloat _ante_angle, GLfloat _post_angle
+	     , GLint _num_moto, GLfloat _size_case_x, GLfloat _size_case_y);
 	void setPostAngle(int angle);
 	void draw();
 private:
 	GLfloat x;
 	GLfloat y;
+	GLfloat size_case_x;
+	GLfloat size_case_y;
 	GLfloat ante_dir[2];
 	GLfloat post_dir[2];
 	Color * color;

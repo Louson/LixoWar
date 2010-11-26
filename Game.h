@@ -23,12 +23,14 @@
 #define H_SPOT          5
 
 #define MIN_SIZE_BOARD  10
-#define SIZE_CASE_X 4
-#define SIZE_CASE_Y 4
+#define Dx 6.0
+#define Dy 6.0
 #define NB_CASE_HALF_LINE_X 1
 #define NB_CASE_HALF_LINE_Y 1
-#define HALF_LINE_SIZE_X NB_CASE_HALF_LINE_X*SIZE_CASE_X
-#define HALF_LINE_SIZE_Y NB_CASE_HALF_LINE_Y*SIZE_CASE_Y
+#define SIZE_CASE_X (d_line_x/Dx)
+#define SIZE_CASE_Y (d_line_y/Dy)
+#define HALF_LINE_SIZE_X (float)NB_CASE_HALF_LINE_X*SIZE_CASE_X
+#define HALF_LINE_SIZE_Y (float)NB_CASE_HALF_LINE_Y*SIZE_CASE_Y
 
 #define SPEED_INCREMENT 0.01
 
@@ -105,7 +107,7 @@ class Game: public Drawable{
         Game(int _opponent_number,
                 int _board_size_x, int _board_size_y,
                 GLfloat quality_x, GLfloat quality_y,
-                GLfloat d_line_x, GLfloat d_line_y, int _moto_size) throw (ExceptionWrongBoardSize);
+                GLfloat _d_line_x, GLfloat _d_line_y, int _moto_size) throw (ExceptionWrongBoardSize);
         ~Game();
 
         void draw();

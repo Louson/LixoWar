@@ -43,7 +43,6 @@ Game::Game(
         moto_size(_moto_size)
 
 {
-
 	sound.playMainMusic();
         if(board_size_x < MIN_SIZE_BOARD || board_size_y < MIN_SIZE_BOARD)
                 throw ExceptionWrongBoardSize(); 
@@ -53,8 +52,6 @@ Game::Game(
         /* presence matrix */
 	int x_dim = 2+board_size_x/(float)SIZE_CASE_X;
 	int y_dim = 2+board_size_y/(float)SIZE_CASE_Y;
-	float Dx = (int)(d_line_x/SIZE_CASE_X);
-	float Dy = (int)(d_line_y/SIZE_CASE_Y);
         presence_matrix = new bool * [x_dim];
 
 	int I = Dx-2*NB_CASE_HALF_LINE_X;
@@ -170,7 +167,7 @@ void Game::draw(){
 		 * We test the new case ;
 		 */
 		Beam *beam;
-		beam = new Beam(x, y, player.angle, player.angle, 1);
+		beam = new Beam(x, y, player.angle, player.angle, 1, SIZE_CASE_X, SIZE_CASE_Y);
 		beams.push_back(beam);
 		graph_elements.push_back(beam);
 

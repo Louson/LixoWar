@@ -31,18 +31,18 @@ const GLfloat LineShininess = 70;
  */
 Board::Board(GLfloat x, GLfloat y,
 	     GLfloat q_x, GLfloat q_y,
-	     GLfloat d_line_x, GLfloat d_line_y):
+	     GLfloat _d_line_x, GLfloat _d_line_y):
 	boardColor(BoardEmission, BoardAmbient, BoardDiffuse, BoardSpecular, BoardShininess),
 	sideColor(SideEmission, SideAmbient, SideDiffuse, SideSpecular, SideShininess),
 	lineColor(LineEmission, LineAmbient, LineDiffuse, LineSpecular, LineShininess)
 {
-	if (x < 2*d_line_x || y < 2*d_line_y) {
+	if (x < 2*_d_line_x || y < 2*_d_line_y) {
 		throw(range_error("Dimensions insuffisantes"));
 	}
 	side_x = x;
 	side_y = y;
-	d_lines_x = d_line_x;
-	d_lines_y = d_line_y;
+	d_line_x = _d_line_x;
+	d_line_y = _d_line_y;
 	quality_x = q_x;
 	quality_y = q_y;
 	set_normal(0, 0, 1);
@@ -65,7 +65,7 @@ void Board::draw() {
 		drawEastLine(j);
 		drawWestLine(j);
 	
-		for (int k=d_lines_x ; k<=side_x-d_lines_x ; k+=d_lines_x) {
+		for (int k=d_line_x ; k<=side_x-d_line_x ; k+=d_line_x) {
 			linev = v[3][0]+k;
 			/* Lignes // (Oy) */
 			sideColor.active();
@@ -98,7 +98,7 @@ void Board::draw() {
 		drawNorthLine(i);
 		drawSouthLine(i);
 
-		for (int k=d_lines_y ; k<=side_y-d_lines_y ; k+=d_lines_y) {
+		for (int k=d_line_y ; k<=side_y-d_line_y ; k+=d_line_y) {
 			lineh = (v[0][1]+k);
 			/* Lignes // (Ox) */
 			sideColor.active();
