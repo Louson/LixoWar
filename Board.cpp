@@ -31,7 +31,8 @@ const GLfloat LineShininess = 70;
  */
 Board::Board(GLfloat x, GLfloat y,
 	     GLfloat q_x, GLfloat q_y,
-	     GLfloat _d_line_x, GLfloat _d_line_y):
+	     GLfloat _d_line_x, GLfloat _d_line_y,
+	     GLfloat _dim_line_x, GLfloat _dim_line_y):
 	boardColor(BoardEmission, BoardAmbient, BoardDiffuse, BoardSpecular, BoardShininess),
 	sideColor(SideEmission, SideAmbient, SideDiffuse, SideSpecular, SideShininess),
 	lineColor(LineEmission, LineAmbient, LineDiffuse, LineSpecular, LineShininess)
@@ -43,6 +44,8 @@ Board::Board(GLfloat x, GLfloat y,
 	side_y = y;
 	d_line_x = _d_line_x;
 	d_line_y = _d_line_y;
+	dim_line_x = _dim_line_x;
+	dim_line_y = _dim_line_y;
 	quality_x = q_x;
 	quality_y = q_y;
 	set_normal(0, 0, 1);

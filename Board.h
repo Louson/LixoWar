@@ -34,12 +34,10 @@ public :
 	/**
 	 * Constructeurs
 	 */
-	Board(GLfloat side_x, GLfloat side_y);
 	Board(GLfloat side_x, GLfloat side_y,
-	      GLfloat d_lines_x, GLfloat d_lines_y);
-	Board(GLfloat side_x, GLfloat side_y,
+	      GLfloat quality_x, GLfloat quality_y,
 	      GLfloat d_lines_x, GLfloat d_lines_y,
-	      GLfloat quality_x, GLfloat quality_y);
+	      GLfloat dim_lines_x, GLfloat dim_lines_y);
 	
 	/**
 	 * Méthodes
@@ -48,6 +46,8 @@ public :
 private:
 	GLfloat d_line_x;
 	GLfloat d_line_y;
+	GLfloat dim_line_x;
+	GLfloat dim_line_y;
 	GLfloat quality_x;
 	GLfloat quality_y;
 	Color boardColor;

@@ -15,7 +15,7 @@ Game * pt_game = NULL;
 
 int main(int argc, char ** argv){
 
-    int side_x, side_y, quality_x, quality_y, d_line_x, d_line_y;
+    int side_x, side_y, quality_x, quality_y, d_line_x, d_line_y, dim_line_x, dim_line_y;
     int moto_size;
     int opponent_number;
     
@@ -34,6 +34,9 @@ int main(int argc, char ** argv){
         d_line_x = Config::fetchParam("d_line_x",D_LINE_X,config_file);
         d_line_y = Config::fetchParam("d_line_y",D_LINE_Y,config_file);
 
+        dim_line_x = Config::fetchParam("dim_line_x",DIM_LINE_X,config_file);
+        dim_line_y = Config::fetchParam("dim_line_y",DIM_LINE_Y,config_file);
+
         opponent_number = Config::fetchParam("enemy_number",OPPONENT_NUMBER,config_file);
 
         moto_size = Config::fetchParam("moto_size", MOTO_SIZE, config_file);
@@ -51,6 +54,7 @@ int main(int argc, char ** argv){
 		       side_x, side_y,
 		       quality_x, quality_y,
 		       d_line_x, d_line_y,
+		       dim_line_x, dim_line_y,
 		       moto_size);
 
     glutMainLoop();

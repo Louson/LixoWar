@@ -22,6 +22,8 @@ Game::Game(
 	GLfloat _quality_y,
 	GLfloat _d_lines_x, 
 	GLfloat _d_lines_y, 
+	GLfloat _dim_lines_x, 
+	GLfloat _dim_lines_y, 
 	int _moto_size
 	) throw (ExceptionWrongBoardSize) :
 	
@@ -33,12 +35,15 @@ Game::Game(
         board_size_y(_board_size_y),
         d_line_x(_d_lines_x),
         d_line_y(_d_lines_y),
+        dim_line_x(_dim_lines_x),
+        dim_line_y(_dim_lines_y),
 
         board(_board_size_x, _board_size_y,
-                        _quality_x, _quality_y,
-                        _d_lines_x, _d_lines_y),
+	      _quality_x, _quality_y,
+	      _d_lines_x, _d_lines_y,
+	      _dim_lines_x, _dim_lines_y),
         sky(2*_board_size_x, 2*_board_size_y,
-                        SKY_PIC),
+	    SKY_PIC),
         wall(2*WALL_SIZE, 2*WALL_SIZE),
         moto_size(_moto_size)
 
@@ -50,6 +55,8 @@ Game::Game(
         action = -1;
 
         /* presence matrix */
+	cout<<dim_line_x<<endl;
+	cout<<SIZE_CASE_X<<"lkjlkj"<<endl;
 	int x_dim = 2+board_size_x/(float)SIZE_CASE_X;
 	int y_dim = 2+board_size_y/(float)SIZE_CASE_Y;
         presence_matrix = new bool * [x_dim];
@@ -62,10 +69,10 @@ Game::Game(
                 for(int j=0; j<y_dim; j++) {
 			if(i*(x_dim-1-i)*j*(y_dim-1-j)) {
 				presence_matrix[i][j] = false;
-				if ( ((int)((i-1)/Dx)*Dx+NB_CASE_HALF_LINE_X<=i-1
-				      && i-1<(int)((i-1)/Dx+1)*Dx-NB_CASE_HALF_LINE_X)
-				     && ((int)((j-1)/Dy)*Dy+NB_CASE_HALF_LINE_Y<=j-1
-					 && j-1<(int)((j-1)/Dy+1)*Dy-NB_CASE_HALF_LINE_Y) )
+				if ( ((int)((i-1)/dim_line_x)*dim_line_x+NB_CASE_HALF_LINE_X<=i-1
+				      && i-1<(int)((i-1)/dim_line_x+1)*dim_line_x-NB_CASE_HALF_LINE_X)
+				     && ((int)((j-1)/dim_line_y)*dim_line_y+NB_CASE_HALF_LINE_Y<=j-1
+					 && j-1<(int)((j-1)/dim_line_y+1)*dim_line_y-NB_CASE_HALF_LINE_Y) )
 					presence_matrix[i][j] = true;
 			}
 			else presence_matrix[i][j] = true;

@@ -23,12 +23,12 @@
 #define H_SPOT          5
 
 #define MIN_SIZE_BOARD  10
-#define Dx 6.0
-#define Dy 6.0
+/* #define Dx 6.0 */
+/* #define Dy 6.0 */
 #define NB_CASE_HALF_LINE_X 1
 #define NB_CASE_HALF_LINE_Y 1
-#define SIZE_CASE_X (GLfloat)(d_line_x/Dx)
-#define SIZE_CASE_Y (GLfloat)(d_line_y/Dy)
+#define SIZE_CASE_X (GLfloat)(d_line_x/dim_line_x)
+#define SIZE_CASE_Y (GLfloat)(d_line_y/dim_line_y)
 #define HALF_LINE_SIZE_X (GLfloat)NB_CASE_HALF_LINE_X*SIZE_CASE_X
 #define HALF_LINE_SIZE_Y (GLfloat)NB_CASE_HALF_LINE_Y*SIZE_CASE_Y
 
@@ -62,7 +62,8 @@ class Game: public Drawable{
 
         /* graphic components */
         int board_size_x, board_size_y;
-        int d_line_x, d_line_y;
+        GLfloat d_line_x, d_line_y;
+        GLfloat dim_line_x, dim_line_y;
 
         Board board;
         Sky sky;
@@ -105,9 +106,11 @@ class Game: public Drawable{
     public:
         class ExceptionWrongBoardSize:public std::exception{};
         Game(int _opponent_number,
-                int _board_size_x, int _board_size_y,
-                GLfloat quality_x, GLfloat quality_y,
-                GLfloat _d_line_x, GLfloat _d_line_y, int _moto_size) throw (ExceptionWrongBoardSize);
+	     int _board_size_x, int _board_size_y,
+	     GLfloat quality_x, GLfloat quality_y,
+	     GLfloat _d_line_x, GLfloat _d_line_y,
+	     GLfloat _dim_line_x, GLfloat _dim_line_y,
+	     int _moto_size) throw (ExceptionWrongBoardSize);
         ~Game();
 
         void draw();
