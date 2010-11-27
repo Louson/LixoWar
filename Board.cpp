@@ -219,7 +219,7 @@ void Board::drawNorthLine(int i) {
 	glEnd();
 	lineColor.active();
 	glBegin(GL_QUADS);
-	glNormal3f(0.0, 0.0, 1.0);
+ 	glNormal3f(0.0, 0.0, 1.0);
 	glVertex3f(v[0][0]-i*s_x, v[1][1], 0.0);
 	glVertex3f(v[0][0]-(i+1)*s_x, v[1][1], 0.0);
 	glVertex3f(v[0][0]-(i+1)*s_x, v[1][1]-HALF_LINE_SIZE_Y, 0.0);

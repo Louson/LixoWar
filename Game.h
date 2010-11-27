@@ -27,10 +27,10 @@
 #define Dy 6.0
 #define NB_CASE_HALF_LINE_X 1
 #define NB_CASE_HALF_LINE_Y 1
-#define SIZE_CASE_X (d_line_x/Dx)
-#define SIZE_CASE_Y (d_line_y/Dy)
-#define HALF_LINE_SIZE_X (float)NB_CASE_HALF_LINE_X*SIZE_CASE_X
-#define HALF_LINE_SIZE_Y (float)NB_CASE_HALF_LINE_Y*SIZE_CASE_Y
+#define SIZE_CASE_X (GLfloat)(d_line_x/Dx)
+#define SIZE_CASE_Y (GLfloat)(d_line_y/Dy)
+#define HALF_LINE_SIZE_X (GLfloat)NB_CASE_HALF_LINE_X*SIZE_CASE_X
+#define HALF_LINE_SIZE_Y (GLfloat)NB_CASE_HALF_LINE_Y*SIZE_CASE_Y
 
 #define SPEED_INCREMENT 0.01
 

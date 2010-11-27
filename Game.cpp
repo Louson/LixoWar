@@ -54,18 +54,6 @@ Game::Game(
 	int y_dim = 2+board_size_y/(float)SIZE_CASE_Y;
         presence_matrix = new bool * [x_dim];
 
-	int I = Dx-2*NB_CASE_HALF_LINE_X;
-	cout<<I<<endl;
-	cout<<Dx<<endl;
-	int a = I/Dx;
-	cout<<a<<endl;
-	int b = a*Dx+NB_CASE_HALF_LINE_X;
-	int c = (a+1)*Dx-NB_CASE_HALF_LINE_X;
-	cout<<b<<endl;
-	cout<<c<<endl;
-	
-
-
         for(int i=0; i<x_dim; i++)
                 presence_matrix[i] = NULL;
         for(int i=0; i<x_dim; i++)
@@ -81,9 +69,9 @@ Game::Game(
 					presence_matrix[i][j] = true;
 			}
 			else presence_matrix[i][j] = true;
-			cout << presence_matrix[i][j];
+			//cout << presence_matrix[i][j];
 		}
-		cout << endl;
+		//cout << endl;
 	}
 
         /* motos */
