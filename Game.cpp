@@ -321,7 +321,8 @@ void Game::randomStart(GLfloat *x, GLfloat *y, int *angle) {
 	do {
 	presence_x = 1+(board_size_x/(float)SIZE_CASE_X)*rand()/(float)RAND_MAX;
 	presence_y = 1+(board_size_y/(float)SIZE_CASE_Y)*rand()/(float)RAND_MAX;
-	} while (presence_x == funcX(board_size_x/2.0+1)
+	} while (presence_matrix[presence_x][presence_y]
+		 || presence_x == funcX(board_size_x/2.0+1)
 		 || presence_x == funcX(-board_size_x/2.0-1)
 		 || presence_y == funcY(board_size_y/2.0+1)
 		 || presence_y == funcY(-board_size_y/2.0-1));
