@@ -42,8 +42,13 @@ void Light::setLight(void){
                         light = GL_LIGHT7;
                         break;
                 default:
-                        throw std::range_error("Invalid number of light");
+//                        throw std::range_error("Invalid number of light");
                         break;
         }
         light_number++;
+}
+
+Light::~Light(void)
+{
+        light_number = 0;
 }

@@ -27,5 +27,6 @@ class Light {
         public:
                 Light(LIGHT *);
                 virtual void init() = 0;
+                ~Light(void);
 };
 #endif

@@ -14,6 +14,41 @@
 
 const char * SKY_PIC = "Images/ciel.ppm";
 
+#define MAX_SPEED 0.15
+#define WALL_SIZE       10000
+
+/* lights */
+#define L_EXPONENT      2.0
+#define L_CUTOFF        180
+#define H_SPOT          5
+
+#define MIN_SIZE_BOARD  10
+/* #define Dx 6.0 */
+/* #define Dy 6.0 */
+#define NB_CASE_HALF_LINE_X 1
+#define NB_CASE_HALF_LINE_Y 1
+#define SIZE_CASE_X (GLfloat)(d_line_x/dim_line_x)
+#define SIZE_CASE_Y (GLfloat)(d_line_y/dim_line_y)
+#define HALF_LINE_SIZE_X (GLfloat)NB_CASE_HALF_LINE_X*SIZE_CASE_X
+#define HALF_LINE_SIZE_Y (GLfloat)NB_CASE_HALF_LINE_Y*SIZE_CASE_Y
+
+#define SPEED_INCREMENT 0.01
+
+#define ACTION_SLOWDOWN         0
+#define ROTATION_INCREMENT      2
+/* cameras settings */
+#define VIEW_DIST               200000.0
+#define FOVY                    90
+#define PERSP_HEIGHT            3
+#define MOTO_COEF               2
+#define REF_HEIGHT              2 
+#define PROJ_SIZE               50
+
+#define SUB_STEP    100
+#define X_START    -100
+#define TAN_FINISH  100
+
+
 Game::Game(
 	int _opponent_number,
 	int _board_size_x, 
@@ -238,16 +273,39 @@ void Game::zoomOrthoCam(int gradient){
         cam_ortho.zoom(gradient);
 }
 
+void Game::speedIncrement(MOTO_STRUCT *pt_moto, enum MOV mov)
+{
+        assert(pt_moto != NULL);
+
+        switch(mov){
+                case UP:
+                        if(pt_moto->speed + SPEED_INCREMENT > MAX_SPEED)
+                                pt_moto->speed = MAX_SPEED;
+                        else
+                                pt_moto->speed += SPEED_INCREMENT;
+                        break;
+                default:
+                        if(pt_moto->speed - SPEED_INCREMENT < 0)
+                                pt_moto->speed = 0;
+                        else
+                                pt_moto->speed -= SPEED_INCREMENT;
+                        break;
+        }
+
+        cout << pt_moto->speed<<endl;
+
+}
+
 void Game::motoMov(enum MOV mov){
         /* the comportement of negative modulo is undefined !!! */
         /* the cast is here to prevent overflow */
         
         switch(mov){
                 case UP:
-                        player.speed += SPEED_INCREMENT;
+                        speedIncrement(&player, UP);
 			break;
                 case DOWN:
-                        player.speed -= SPEED_INCREMENT;
+                        speedIncrement(&player, DOWN);
                         break;
                 case LEFT:
                         player.angle = (player.angle + ROTATION_INCREMENT) % 360;

@@ -15,39 +15,6 @@
 #include "Wall.h"
 #include "PtBeam.h"
 
-#define WALL_SIZE       10000
-
-/* lights */
-#define L_EXPONENT      2.0
-#define L_CUTOFF        180
-#define H_SPOT          5
-
-#define MIN_SIZE_BOARD  10
-/* #define Dx 6.0 */
-/* #define Dy 6.0 */
-#define NB_CASE_HALF_LINE_X 1
-#define NB_CASE_HALF_LINE_Y 1
-#define SIZE_CASE_X (GLfloat)(d_line_x/dim_line_x)
-#define SIZE_CASE_Y (GLfloat)(d_line_y/dim_line_y)
-#define HALF_LINE_SIZE_X (GLfloat)NB_CASE_HALF_LINE_X*SIZE_CASE_X
-#define HALF_LINE_SIZE_Y (GLfloat)NB_CASE_HALF_LINE_Y*SIZE_CASE_Y
-
-#define SPEED_INCREMENT 0.01
-
-#define ACTION_SLOWDOWN         0
-#define ROTATION_INCREMENT      2
-/* cameras settings */
-#define VIEW_DIST               200000.0
-#define FOVY                    90
-#define PERSP_HEIGHT            3
-#define MOTO_COEF               2
-#define REF_HEIGHT              2 
-#define PROJ_SIZE               50
-
-#define SUB_STEP    100
-#define X_START    -100
-#define TAN_FINISH  100
-
 enum MOV {UP, DOWN, LEFT, RIGHT};
 
 enum ACTIONS {NOTHING=-1, TURN_RIGHT, TURN_LEFT};
@@ -85,13 +52,13 @@ class Game: public Drawable{
         bool ** presence_matrix;
 	int presence_x, presence_y;
 
-
         std::vector<Drawable*> graph_elements;
 
         void resetLight(void);
         void setOrthoCam(void);
         void setPerspCam(void);
 
+        void speedIncrement(MOTO_STRUCT *, const enum MOV);
         int action; 
 
 	void randomStart(GLfloat *x, GLfloat *y, int *angle);

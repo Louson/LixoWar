@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
                 return RETURN_BAD_PATH;
         }
 
-       
+
         /* sound */
         try{
                 sound.init();
@@ -60,23 +60,25 @@ int main(int argc, char *argv[])
         }
 
         /* Set window */
-        Window::create(WINDOW_NAME,&argc,argv);
-        Window::init();
-        
-        pt_game = new Game(opponent_number,
-                        side_x, side_y,
-                        quality_x, quality_y,
-                        d_line_x, d_line_y,
-                        dim_line_x, dim_line_y,
-                        moto_size, sound);
+        while(!Window::leaveGame()){
+                Window::create(WINDOW_NAME,&argc,argv);
+                Window::init();
 
-        glutMainLoop();
-        if (Window::has_won()) {
-                cout << "YOU WIN" << endl;
-        } else if (Window::has_lost()) {
-                cout << "YOU LOSE" << endl;
-        } else cout << "DRAW" << endl;
+                pt_game = new Game(opponent_number,
+                                side_x, side_y,
+                                quality_x, quality_y,
+                                d_line_x, d_line_y,
+                                dim_line_x, dim_line_y,
+                                moto_size, sound);
 
-        delete pt_game;
+                glutMainLoop();
+                if(pt_game->has_won()){
+                        cout << "YOU WIN" << endl;
+                }else if(pt_game->has_lost()) {
+                        cout << "YOU LOSE" << endl;
+                } else cout << "DRAW" << endl;
+
+                delete pt_game;
+        }
         return EXIT_SUCCESS;
 }
