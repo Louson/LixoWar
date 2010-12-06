@@ -94,15 +94,14 @@ class Game: public Drawable{
 
         int action; 
 
-	Sound sound;
-
 	void randomStart(GLfloat *x, GLfloat *y, int *angle);
 
 	int funcX(GLfloat x);
 	int funcY(GLfloat y);
 	GLfloat inverseX(int px);
 	GLfloat inverseY(int py);
-        
+    
+        Sound & sound;
     public:
         class ExceptionWrongBoardSize:public std::exception{};
         Game(int _opponent_number,
@@ -110,7 +109,7 @@ class Game: public Drawable{
 	     GLfloat quality_x, GLfloat quality_y,
 	     GLfloat _d_line_x, GLfloat _d_line_y,
 	     GLfloat _dim_line_x, GLfloat _dim_line_y,
-	     int _moto_size) throw (ExceptionWrongBoardSize);
+	     int _moto_size, Sound &) throw (ExceptionWrongBoardSize);
         ~Game();
 
         void draw();

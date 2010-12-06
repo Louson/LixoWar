@@ -29,6 +29,7 @@ class File{
         File(const char * path) throw(ExceptionBadPath);
 
         int getParamInt(const string &) const throw(ExceptionParamInexistent);
+        const string getParamString(const string &) const throw(ExceptionParamInexistent);
 };
 
 #endif

@@ -3,29 +3,12 @@
 
 #include <string>
 
+#include "File.h"
 /* #include <AL/alut.h> */
 /* #include <AL/alc.h> */
 #include "fmod/fmod.hpp"
 #include "fmod/fmod_errors.h"
 #include "fmod/wincompat.h"
-
-#define NB_CANAL 4
-/**
- * STREAM_MODE pour une lecture live
- * SOUND_MODE pour une mise en tampon
- */
-#define STREAM_MODE
-#define CHECK_ERRORS
-
-/**
- * Musics paths
- */
-#define MAIN_MUSIC "./Sounds/music.mp3"
-#define BIP_START
-#define VROUM "./Sounds/vroum.mp3"
-#define VROUM_UP
-#define VROUM_DOWN
-#define TURN
 
 class Sound {
 public:
@@ -34,9 +17,16 @@ public:
 	void playMainMusic(void);
 	void playVroum(void);
 
+        void init(void) throw(File::ExceptionBadPath, File::ExceptionParamInexistent); 
 	bool isMusic();
 	bool isFoley();
 private:
+
+        /* sounds used */
+        std::string path_theme;
+        std::string path_vroum;
+
+
 	void checkError(std::string s);
 	FMOD::System *system;
 	FMOD_RESULT result;

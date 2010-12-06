@@ -42,3 +42,12 @@ int File::getParamInt(const string & param) const throw(ExceptionParamInexistent
    
     return atoi((*it).second.c_str());
 }
+
+const string File::getParamString(const string &param) const throw(ExceptionParamInexistent)
+{
+        map<string,string>::const_iterator it = lines.find(param);
+    
+        if(it == lines.end()) throw ExceptionParamInexistent();
+   
+        return (*it).second;
+}
