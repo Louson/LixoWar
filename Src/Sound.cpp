@@ -14,16 +14,13 @@
 #define STREAM_MODE
 #define CHECK_ERRORS
 
-
-Sound::Sound() 
+Sound::Sound():
+        channelMusic(0)
 {
 	result = FMOD::System_Create(&system);
 	checkError("Error in the sound system creation");
 
-	result = system->setOutput(FMOD_OUTPUTTYPE_ALSA);
-	checkError("Error in the sound system setOutput");
-
-	system->init(32, FMOD_INIT_NORMAL, 0); 
+	system->init(1, FMOD_INIT_NORMAL, 0); 
 	checkError("Error in the sound system init");
 }
 
@@ -35,8 +32,11 @@ void Sound::init(void) throw(File::ExceptionBadPath, File::ExceptionParamInexist
 }
 
 Sound::~Sound() {
-	system->release();
-	mainMusic->release();
+        if(system){
+                system->release();
+                system->close();
+                system->release();
+        }
 }
 
 void Sound::checkError(std::string s) {
@@ -50,7 +50,8 @@ void Sound::checkError(std::string s) {
 void Sound::playMainMusic(void) {
 #ifdef STREAM_MODE
 	/* Pour un flux (lecture en live) */
-	result = system->createStream(path_theme.c_str(), FMOD_SOFTWARE, 0, &mainMusic);
+	//result = system->createStream(path_theme.c_str(), FMOD_SOFTWARE | FMOD_2D | FMOD_CREATESTREAM, 0, &mainMusic);
+	result = system->createSound(path_theme.c_str(), FMOD_SOFTWARE | FMOD_2D | FMOD_CREATESTREAM, 0, &mainMusic);
 #endif
 
 #ifdef SOUND_MODE

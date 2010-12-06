@@ -32,4 +32,6 @@ mrproper: clean
 clean:
 	rm -f Src/*.o 
 
+run:
+	./$(PROJECT_NAME)
 .PHONY: clean 

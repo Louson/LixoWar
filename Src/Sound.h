@@ -26,7 +26,6 @@ private:
         std::string path_theme;
         std::string path_vroum;
 
-
 	void checkError(std::string s);
 	FMOD::System *system;
 	FMOD_RESULT result;
