@@ -1,12 +1,15 @@
-#include <string>
 #include <cassert>
-#include <GL/freeglut.h>
 #include <cmath>
+#include <ctime>
+#include <GL/freeglut.h>
 #include <iostream>
+#include <string>
 
-#include "Window.h"
-#include "Game.h"
 #include "Color.h"
+#include "Game.h"
+#include "Window.h"
+
+#define WAITING_TIME 5*CLOCKS_PER_SEC
 
 extern Game * pt_game;
 
@@ -36,10 +39,30 @@ bool Window::leaveGame(void)
  * use Functor with glut/freeglut
  */
 void Window::display() {
-        if (pt_game->has_lost() || pt_game->has_won()) {
-                glutLeaveMainLoop();
-        }
-        assert(pt_game!=NULL);
+        static bool pause = false;
+        static int wait;
+        static int sav_click;
+        int current_click;
+
+                if ((pt_game->has_lost() || pt_game->has_won()) && !pause) {
+                pause = true;
+                sav_click = clock();
+                wait = WAITING_TIME;
+                        glutPostRedisplay();
+        }else if(pause){
+                current_click = clock();
+                wait -= current_click - sav_click;
+                sav_click = current_click;
+
+                cout << wait << endl;
+                if(wait <= 0){
+                        pause = false;
+                        glutLeaveMainLoop();
+                }else
+                        glutPostRedisplay();
+
+        }else{
+                assert(pt_game!=NULL);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(0,0,0,0);
 
@@ -71,6 +94,7 @@ void Window::display() {
                 glEnd();
 
                 pt_game -> draw();
+        }
         }
         glFlush();
         glutSwapBuffers();
