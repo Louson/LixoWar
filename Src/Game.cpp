@@ -109,10 +109,12 @@ Game::Game(
 
         /* motos */
 	randomStart(&player.x, &player.y, &player.angle);
-        player.speed = 0;
+        presence_x = funcX(player.x);
+	presence_y = funcY(player.y);
+	player.speed = 0;
         player.pt_moto = new Moto(_moto_size);
 
-	opponentNumber = 1;
+	//opponentNumber = 1;
 	/* opponents */
 	tab_opp = new ENEMY_STRUCT[opponentNumber];
 	for (int i=0 ; i<opponentNumber ; i++) {
@@ -382,25 +384,25 @@ bool Game::testPresence() {
 }
 
 void Game::randomStart(GLfloat *x, GLfloat *y, int *angle) {
-
+	int px, py;
 	do {
-	presence_x = 1+(board_size_x/(float)SIZE_CASE_X)*rand()/(float)RAND_MAX;
-	presence_y = 1+(board_size_y/(float)SIZE_CASE_Y)*rand()/(float)RAND_MAX;
-	} while (presence_matrix[presence_x][presence_y]
-		 || presence_x == funcX(board_size_x/2.0+1)
-		 || presence_x == funcX(-board_size_x/2.0-1)
-		 || presence_y == funcY(board_size_y/2.0+1)
-		 || presence_y == funcY(-board_size_y/2.0-1));
+	px = 1+(board_size_x/(float)SIZE_CASE_X)*rand()/(float)RAND_MAX;
+	py = 1+(board_size_y/(float)SIZE_CASE_Y)*rand()/(float)RAND_MAX;
+	} while (presence_matrix[px][py]
+		 || px == funcX(board_size_x/2.0+1)
+		 || px == funcX(-board_size_x/2.0-1)
+		 || py == funcY(board_size_y/2.0+1)
+		 || py == funcY(-board_size_y/2.0-1));
 
-	*x = inverseX(presence_x);
-	*y = inverseY(presence_y);;
+	*x = inverseX(px);
+	*y = inverseY(py);;
 	*angle = 90* (int) (rand()%4 -1);
-	presence_matrix[presence_x][presence_y] = true;
+	presence_matrix[px][py] = true;
 
 }
 
 /**
- * Retourne la case de la matrice associé à la postition
+ * Retourne la case de la matrice associé à la position
  */
 int Game::funcX(GLfloat x) {
 	return 1+(int)((x+board_size_x/2.0)/(float)(SIZE_CASE_X));
@@ -408,7 +410,9 @@ int Game::funcX(GLfloat x) {
 int Game::funcY(GLfloat y) {
 	return 1+(int)((y+board_size_y/2.0)/(float)(SIZE_CASE_Y));
 }
-
+/**
+ * Retourne la position associée à la case
+ */
 GLfloat Game::inverseX(int px) {
 	return SIZE_CASE_X*(px-0.5)-board_size_x/2.0;
 }
