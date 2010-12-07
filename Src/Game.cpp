@@ -114,7 +114,7 @@ Game::Game(
 	player.speed = 0;
         player.pt_moto = new Moto(_moto_size);
 
-	opponentNumber = 1;
+	opponentNumber = 6;
 	/* opponents */
 	tab_opp = new ENEMY_STRUCT[opponentNumber];
 	for (int i=0 ; i<opponentNumber ; i++) {
@@ -324,6 +324,10 @@ void Game::motoMov(enum MOV mov){
                         action = TURN_RIGHT;
                         break;
         }
+}
+
+void Game::enemyMov(ENEMY_STRUCT enemy) {
+	
 }
 
 void Game::setPerspCam() {

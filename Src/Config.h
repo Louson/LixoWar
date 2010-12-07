@@ -25,4 +25,6 @@ namespace Config{
     int fetchParam(const string & paramName,int defaultValue, const File & configFile);
 };
 
+/* Enemy speed */
+
 #endif

@@ -84,6 +84,7 @@ class Game: public Drawable{
 
         /* actions */
         void motoMov(enum MOV);
+	void enemyMov(ENEMY_STRUCT enemy);
         void zoomOrthoCam(int);
 
         /* Cameras */
