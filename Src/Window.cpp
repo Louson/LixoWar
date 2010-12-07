@@ -10,6 +10,7 @@
 #include "Window.h"
 
 #define WAITING_TIME 5*CLOCKS_PER_SEC
+#define GLUT_KEY_ENTER 13
 
 extern Game * pt_game;
 
@@ -38,32 +39,14 @@ bool Window::leaveGame(void)
  * this function needs to be static => it's impossible to 
  * use Functor with glut/freeglut
  */
-void Window::display() {
-        static bool pause = false;
-        static int wait;
-        static int sav_click;
-        int current_click;
+void Window::display(void) 
+{
+        assert(pt_game!=NULL);
 
-                if ((pt_game->has_lost() || pt_game->has_won()) && !pause) {
-                pause = true;
-                sav_click = clock();
-                wait = WAITING_TIME;
-                        glutPostRedisplay();
-        }else if(pause){
-                current_click = clock();
-                wait -= current_click - sav_click;
-                sav_click = current_click;
-
-                cout << wait << endl;
-                if(wait <= 0){
-                        pause = false;
-                        glutLeaveMainLoop();
-                }else
-                        glutPostRedisplay();
-
+        if(pt_game->has_lost() || pt_game->has_won()){
+                        /* write something on the screen */
         }else{
-                assert(pt_game!=NULL);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(0,0,0,0);
 
         for(int i=0; i<VIEWPORT_NUMBER; i++){
@@ -156,7 +139,14 @@ void Window::init(){
 }
 
 void Window::keyboard(unsigned char cara,int x, int y){
-        switch((int) cara){
+        switch(cara){
+                case GLUT_KEY_ENTER:
+                        /* if the game is finished, we wait for an action then
+                         * we restart the game
+                         */
+                        if(pt_game->has_lost() || pt_game->has_won())
+                                glutLeaveMainLoop();
+                        break;
                 case KEY_ESC:
                         Window::_leaveGame = true;
                         glutLeaveMainLoop();
@@ -177,7 +167,7 @@ void Window::keyboard(unsigned char cara,int x, int y){
 
 void Window::specialKeyboard(int key, int x, int y){
         switch(key){
-                case GLUT_KEY_UP:
+               case GLUT_KEY_UP:
                         pt_game->motoMov(UP);
                         break;
                 case GLUT_KEY_RIGHT:

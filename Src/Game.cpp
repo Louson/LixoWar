@@ -25,13 +25,6 @@ const char * SKY_PIC = "Images/ciel.ppm";
 #define MIN_SIZE_BOARD  10
 /* #define Dx 6.0 */
 /* #define Dy 6.0 */
-#define NB_CASE_HALF_LINE_X 1
-#define NB_CASE_HALF_LINE_Y 1
-#define SIZE_CASE_X (GLfloat)(d_line_x/dim_line_x)
-#define SIZE_CASE_Y (GLfloat)(d_line_y/dim_line_y)
-#define HALF_LINE_SIZE_X (GLfloat)NB_CASE_HALF_LINE_X*SIZE_CASE_X
-#define HALF_LINE_SIZE_Y (GLfloat)NB_CASE_HALF_LINE_Y*SIZE_CASE_Y
-
 #define SPEED_INCREMENT 0.01
 
 #define ACTION_SLOWDOWN         0
@@ -47,7 +40,6 @@ const char * SKY_PIC = "Images/ciel.ppm";
 #define SUB_STEP    100
 #define X_START    -100
 #define TAN_FINISH  100
-
 
 Game::Game(
 	int _opponent_number,
@@ -84,15 +76,12 @@ Game::Game(
         moto_size(_moto_size),
         sound(_sound)
 {
-	sound.playMainMusic();
         if(board_size_x < MIN_SIZE_BOARD || board_size_y < MIN_SIZE_BOARD)
                 throw ExceptionWrongBoardSize(); 
 
         action = -1;
 
         /* presence matrix */
-	cout<<dim_line_x<<endl;
-	cout<<SIZE_CASE_X<<"lkjlkj"<<endl;
 	int x_dim = 2+board_size_x/(float)SIZE_CASE_X;
 	int y_dim = 2+board_size_y/(float)SIZE_CASE_Y;
         presence_matrix = new bool * [x_dim];
@@ -105,16 +94,14 @@ Game::Game(
                 for(int j=0; j<y_dim; j++) {
 			if(i*(x_dim-1-i)*j*(y_dim-1-j)) {
 				presence_matrix[i][j] = false;
-				if ( ((int)((i-1)/dim_line_x)*dim_line_x+NB_CASE_HALF_LINE_X<=i-1
-				      && i-1<(int)((i-1)/dim_line_x+1)*dim_line_x-NB_CASE_HALF_LINE_X)
-				     && ((int)((j-1)/dim_line_y)*dim_line_y+NB_CASE_HALF_LINE_Y<=j-1
-					 && j-1<(int)((j-1)/dim_line_y+1)*dim_line_y-NB_CASE_HALF_LINE_Y) )
+                                if ( ((int)((i-1)/dim_line_x)*dim_line_x+NB_CASE_HALF_LINE_X<=i-1
+                                                        && i-1<(int)((i-1)/dim_line_x+1)*dim_line_x-NB_CASE_HALF_LINE_X)
+                                                && ((int)((j-1)/dim_line_y)*dim_line_y+NB_CASE_HALF_LINE_Y<=j-1
+                                                        && j-1<(int)((j-1)/dim_line_y+1)*dim_line_y-NB_CASE_HALF_LINE_Y) )
 					presence_matrix[i][j] = true;
 			}
 			else presence_matrix[i][j] = true;
-			//cout << presence_matrix[i][j];
 		}
-		//cout << endl;
 	}
 
         /* motos */

@@ -7,27 +7,18 @@
 
 #define B_DEPTH -2.0
 
+/* needed by game.cpp */
+#define NB_CASE_HALF_LINE_X 1
+#define NB_CASE_HALF_LINE_Y 1
+#define SIZE_CASE_X (GLfloat)(d_line_x/dim_line_x)
+#define SIZE_CASE_Y (GLfloat)(d_line_y/dim_line_y)
+#define HALF_LINE_SIZE_X (GLfloat)NB_CASE_HALF_LINE_X*SIZE_CASE_X
+#define HALF_LINE_SIZE_Y (GLfloat)NB_CASE_HALF_LINE_Y*SIZE_CASE_Y
+
+
 /**
  * Ambient détermine la couleur qui sera réfléchie
  */
-//extern GLfloat BoardEmission[4];
-//extern GLfloat BoardDiffuse[4];
-//extern GLfloat BoardAmbient[4];
-//extern GLfloat BoardSpecular[4];
-//extern GLfloat BoardShininess;
-//
-//extern GLfloat SideEmission[4];
-//extern GLfloat SideDiffuse[4];
-//extern GLfloat SideAmbient[4];
-//extern GLfloat SideSpecular[4];
-//extern GLfloat SideShininess;
-//
-//extern GLfloat LineEmission[4];
-//extern GLfloat LineDiffuse[4];
-//extern GLfloat LineAmbient[4];
-//extern GLfloat LineSpecular[4];
-//extern GLfloat LineShininess;
-
 
 class Board : public Plan{
 public :
