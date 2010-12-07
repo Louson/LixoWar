@@ -45,6 +45,7 @@ class Game: public Drawable{
         int moto_size;
 
         MOTO_STRUCT player;
+	ENEMY_STRUCT *tab_opp;
 
 	std::vector<Beam *> beams;
 

@@ -76,7 +76,9 @@ Game::Game(
         moto_size(_moto_size),
         sound(_sound)
 {
-        if(board_size_x < MIN_SIZE_BOARD || board_size_y < MIN_SIZE_BOARD)
+   	srand((unsigned)time(0));
+	
+	if(board_size_x < MIN_SIZE_BOARD || board_size_y < MIN_SIZE_BOARD)
                 throw ExceptionWrongBoardSize(); 
 
         action = -1;
@@ -101,7 +103,8 @@ Game::Game(
 					presence_matrix[i][j] = true;
 			}
 			else presence_matrix[i][j] = true;
-		}
+			cout<<presence_matrix[i][j];
+		}cout<<endl;
 	}
 
         /* motos */
@@ -109,10 +112,24 @@ Game::Game(
         player.speed = 0;
         player.pt_moto = new Moto(_moto_size);
 
+	opponentNumber = 1;
+	/* opponents */
+	tab_opp = new ENEMY_STRUCT[opponentNumber];
+	for (int i=0 ; i<opponentNumber ; i++) {
+		randomStart(&tab_opp[i].x, &tab_opp[i].y, &tab_opp[i].angle);
+		cout <<  tab_opp[i].x <<",,,,,,,,"<<tab_opp[i].y<<endl;
+		(tab_opp+i)->numero = i+1;
+		(tab_opp+i)->speed = 0;
+		(tab_opp+i)->pt_moto = new Moto(_moto_size);
+	}
+
         /* drawing elements */
         for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
                 graph_elements.push_back(*it);
         graph_elements.push_back(player.pt_moto);
+	for (int i=0 ; i<opponentNumber ; i++) {
+		graph_elements.push_back((tab_opp+i)->pt_moto);
+	}
         graph_elements.push_back(&wall);
         graph_elements.push_back(&board);
         //graph_elements.push_back(&sky);
@@ -169,7 +186,7 @@ void Game::draw(){
 	player.x += player.speed*((int) cos(((float)player.angle)*M_PI/180.0));
 	player.y += player.speed*((int) sin(((float)player.angle)*M_PI/180.0));
 
-//	cout<<"x="<<player.x<< " y="<<player.y<<" px="<<presence_x<<" py="<<presence_y<<endl;
+	cout<<"x="<<player.x<< " y="<<player.y<<" px="<<presence_x<<" py="<<presence_y<<endl;
 
  	assert(player.x<=2*SIZE_CASE_X+board_size_x/2.0);
  	assert(player.x>=-2*SIZE_CASE_X-board_size_x/2.0);
@@ -196,6 +213,9 @@ void Game::draw(){
 	}
 
 	player.pt_moto->setPos(player.x, player.y, player.angle);
+	for (int i=0 ; i< opponentNumber ; i++) {
+		(tab_opp+i)->pt_moto->setPos((tab_opp+i)->x, (tab_opp+i)->y, (tab_opp+i)->angle);
+	}
 
         for(std::vector<Drawable *>::iterator it = graph_elements.begin(); it < graph_elements.end();it++)
                 if(*it) (*it) -> draw();
@@ -362,7 +382,6 @@ bool Game::testPresence() {
 }
 
 void Game::randomStart(GLfloat *x, GLfloat *y, int *angle) {
-	srand((unsigned)time(0));
 
 	do {
 	presence_x = 1+(board_size_x/(float)SIZE_CASE_X)*rand()/(float)RAND_MAX;
@@ -377,6 +396,7 @@ void Game::randomStart(GLfloat *x, GLfloat *y, int *angle) {
 	*y = inverseY(presence_y);;
 	*angle = 90* (int) (rand()%4 -1);
 	presence_matrix[presence_x][presence_y] = true;
+
 }
 
 /**

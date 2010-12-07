@@ -18,8 +18,8 @@ Moto::Moto(GLfloat _moto_size):
         wheelNW(_moto_size, false),
         wheelNE(_moto_size, true),
         wheelSE(_moto_size, true),
-        wheelSW(_moto_size, false)
-{}
+        wheelSW(_moto_size, false) {
+}
 
 void Moto::setPos(GLfloat _x, GLfloat _y, int _angle){
         x = _x;
