@@ -9,42 +9,28 @@
 #include "fmod/fmod_errors.h"
 #include "fmod/wincompat.h"
 
-enum SON {EXPLOSION};
+enum SON {EXPLOSION, THEME, VROUM};
 
 class Sound {
-public:
-        Sound();
-        ~Sound();
-	void playMainMusic(void);
-	void playVroum(void);
+        public:
+                Sound();
+                ~Sound();
 
-        void init(void) throw(File::ExceptionBadPath, File::ExceptionParamInexistent); 
-	bool isMusic();
-	bool isFoley();
-        void play(enum SON);
-private:
-        /* sounds used */
-        std::string path_theme;
-        std::string path_vroum;
-        std::string sounds[3];
-        FMOD::Sound *fmod_sounds[3];
+                void init(void) throw(File::ExceptionBadPath, File::ExceptionParamInexistent); 
+                bool isMusic();
+                bool isFoley();
+                void play(enum SON);
+        private:
+                /* sounds used */
+                std::string sounds[3];
+                FMOD::Sound *fmod_sounds[3];
 
-	void checkError(std::string s);
-	FMOD::System *system;
-	FMOD_RESULT result;
+                void checkError(std::string s);
+                FMOD::System *system;
+                FMOD_RESULT result;
 
-	FMOD::Channel *channelMusic;
-	FMOD::Channel *channelFoley;
-
-	FMOD::Sound *mainMusic;
-	FMOD::Sound *bipStart;
-	FMOD::Sound *vroum;
-	FMOD::Sound *vroumUp;
-	FMOD::Sound *vroumDown;
-	FMOD::Sound *turn;
-	FMOD::Sound *explosion;
-	FMOD::Sound *laugh;
-	FMOD::Sound *gameOver;
+                FMOD::Channel *channelMusic;
+                FMOD::Channel *channelFoley;
 };
 
 #endif

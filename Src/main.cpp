@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
                 cout << "Sound configuration file inexistent" << endl;
                 exit(EXIT_FAILURE);
         }
-	sound.playMainMusic();
+	sound.play(THEME);
 
         /* Set window */
         while(!Window::leaveGame()){

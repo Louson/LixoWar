@@ -20,7 +20,7 @@ Sound::Sound():
 	result = FMOD::System_Create(&system);
 	checkError("Error in the sound system creation");
 
-	result = system->init(1, FMOD_INIT_NORMAL, 0); 
+	result = system->init(32, FMOD_INIT_NORMAL, 0); 
 	checkError("Error in the sound system init");
 }
 
@@ -28,8 +28,8 @@ void Sound::init(void) throw(File::ExceptionBadPath, File::ExceptionParamInexist
 {
 	File config_file(PATH_CONFIG_FILE);
         sounds[EXPLOSION] = config_file.getParamString("explosion");
-	path_theme = config_file.getParamString("theme");
-	path_vroum = config_file.getParamString("vroum");
+	sounds[THEME] = config_file.getParamString("theme");
+	sounds[VROUM] = config_file.getParamString("vroum");
 }
 
 Sound::~Sound() {
@@ -48,45 +48,12 @@ void Sound::checkError(std::string s) {
 #endif
 }
 
-void Sound::playMainMusic(void) {
-#ifdef STREAM_MODE
-	/* Pour un flux (lecture en live) */
-	//result = system->createStream(path_theme.c_str(), FMOD_SOFTWARE | FMOD_2D | FMOD_CREATESTREAM, 0, &mainMusic);
-	result = system->createSound(path_theme.c_str(), FMOD_SOFTWARE | FMOD_2D | FMOD_CREATESTREAM, 0, &mainMusic);
-#endif
-
-#ifdef SOUND_MODE
-	/* Pour un son (lecture en tampon) */
-	result = system->createSound(path_theme.c_str(), FMOD_SOFTWARE, 0, &mainMusic);
-#endif
-	checkError("The theme does not exist");
-
-	result = system->playSound(FMOD_CHANNEL_FREE, mainMusic, 0, &channelMusic);
-	checkError("The theme can't be played");
-}
-
 void Sound::play(enum SON son){
 	result = system->createSound(sounds[son].c_str(), FMOD_SOFTWARE | FMOD_2D | FMOD_CREATESTREAM, 0, &fmod_sounds[son]);
 	checkError("The music does not exist");
 	result = system->playSound(FMOD_CHANNEL_FREE, fmod_sounds[son], 0, &channelMusic);
 	checkError("The music does not exist");
 }
-void Sound::playVroum(void) {
-#ifdef STREAM_MODE
-	/* Pour un flux (lecture en live) */
-	result = system->createStream(path_vroum.c_str(), FMOD_SOFTWARE, 0, &mainMusic);
-#endif
-
-#ifdef SOUND_MODE
-	/* Pour un son (lecture en tampon) */
-	result = system->createSound(path_vroum.c_str(), FMOD_SOFTWARE, 0, &mainMusic);
-#endif
-	checkError("The music does not exist");
-		
-	result = system->playSound(FMOD_CHANNEL_FREE, mainMusic, 0, &channelFoley);
-	checkError("The music can't be played");
-}
-
 
 bool Sound::isMusic() {
 	bool boolean;
