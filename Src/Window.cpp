@@ -17,7 +17,7 @@ static const unsigned char * END_TEXT = (unsigned char *)
 static const unsigned char * WIN_TEXT = (unsigned char *) 
         "You win !";
 static const unsigned char * LOST_TEXT = (unsigned char *) 
-        "You lost ...";
+        "GAME OVER !\n\nYou lost ...";
 
 extern Game * pt_game;
 
