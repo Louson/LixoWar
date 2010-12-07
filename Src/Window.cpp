@@ -12,6 +12,13 @@
 #define WAITING_TIME 5*CLOCKS_PER_SEC
 #define GLUT_KEY_ENTER 13
 
+static const unsigned char * END_TEXT = (unsigned char *) 
+        "Type ENTER to continue or ESC to quit.";
+static const unsigned char * WIN_TEXT = (unsigned char *) 
+        "You win !";
+static const unsigned char * LOST_TEXT = (unsigned char *) 
+        "You lost ...";
+
 extern Game * pt_game;
 
 namespace Window {
@@ -43,41 +50,51 @@ void Window::display(void)
 {
         assert(pt_game!=NULL);
 
-        if(pt_game->has_lost() || pt_game->has_won()){
-                        /* write something on the screen */
-        }else{
-                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(0,0,0,0);
 
-        for(int i=0; i<VIEWPORT_NUMBER; i++){
+        if(pt_game->has_lost() || pt_game->has_won()){
+
+                glDisable(GL_LIGHTING);
+                glDisable(GL_DEPTH_TEST);
+
                 glMatrixMode(GL_MODELVIEW);
                 glLoadIdentity();
                 glMatrixMode(GL_PROJECTION);
                 glLoadIdentity();
 
-                switch(i){
-                        case(NORMAL_VIEWPORT):
-                                glViewport(0, 0, window_width, window_height);
-                                pt_game->activatePerspCam();
-                                break;
-                        case(MAP_VIEWPORT):
-                                glViewport(window_width*MAP_VIEWPORT_POS_RATIO, 
-                                                window_height*MAP_VIEWPORT_POS_RATIO,
-                                                window_width*MAP_VIEWPORT_SIZE_RATIO-MAP_VIEWPORT_PIXEL_DEP,
-                                                window_height*MAP_VIEWPORT_SIZE_RATIO-MAP_VIEWPORT_PIXEL_DEP);
-                                pt_game->activateOrthoCam();
-                                break;
+                glViewport(0, 0, window_width, window_height);
+                glRasterPos3f(-0.5, 0,0);
+
+                if(pt_game->has_lost())
+                        glutBitmapString(GLUT_BITMAP_HELVETICA_18, LOST_TEXT);
+                else
+                        glutBitmapString(GLUT_BITMAP_HELVETICA_18, WIN_TEXT);
+
+                glutBitmapString(GLUT_BITMAP_HELVETICA_18, END_TEXT);
+        }else{
+                for(int i=0; i<VIEWPORT_NUMBER; i++){
+                        glMatrixMode(GL_MODELVIEW);
+                        glLoadIdentity();
+                        glMatrixMode(GL_PROJECTION);
+                        glLoadIdentity();
+
+                        switch(i){
+                                case(NORMAL_VIEWPORT):
+                                        glViewport(0, 0, window_width, window_height);
+                                        pt_game->activatePerspCam();
+                                        break;
+                                case(MAP_VIEWPORT):
+                                        glViewport(window_width*MAP_VIEWPORT_POS_RATIO, 
+                                                        window_height*MAP_VIEWPORT_POS_RATIO,
+                                                        window_width*MAP_VIEWPORT_SIZE_RATIO-MAP_VIEWPORT_PIXEL_DEP,
+                                                        window_height*MAP_VIEWPORT_SIZE_RATIO-MAP_VIEWPORT_PIXEL_DEP);
+                                        pt_game->activateOrthoCam();
+                                        break;
+                        }
+
+                        pt_game -> draw();
                 }
-
-                Color color;
-                color.active();
-                glBegin(GL_LINES);
-                glVertex3i(0,0,0);
-                glVertex3i(100,100,0);
-                glEnd();
-
-                pt_game -> draw();
-        }
         }
         glFlush();
         glutSwapBuffers();
@@ -121,10 +138,6 @@ void Window::init(){
         GLfloat ambientLight[4] = {0.5, 0.5, 0.5, 1.0}; 
         glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
 
-        /* Transparency */
-        //     glEnable(GL_BLEND);
-        //     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
         /**
          * Graphics settings
          */
@@ -167,7 +180,7 @@ void Window::keyboard(unsigned char cara,int x, int y){
 
 void Window::specialKeyboard(int key, int x, int y){
         switch(key){
-               case GLUT_KEY_UP:
+                case GLUT_KEY_UP:
                         pt_game->motoMov(UP);
                         break;
                 case GLUT_KEY_RIGHT:
