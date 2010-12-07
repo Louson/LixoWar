@@ -103,8 +103,8 @@ Game::Game(
 					presence_matrix[i][j] = true;
 			}
 			else presence_matrix[i][j] = true;
-			cout<<presence_matrix[i][j];
-		}cout<<endl;
+			//cout<<presence_matrix[i][j];
+		}//cout<<endl;
 	}
 
         /* motos */
@@ -114,12 +114,11 @@ Game::Game(
 	player.speed = 0;
         player.pt_moto = new Moto(_moto_size);
 
-	//opponentNumber = 1;
+	opponentNumber = 1;
 	/* opponents */
 	tab_opp = new ENEMY_STRUCT[opponentNumber];
 	for (int i=0 ; i<opponentNumber ; i++) {
 		randomStart(&tab_opp[i].x, &tab_opp[i].y, &tab_opp[i].angle);
-		cout <<  tab_opp[i].x <<",,,,,,,,"<<tab_opp[i].y<<endl;
 		(tab_opp+i)->numero = i+1;
 		(tab_opp+i)->speed = 0;
 		(tab_opp+i)->pt_moto = new Moto(_moto_size);
@@ -188,7 +187,7 @@ void Game::draw(){
 	player.x += player.speed*((int) cos(((float)player.angle)*M_PI/180.0));
 	player.y += player.speed*((int) sin(((float)player.angle)*M_PI/180.0));
 
-	cout<<"x="<<player.x<< " y="<<player.y<<" px="<<presence_x<<" py="<<presence_y<<endl;
+//	cout<<"x="<<player.x<< " y="<<player.y<<" px="<<presence_x<<" py="<<presence_y<<endl;
 
  	assert(player.x<=2*SIZE_CASE_X+board_size_x/2.0);
  	assert(player.x>=-2*SIZE_CASE_X-board_size_x/2.0);
