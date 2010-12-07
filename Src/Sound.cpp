@@ -20,15 +20,15 @@ Sound::Sound():
 	result = FMOD::System_Create(&system);
 	checkError("Error in the sound system creation");
 
-	system->init(1, FMOD_INIT_NORMAL, 0); 
+	result = system->init(1, FMOD_INIT_NORMAL, 0); 
 	checkError("Error in the sound system init");
 }
 
 void Sound::init(void) throw(File::ExceptionBadPath, File::ExceptionParamInexistent)
 {
-                File config_file(PATH_CONFIG_FILE);
-                path_theme = config_file.getParamString("theme");
-                path_vroum = config_file.getParamString("vroum");
+	File config_file(PATH_CONFIG_FILE);
+	path_theme = config_file.getParamString("theme");
+	path_vroum = config_file.getParamString("vroum");
 }
 
 Sound::~Sound() {
@@ -72,7 +72,7 @@ void Sound::playVroum(void) {
 
 #ifdef SOUND_MODE
 	/* Pour un son (lecture en tampon) */
-	result = system->createSound(path_vroum, FMOD_SOFTWARE, 0, &mainMusic);
+	result = system->createSound(path_vroum.c_str(), FMOD_SOFTWARE, 0, &mainMusic);
 #endif
 	checkError("The music does not exist");
 		
