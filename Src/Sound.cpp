@@ -27,6 +27,7 @@ Sound::Sound():
 void Sound::init(void) throw(File::ExceptionBadPath, File::ExceptionParamInexistent)
 {
 	File config_file(PATH_CONFIG_FILE);
+        sounds[EXPLOSION] = config_file.getParamString("explosion");
 	path_theme = config_file.getParamString("theme");
 	path_vroum = config_file.getParamString("vroum");
 }
@@ -64,6 +65,12 @@ void Sound::playMainMusic(void) {
 	checkError("The theme can't be played");
 }
 
+void Sound::play(enum SON son){
+	result = system->createSound(sounds[son].c_str(), FMOD_SOFTWARE | FMOD_2D | FMOD_CREATESTREAM, 0, &fmod_sounds[son]);
+	checkError("The music does not exist");
+	result = system->playSound(FMOD_CHANNEL_FREE, fmod_sounds[son], 0, &channelMusic);
+	checkError("The music does not exist");
+}
 void Sound::playVroum(void) {
 #ifdef STREAM_MODE
 	/* Pour un flux (lecture en live) */
@@ -79,6 +86,7 @@ void Sound::playVroum(void) {
 	result = system->playSound(FMOD_CHANNEL_FREE, mainMusic, 0, &channelFoley);
 	checkError("The music can't be played");
 }
+
 
 bool Sound::isMusic() {
 	bool boolean;

@@ -42,23 +42,23 @@ const char * SKY_PIC = "Images/ciel.ppm";
 #define TAN_FINISH  100
 
 Game::Game(
-	int _opponent_number,
-	int _board_size_x, 
-	int _board_size_y,
-	GLfloat _quality_x, 
-	GLfloat _quality_y,
-	GLfloat _d_lines_x, 
-	GLfloat _d_lines_y, 
-	GLfloat _dim_lines_x, 
-	GLfloat _dim_lines_y, 
-	int _moto_size,
-        Sound & _sound
-	) throw (ExceptionWrongBoardSize) :
-	
-	win(false), lose(false),
+                int _opponent_number,
+                int _board_size_x, 
+                int _board_size_y,
+                GLfloat _quality_x, 
+                GLfloat _quality_y,
+                GLfloat _d_lines_x, 
+                GLfloat _d_lines_y, 
+                GLfloat _dim_lines_x, 
+                GLfloat _dim_lines_y, 
+                int _moto_size,
+                Sound & _sound
+          ) throw (ExceptionWrongBoardSize) :
 
-	opponentNumber(_opponent_number),
-	
+        win(false), lose(false),
+
+        opponentNumber(_opponent_number),
+
         board_size_x(_board_size_x),
         board_size_y(_board_size_y),
         d_line_x(_d_lines_x),
@@ -67,25 +67,27 @@ Game::Game(
         dim_line_y(_dim_lines_y),
 
         board(_board_size_x, _board_size_y,
-	      _quality_x, _quality_y,
-	      _d_lines_x, _d_lines_y,
-	      _dim_lines_x, _dim_lines_y),
+                        _quality_x, _quality_y,
+                        _d_lines_x, _d_lines_y,
+                        _dim_lines_x, _dim_lines_y),
         sky(2*_board_size_x, 2*_board_size_y,
-	    SKY_PIC),
+                        SKY_PIC),
         wall(2*WALL_SIZE, 2*WALL_SIZE),
         moto_size(_moto_size),
-        sound(_sound)
+        sound(_sound),
+        explosion(NULL),
+        begin_explosion(true)
 {
-   	srand((unsigned)time(0));
-	
-	if(board_size_x < MIN_SIZE_BOARD || board_size_y < MIN_SIZE_BOARD)
+        srand((unsigned)time(0));
+
+        if(board_size_x < MIN_SIZE_BOARD || board_size_y < MIN_SIZE_BOARD)
                 throw ExceptionWrongBoardSize(); 
 
         action = -1;
 
         /* presence matrix */
-	int x_dim = 2+board_size_x/(float)SIZE_CASE_X;
-	int y_dim = 2+board_size_y/(float)SIZE_CASE_Y;
+        int x_dim = 2+board_size_x/(float)SIZE_CASE_X;
+        int y_dim = 2+board_size_y/(float)SIZE_CASE_Y;
         presence_matrix = new bool * [x_dim];
 
         for(int i=0; i<x_dim; i++)
@@ -94,49 +96,47 @@ Game::Game(
                 presence_matrix[i] = new bool[y_dim];
         for(int i=0; i<x_dim; i++) {
                 for(int j=0; j<y_dim; j++) {
-			if(i*(x_dim-1-i)*j*(y_dim-1-j)) {
-				presence_matrix[i][j] = false;
+                        if(i*(x_dim-1-i)*j*(y_dim-1-j)) {
+                                presence_matrix[i][j] = false;
                                 if ( ((int)((i-1)/dim_line_x)*dim_line_x+NB_CASE_HALF_LINE_X<=i-1
                                                         && i-1<(int)((i-1)/dim_line_x+1)*dim_line_x-NB_CASE_HALF_LINE_X)
                                                 && ((int)((j-1)/dim_line_y)*dim_line_y+NB_CASE_HALF_LINE_Y<=j-1
                                                         && j-1<(int)((j-1)/dim_line_y+1)*dim_line_y-NB_CASE_HALF_LINE_Y) )
-					presence_matrix[i][j] = true;
-			}
-			else presence_matrix[i][j] = true;
-			//cout<<presence_matrix[i][j];
-		}//cout<<endl;
-	}
+                                        presence_matrix[i][j] = true;
+                        }
+                        else presence_matrix[i][j] = true;
+                        //cout<<presence_matrix[i][j];
+                }//cout<<endl;
+        }
 
         /* motos */
-	randomStart(&player.x, &player.y, &player.angle);
+        randomStart(&player.x, &player.y, &player.angle);
         presence_x = funcX(player.x);
-	presence_y = funcY(player.y);
-	player.speed = 0;
+        presence_y = funcY(player.y);
+        player.speed = 0;
         player.pt_moto = new Moto(_moto_size);
 
-	opponentNumber = 6;
-	/* opponents */
-	tab_opp = new ENEMY_STRUCT[opponentNumber];
-	for (int i=0 ; i<opponentNumber ; i++) {
-		randomStart(&tab_opp[i].x, &tab_opp[i].y, &tab_opp[i].angle);
-		(tab_opp+i)->numero = i+1;
-		(tab_opp+i)->speed = 0;
-		(tab_opp+i)->pt_moto = new Moto(_moto_size);
-	}
+        opponentNumber = 6;
+        /* opponents */
+        tab_opp = new ENEMY_STRUCT[opponentNumber];
+        for (int i=0 ; i<opponentNumber ; i++) {
+                randomStart(&tab_opp[i].x, &tab_opp[i].y, &tab_opp[i].angle);
+                (tab_opp+i)->numero = i+1;
+                (tab_opp+i)->speed = 0;
+                (tab_opp+i)->pt_moto = new Moto(_moto_size);
+        }
 
         /* drawing elements */
         for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
                 graph_elements.push_back(*it);
         graph_elements.push_back(player.pt_moto);
-	for (int i=0 ; i<opponentNumber ; i++) {
-		graph_elements.push_back((tab_opp+i)->pt_moto);
-	}
+        for (int i=0 ; i<opponentNumber ; i++) {
+                graph_elements.push_back((tab_opp+i)->pt_moto);
+        }
         graph_elements.push_back(&wall);
         graph_elements.push_back(&board);
-        //graph_elements.push_back(&sky);
 
-
-	/* light */
+        /* light */
         LIGHT spot_sky;
 
         spot_sky.diffuse[0] = 1;
@@ -184,46 +184,58 @@ Game::Game(
 }
 
 void Game::draw(){
-	player.x += player.speed*((int) cos(((float)player.angle)*M_PI/180.0));
-	player.y += player.speed*((int) sin(((float)player.angle)*M_PI/180.0));
+        assert(player.x<=2*SIZE_CASE_X+board_size_x/2.0);
+        assert(player.x>=-2*SIZE_CASE_X-board_size_x/2.0);
+        assert(player.y<=2*SIZE_CASE_Y+board_size_y/2.0);
+        assert(player.y>=-2*SIZE_CASE_Y-board_size_y/2.0);
 
-//	cout<<"x="<<player.x<< " y="<<player.y<<" px="<<presence_x<<" py="<<presence_y<<endl;
+        if(explosion){
+                if(begin_explosion){
+                        begin_explosion = false;
+                        sound.play(EXPLOSION);
+                }
+                explosion->draw();
+                if(explosion->getApogee())
+                        /* we throw away the moto => cheap hack */
+                        player.pt_moto->setPos(-1000000, -1000000, 0);
+                if(explosion->getEnd())
+                        lose = true;
+        }else{
+                /* player position calculation */
+                player.x += player.speed*((int) cos(((float)player.angle)*M_PI/180.0));
+                player.y += player.speed*((int) sin(((float)player.angle)*M_PI/180.0));
+                player.pt_moto->setPos(player.x, player.y, player.angle);
 
- 	assert(player.x<=2*SIZE_CASE_X+board_size_x/2.0);
- 	assert(player.x>=-2*SIZE_CASE_X-board_size_x/2.0);
- 	assert(player.y<=2*SIZE_CASE_Y+board_size_y/2.0);
- 	assert(player.y>=-2*SIZE_CASE_Y-board_size_y/2.0);
+                /* colision detection */
+                GLfloat x = inverseX(presence_x);
+                GLfloat y = inverseY(presence_y);
+                if (player.x<x-SIZE_CASE_X/2.0 || player.x>x+SIZE_CASE_X/2.0
+                                || player.y<y-SIZE_CASE_Y/2.0 || player.y>y+SIZE_CASE_Y/2.0) {
+                        /* Si on se trouve sur une nouvelle case 
+                         * We draw the previous beam ;
+                         * We test the new case ;
+                         */
+                        if (testPresence()) {
+                                explosion = new Explosion(player.x, player.y);
+                        }else{
+                                Beam *beam;
+                                beam = new Beam(x, y, player.angle, player.angle, 1, SIZE_CASE_X, SIZE_CASE_Y);
+                                beams.push_back(beam);
+                                graph_elements.push_back(beam);
+                                presence_matrix[presence_x][presence_y] = true;
+                        }
+                }
+        }
 
-	GLfloat x = inverseX(presence_x);
-	GLfloat y = inverseY(presence_y);
-	if (player.x<x-SIZE_CASE_X/2.0 || player.x>x+SIZE_CASE_X/2.0
-	    || player.y<y-SIZE_CASE_Y/2.0 || player.y>y+SIZE_CASE_Y/2.0) {
-		/* Si on se trouve sur une nouvelle case 
-		 * We draw the previous beam ;
-		 * We test the new case ;
-		 */
-		Beam *beam;
-		beam = new Beam(x, y, player.angle, player.angle, 1, SIZE_CASE_X, SIZE_CASE_Y);
-		beams.push_back(beam);
-		graph_elements.push_back(beam);
-
-		if (testPresence()) {
-			lose = true;
-		}
-		presence_matrix[presence_x][presence_y] = true;
-	}
-
-	player.pt_moto->setPos(player.x, player.y, player.angle);
-	for (int i=0 ; i< opponentNumber ; i++) {
-		(tab_opp+i)->pt_moto->setPos((tab_opp+i)->x, (tab_opp+i)->y, (tab_opp+i)->angle);
-	}
+        for (int i=0 ; i< opponentNumber ; i++) 
+                (tab_opp+i)->pt_moto->setPos((tab_opp+i)->x, (tab_opp+i)->y, (tab_opp+i)->angle);
 
         for(std::vector<Drawable *>::iterator it = graph_elements.begin(); it < graph_elements.end();it++)
                 if(*it) (*it) -> draw();
 
+        /* action management */ 
         switch(action){
                 case NOTHING:
-
                         /* no action to do */
                         break;
                 case TURN_LEFT:
@@ -244,7 +256,8 @@ void Game::draw(){
                 default:
                         break;
         }
-	glutPostRedisplay();
+
+        glutPostRedisplay();
 }
 
 Game::~Game(){
@@ -258,6 +271,7 @@ Game::~Game(){
         for(int i=0; i<2+board_size_x/(float)SIZE_CASE_X; i++)
                 delete [] presence_matrix[i];
         delete [] presence_matrix;
+        delete explosion;
 }
 
 void Game::activatePerspCam(){
@@ -300,18 +314,18 @@ void Game::speedIncrement(MOTO_STRUCT *pt_moto, enum MOV mov)
                         break;
         }
 
-        cout << pt_moto->speed<<endl;
+        //cout << pt_moto->speed<<endl;
 
 }
 
 void Game::motoMov(enum MOV mov){
         /* the comportement of negative modulo is undefined !!! */
         /* the cast is here to prevent overflow */
-        
+
         switch(mov){
                 case UP:
                         speedIncrement(&player, UP);
-			break;
+                        break;
                 case DOWN:
                         speedIncrement(&player, DOWN);
                         break;
@@ -327,7 +341,7 @@ void Game::motoMov(enum MOV mov){
 }
 
 void Game::enemyMov(ENEMY_STRUCT enemy) {
-	
+
 }
 
 void Game::setPerspCam() {
@@ -358,49 +372,49 @@ void Game::setOrthoCam() {
 }
 
 void Game::cameraStart() {
-	GLfloat taux = H_CAM/TAN_FINISH;
-	for (int i=0 ; i<SUB_STEP ; i++) {
-		GLfloat angle = player.angle + 2*i*M_PI/(float)SUB_STEP;
-		cam_persp.set_position(player.x + X_START*cos(angle), player.y + H_CAM*sin(angle), H_CAM*(1-exp(-cos(angle)/taux)),
-				       player.x, player.y, 0.0,
-				       1.0, 1.0 ,1.0);
-		cam_persp.activate();
-		resetLight();
-	}
+        GLfloat taux = H_CAM/TAN_FINISH;
+        for (int i=0 ; i<SUB_STEP ; i++) {
+                GLfloat angle = player.angle + 2*i*M_PI/(float)SUB_STEP;
+                cam_persp.set_position(player.x + X_START*cos(angle), player.y + H_CAM*sin(angle), H_CAM*(1-exp(-cos(angle)/taux)),
+                                player.x, player.y, 0.0,
+                                1.0, 1.0 ,1.0);
+                cam_persp.activate();
+                resetLight();
+        }
 }
 
 bool Game::has_won() {
-	return win;
+        return win;
 }
 bool Game::has_lost() {
-	return lose;
+        return lose;
 }
 
 bool Game::testPresence() {
-	presence_x = funcX(player.x);
-	presence_y = funcY(player.y);
-	if (presence_matrix[presence_x][presence_y]) {
-		cout << "Wow wow wow stop" <<endl;
-		return true;
-	}
-	return false;
+        presence_x = funcX(player.x);
+        presence_y = funcY(player.y);
+        if (presence_matrix[presence_x][presence_y]) {
+                cout << "Wow wow wow stop" <<endl;
+                return true;
+        }
+        return false;
 }
 
 void Game::randomStart(GLfloat *x, GLfloat *y, int *angle) {
-	int px, py;
-	do {
-	px = 1+(board_size_x/(float)SIZE_CASE_X)*rand()/(float)RAND_MAX;
-	py = 1+(board_size_y/(float)SIZE_CASE_Y)*rand()/(float)RAND_MAX;
-	} while (presence_matrix[px][py]
-		 || px == funcX(board_size_x/2.0+1)
-		 || px == funcX(-board_size_x/2.0-1)
-		 || py == funcY(board_size_y/2.0+1)
-		 || py == funcY(-board_size_y/2.0-1));
+        int px, py;
+        do {
+                px = 1+(board_size_x/(float)SIZE_CASE_X)*rand()/(float)RAND_MAX;
+                py = 1+(board_size_y/(float)SIZE_CASE_Y)*rand()/(float)RAND_MAX;
+        } while (presence_matrix[px][py]
+                        || px == funcX(board_size_x/2.0+1)
+                        || px == funcX(-board_size_x/2.0-1)
+                        || py == funcY(board_size_y/2.0+1)
+                        || py == funcY(-board_size_y/2.0-1));
 
-	*x = inverseX(px);
-	*y = inverseY(py);;
-	*angle = 90* (int) (rand()%4 -1);
-	presence_matrix[px][py] = true;
+        *x = inverseX(px);
+        *y = inverseY(py);;
+        *angle = 90* (int) (rand()%4 -1);
+        presence_matrix[px][py] = true;
 
 }
 
@@ -408,17 +422,17 @@ void Game::randomStart(GLfloat *x, GLfloat *y, int *angle) {
  * Retourne la case de la matrice associé à la position
  */
 int Game::funcX(GLfloat x) {
-	return 1+(int)((x+board_size_x/2.0)/(float)(SIZE_CASE_X));
+        return 1+(int)((x+board_size_x/2.0)/(float)(SIZE_CASE_X));
 }
 int Game::funcY(GLfloat y) {
-	return 1+(int)((y+board_size_y/2.0)/(float)(SIZE_CASE_Y));
+        return 1+(int)((y+board_size_y/2.0)/(float)(SIZE_CASE_Y));
 }
 /**
  * Retourne la position associée à la case
  */
 GLfloat Game::inverseX(int px) {
-	return SIZE_CASE_X*(px-0.5)-board_size_x/2.0;
+        return SIZE_CASE_X*(px-0.5)-board_size_x/2.0;
 }
 GLfloat Game::inverseY(int py) {
-	return SIZE_CASE_Y*(py-0.5)-board_size_y/2.0;
+        return SIZE_CASE_Y*(py-0.5)-board_size_y/2.0;
 }

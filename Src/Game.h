@@ -1,19 +1,20 @@
 #ifndef _GAME_H
 #define _GAME_H
-#include "Sound.h"
 
 #include <vector>
 
-#include "Moto.h"
 #include "Board.h"
-#include "Sky.h"
-#include "Drawable.h"
 #include "Camera.h"
 #include "Camera_Ortho.h"
 #include "Camera_Persp.h"
+#include "Drawable.h"
+#include "Explosion.h"
 #include "Light.h"
-#include "Wall.h"
+#include "Moto.h"
 #include "PtBeam.h"
+#include "Sky.h"
+#include "Sound.h"
+#include "Wall.h"
 
 enum MOV {UP, DOWN, LEFT, RIGHT};
 
@@ -68,8 +69,12 @@ class Game: public Drawable{
 	int funcY(GLfloat y);
 	GLfloat inverseX(int px);
 	GLfloat inverseY(int py);
-    
+        
         Sound & sound;
+        
+        Explosion *explosion;
+        bool begin_explosion;
+
     public:
         class ExceptionWrongBoardSize:public std::exception{};
         Game(int _opponent_number,

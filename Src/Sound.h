@@ -4,11 +4,12 @@
 #include <string>
 
 #include "File.h"
-/* #include <AL/alut.h> */
-/* #include <AL/alc.h> */
+
 #include "fmod/fmod.hpp"
 #include "fmod/fmod_errors.h"
 #include "fmod/wincompat.h"
+
+enum SON {EXPLOSION};
 
 class Sound {
 public:
@@ -20,11 +21,13 @@ public:
         void init(void) throw(File::ExceptionBadPath, File::ExceptionParamInexistent); 
 	bool isMusic();
 	bool isFoley();
+        void play(enum SON);
 private:
-
         /* sounds used */
         std::string path_theme;
         std::string path_vroum;
+        std::string sounds[3];
+        FMOD::Sound *fmod_sounds[3];
 
 	void checkError(std::string s);
 	FMOD::System *system;
@@ -39,7 +42,7 @@ private:
 	FMOD::Sound *vroumUp;
 	FMOD::Sound *vroumDown;
 	FMOD::Sound *turn;
-	FMOD::Sound *boum;
+	FMOD::Sound *explosion;
 	FMOD::Sound *laugh;
 	FMOD::Sound *gameOver;
 };
