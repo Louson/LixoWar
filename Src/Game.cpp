@@ -42,24 +42,20 @@ const char * SKY_PIC = "Images/ciel.ppm";
 #define TAN_FINISH  100
 
 Game::Game(
-                int _opponent_number,
-                int _board_size_x, 
-                int _board_size_y,
-                GLfloat _quality_x, 
-                GLfloat _quality_y,
-                GLfloat _d_lines_x, 
-                GLfloat _d_lines_y, 
-                GLfloat _dim_lines_x, 
-                GLfloat _dim_lines_y, 
-                int _moto_size,
-                Sound & _sound,
-                int _num_lasers
-          ) throw (ExceptionWrongBoardSize) :
-
+	int _opponent_number,
+	int _board_size_x, int _board_size_y,
+	GLfloat _quality_x, GLfloat _quality_y,
+	GLfloat _d_lines_x, GLfloat _d_lines_y, 
+	GLfloat _dim_lines_x, GLfloat _dim_lines_y, 
+	int _moto_size,
+	Sound & _sound,
+	int _num_lasers
+	) throw (ExceptionWrongBoardSize) :
+	
         win(false), lose(false),
-
+	
         opponentNumber(_opponent_number),
-
+	
         board_size_x(_board_size_x),
         board_size_y(_board_size_y),
         d_line_x(_d_lines_x),
@@ -228,9 +224,9 @@ void Game::testNewCase(MOTO_STRUCT *motoTest) {
                         else if (motoTest->numero) {
                                 opponentNumber--;
                                 if (!opponentNumber) {
-                                        //win = true;
-                                        //end_game = true;
-                                }
+                                        win = true;
+				}
+				motoTest->pt_moto->explode();
                                 return;
                         }else{
                                 end_game = true;
@@ -400,13 +396,12 @@ void Game::enemyMov(MOTO_STRUCT *enemy) {
                         break;
                 case DOWN:
                         enemy->angle = (enemy->angle + 180) % 360;
-                        speedIncrement(enemy, DOWN);
                         break;
                 case LEFT:
                         enemy->angle = (enemy->angle + 90) % 360;
                         break;
                 case RIGHT:
-                        enemy->angle = (enemy->angle - 90) % 360;
+                        enemy->angle = (enemy->angle + 270) % 360;
                         break;
         }
 }
@@ -415,10 +410,12 @@ void Game::enemyMov(MOTO_STRUCT *enemy) {
  * Renvoie la meilleure direction
  */
 enum MOV Game::choseDirection(GLfloat x, GLfloat y, int angle) {
-        int min, upper;
+        int max, lower;
         enum MOV res = UP;
         int cosr;
         int sinr;
+
+	cout <<"Angle = "<<angle<<endl;
 
         switch ((angle%360+360)%360) {
                 case 0 :
@@ -439,22 +436,30 @@ enum MOV Game::choseDirection(GLfloat x, GLfloat y, int angle) {
                         break;
         }
 
-        min = look(funcX(x), funcY(y), cosr, sinr);
-        upper = look(funcX(x), funcY(y), sinr, -cosr);
-        if ( min > upper ) {
-                min = upper;
+	/* Tout droit */
+        max = look(funcX(x), funcY(y), cosr, sinr);
+	cout << " UP = "<<max;
+	/* à droite */
+        lower = look(funcX(x), funcY(y), sinr, -cosr);
+	cout << " RIGHT = "<<lower;
+        if ( max < lower ) {
+                max = lower;
                 res = RIGHT;
         }
-        upper = look(funcX(x), funcY(y), -sinr, -cosr);
-        if ( min > upper) {
-                min = upper;
+	/* à gauche */
+        lower = look(funcX(x), funcY(y), -sinr, -cosr);
+	cout << " LEFT = "<<lower;
+        if ( max < lower) {
+                max = lower;
                 res = LEFT;
         }
-        //	upper = look(funcX(x), funcY(y), cosr, -sinr);
-        // 	if ( min > upper) {
-        // 		min = upper;
+	/* en arrière */
+        //	lower = look(funcX(x), funcY(y), cosr, -sinr);
+        // 	if ( max > lower) {
+        // 		max = lower;
         // 		res = DOWN;
         // 	}
+	cout << " res = " << res << endl;
         return res;
 }
 
