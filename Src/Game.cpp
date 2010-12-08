@@ -111,8 +111,8 @@ Game::Game(
 
         /* motos */
         randomStart(&player.x, &player.y, &player.angle);
-        presence_x = funcX(player.x);
-        presence_y = funcY(player.y);
+        player.presence_x = funcX(player.x);
+        player.presence_y = funcY(player.y);
         player.speed = 0;
         player.pt_moto = new Moto(_moto_size, BLUE);
 
@@ -203,8 +203,8 @@ void Game::draw(){
                 player.pt_moto->setPos(player.x, player.y, player.angle);
 
                 /* colision detection */
-                GLfloat x = inverseX(presence_x);
-                GLfloat y = inverseY(presence_y);
+                GLfloat x = inverseX(player.presence_x);
+                GLfloat y = inverseY(player.presence_y);
                 if (player.x<x-SIZE_CASE_X/2.0 || player.x>x+SIZE_CASE_X/2.0
                                 || player.y<y-SIZE_CASE_Y/2.0 || player.y>y+SIZE_CASE_Y/2.0) {
                         /* Si on se trouve sur une nouvelle case 
@@ -219,7 +219,7 @@ void Game::draw(){
                                 beam = new Beam(x, y, player.angle, player.angle, 1, SIZE_CASE_X, SIZE_CASE_Y);
                                 beams.push_back(beam);
                                 graph_elements.push_back(beam);
-                                presence_matrix[presence_x][presence_y] = true;
+                                presence_matrix[player.presence_x][player.presence_y] = true;
                         }
                 }
         }
@@ -387,9 +387,9 @@ bool Game::has_lost() {
 }
 
 bool Game::testPresence() {
-        presence_x = funcX(player.x);
-        presence_y = funcY(player.y);
-        if (presence_matrix[presence_x][presence_y]) {
+        player.presence_x = funcX(player.x);
+        player.presence_y = funcY(player.y);
+        if (presence_matrix[player.presence_x][player.presence_y]) {
                 cout << "Wow wow wow stop" <<endl;
                 return true;
         }
@@ -431,4 +431,12 @@ GLfloat Game::inverseX(int px) {
 }
 GLfloat Game::inverseY(int py) {
         return SIZE_CASE_Y*(py-0.5)-board_size_y/2.0;
+}
+
+void enemyMov(ENEMY_STRUCT enemy) {
+	
+}
+
+enum MOV Game::choseDirection(GLfloat x, GLfloat y) {
+	
 }

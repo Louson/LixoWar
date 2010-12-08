@@ -90,6 +90,7 @@ class Game: public Drawable{
         /* actions */
         void motoMov(enum MOV);
 	void enemyMov(ENEMY_STRUCT enemy);
+	enum MOV choseDirection(GLfloat x, GLfloat y);
         void zoomOrthoCam(int);
 
         /* Cameras */
