@@ -121,7 +121,9 @@ Game::Game(
         tab_opp = new MOTO_STRUCT[opponentNumber];
         for (int i=0 ; i<opponentNumber ; i++) {
                 randomStart(&tab_opp[i].x, &tab_opp[i].y, &tab_opp[i].angle);
-                (tab_opp+i)->numero = i+1;
+                tab_opp[i].presence_x = funcX(tab_opp[i].x);
+                tab_opp[i].presence_y = funcY(tab_opp[i].y);
+		(tab_opp+i)->numero = i+1;
                 (tab_opp+i)->speed = 0;
                 (tab_opp+i)->pt_moto = new Moto(_moto_size, RED);
         }
@@ -193,6 +195,7 @@ void Game::testNewCase(MOTO_STRUCT *motoTest) {
 		 * We test the new case ;
 		 */
 		if (testPresence(motoTest)){
+//			cout << "ouais ouais"<<endl;
 			if (motoTest->numero) {
 				opponentNumber--;
 				if (!opponentNumber) {
@@ -205,7 +208,7 @@ void Game::testNewCase(MOTO_STRUCT *motoTest) {
 			motoTest->pt_moto->explode();
 		}else{
 			Beam *beam;
-			beam = new Beam(temp_x, temp_y, motoTest->angle, motoTest->angle, 1, SIZE_CASE_X, SIZE_CASE_Y, BLUE);
+			beam = new Beam(temp_x, temp_y, motoTest->angle, motoTest->angle, motoTest->numero, SIZE_CASE_X, SIZE_CASE_Y, BLUE);
 			beams.push_back(beam);
 			graph_elements.push_back(beam);
 			presence_matrix[motoTest->presence_x][motoTest->presence_y] = true;
@@ -239,7 +242,7 @@ void Game::draw(){
 			enemy->y += enemy->speed*((int) sin(((float)enemy->angle)*M_PI/180.0));
 			enemy->pt_moto->setPos(enemy->x, enemy->y, enemy->angle);
 			enemyMov(enemy);
-			//testNewCase(enemy);
+			testNewCase(enemy);
 		}
 
                 /* colision detection */
@@ -419,10 +422,10 @@ enum MOV Game::choseDirection(GLfloat x, GLfloat y, int angle) {
 		res = LEFT;
 	}
 	upper = look(funcX(x), funcY(y), cosr, -sinr);
-	if ( min > upper) {
-		min = upper;
-		res = DOWN;
-	}
+// 	if ( min > upper) {
+// 		min = upper;
+// 		res = DOWN;
+// 	}
 	cout << "direction " << res << endl;
 	return res;
 }
@@ -514,7 +517,6 @@ void Game::randomStart(GLfloat *x, GLfloat *y, int *angle) {
         *y = inverseY(py);;
         *angle = 90* (int) (rand()%4 -1);
         presence_matrix[px][py] = true;
-
 }
 
 /**
