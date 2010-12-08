@@ -17,6 +17,7 @@ Src/Light.o\
 Src/Beam.o\
 Src/Sound.o\
 Src/Explosion.o\
+Src/Laser.o\
 lib/libfmodex.so
 
 all: $(PROJECT_NAME)
