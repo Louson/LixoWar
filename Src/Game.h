@@ -93,7 +93,7 @@ class Game: public Drawable{
         /* actions */
         void motoMov(enum MOV);
 	void enemyMov(MOTO_STRUCT *enemy);
-	enum MOV choseDirection(GLfloat x, GLfloat y, GLfloat angle);
+	enum MOV choseDirection(GLfloat x, GLfloat y, int angle);
 	int look(int px, int py, int kx, int ky);
         void zoomOrthoCam(int);
 
@@ -102,7 +102,7 @@ class Game: public Drawable{
         void activateOrthoCam(void);
 	void cameraStart();
 
-	bool testPresence();
+	bool testPresence(MOTO_STRUCT *motoTest);
 	bool has_won();
 	bool has_lost();
 

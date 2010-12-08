@@ -192,8 +192,16 @@ void Game::testNewCase(MOTO_STRUCT *motoTest) {
 		 * We draw the previous beam ;
 		 * We test the new case ;
 		 */
-		if (testPresence()){
-			end_game = true;
+		if (testPresence(motoTest)){
+			if (motoTest->numero) {
+				opponentNumber--;
+				if (!opponentNumber) {
+					win = true;
+					end_game = true;
+				}
+			} else {
+				end_game = true;
+			}
 			motoTest->pt_moto->explode();
 		}else{
 			Beam *beam;
@@ -230,7 +238,8 @@ void Game::draw(){
 			enemy->x += enemy->speed*((int) cos(((float)enemy->angle)*M_PI/180.0));
 			enemy->y += enemy->speed*((int) sin(((float)enemy->angle)*M_PI/180.0));
 			enemy->pt_moto->setPos(enemy->x, enemy->y, enemy->angle);
-			testNewCase(enemy);
+			enemyMov(enemy);
+			//testNewCase(enemy);
 		}
 
                 /* colision detection */
@@ -349,12 +358,16 @@ void Game::motoMov(enum MOV mov){
         }
 }
 
+/**
+ * Déplace l'ennemi dans la bonne direction
+ */
 void Game::enemyMov(MOTO_STRUCT *enemy) {
 	switch (choseDirection(enemy->x, enemy->y, enemy->angle)) {
                 case UP:
                         speedIncrement(enemy, UP);
                         break;
                 case DOWN:
+                        enemy->angle = (enemy->angle + 180) % 360;
                         speedIncrement(enemy, DOWN);
                         break;
                 case LEFT:
@@ -369,22 +382,48 @@ void Game::enemyMov(MOTO_STRUCT *enemy) {
 /**
  * Renvoie la meilleure direction
  */
-enum MOV Game::choseDirection(GLfloat x, GLfloat y, GLfloat angle) {
+enum MOV Game::choseDirection(GLfloat x, GLfloat y, int angle) {
 	int min, upper;
 	enum MOV res = UP;
-	if ( (min = look(funcX(x), funcY(y), cos(angle), sin(angle)))
-	     > (upper = look(funcX(x), funcY(y), sin(angle), -cos(angle))) ) {
+	int cosr;
+	int sinr;
+
+	switch ((angle%360+360)%360) {
+	case 0 :
+		cosr = 1;
+		sinr = 0;
+		break;
+	case 90 :
+		cosr = 0;
+		sinr = 1;
+		break;
+	case 180 :
+		cosr = -1;
+		sinr = 0;
+		break;
+	case 270 :
+		cosr = 0;
+		sinr = -1;
+		break;
+	}
+
+	min = look(funcX(x), funcY(y), cosr, sinr);
+	upper = look(funcX(x), funcY(y), sinr, -cosr);
+	if ( min > upper ) {
 		min = upper;
 		res = RIGHT;
 	}
-	if ( min > (upper = look(funcX(x), funcY(y), -sin(angle), -cos(angle))) ) {
+	upper = look(funcX(x), funcY(y), -sinr, -cosr);
+	if ( min > upper) {
 		min = upper;
 		res = LEFT;
 	}
-	if ( (min > (upper = look(funcX(x), funcY(y), cos(angle), -sin(angle)))) ) {
+	upper = look(funcX(x), funcY(y), cosr, -sinr);
+	if ( min > upper) {
 		min = upper;
 		res = DOWN;
 	}
+	cout << "direction " << res << endl;
 	return res;
 }
 
@@ -396,9 +435,9 @@ int Game::look(int px, int py, int kx, int ky) {
 	int resy = py;
 	assert(kx*ky == 0);
 	do {
-		resx = px + kx;
-		resy = py + ky;
-	} while (presence_matrix[resx][resy]);
+		resx += kx;
+		resy += ky;
+	} while (!presence_matrix[resx][resy]);
 	if (kx + ky > 0)
 		return (resx-px)+(resy-py);
 	else return (px-resx)+(py-resy);
@@ -450,10 +489,10 @@ bool Game::has_lost() {
         return lose;
 }
 
-bool Game::testPresence() {
-        player.presence_x = funcX(player.x);
-        player.presence_y = funcY(player.y);
-        if (presence_matrix[player.presence_x][player.presence_y]) {
+bool Game::testPresence(MOTO_STRUCT *motoTest) {
+        motoTest->presence_x = funcX(motoTest->x);
+        motoTest->presence_y = funcY(motoTest->y);
+        if (presence_matrix[motoTest->presence_x][motoTest->presence_y]) {
                 cout << "Wow wow wow stop" <<endl;
                 return true;
         }
