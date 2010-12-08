@@ -1,8 +1,11 @@
 #include <GL/freeglut.h>
+#include <cmath>
 
 #include "Laser.h"
 
 #define UP_COORD 70
+
+#define EPSILON 3
 
 Laser::Laser(const GLfloat _x, const GLfloat _y, const int _dim_line_x, const int _dim_line_y):
         x_pos(_x), y_pos(_y),
@@ -44,11 +47,12 @@ void Laser::draw(void)
         glVertex3f(dim_line_x/2, 0, 0);
         glEnd();
 
+        /* bottom triangle for the map */
         glBegin(GL_TRIANGLES);
         base_color.active();
-        glVertex3f(0, dim_line_y, 0);
-        glVertex3f(-dim_line_x/2, 0, 0);
-        glVertex3f(dim_line_x/2, 0, 0);
+        glVertex3f(0, dim_line_y, 1);
+        glVertex3f(-dim_line_x/2, 0, 1);
+        glVertex3f(dim_line_x/2, 0, 1);
         glEnd();
 
         glPopMatrix();
@@ -56,7 +60,7 @@ void Laser::draw(void)
 
 const bool Laser::testPos(const int _x, const int _y) const
 {
-        return _x == x_pos && _y == y_pos;
+        return std::abs(_x - x_pos) < EPSILON && std::abs(_y - y_pos) < EPSILON;
 }
 
 void Laser::deactivate(void)

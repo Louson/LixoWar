@@ -112,7 +112,7 @@ Game::Game(
         randomStart(&player.x, &player.y, &player.angle);
         player.presence_x = funcX(player.x);
         player.presence_y = funcY(player.y);
-	player.numero = 0;
+        player.numero = 0;
         player.speed = 0;
         player.pt_moto = new Moto(_moto_size, BLUE);
 
@@ -120,10 +120,10 @@ Game::Game(
         str_laser.init_num = str_laser.cur_num = _num_lasers; 
         str_laser.tab = new Laser * [str_laser.init_num];
         for(int i = 0; i < str_laser.init_num; i++){
-           GLfloat laser_x, laser_y;
-           randomStart(&laser_x, &laser_y, NULL);
-           str_laser.tab[i] = new Laser(laser_x, laser_y, dim_line_x, dim_line_y);
-           graph_elements.push_back(str_laser.tab[i]);
+                GLfloat laser_x, laser_y;
+                randomStart(&laser_x, &laser_y, NULL);
+                str_laser.tab[i] = new Laser(laser_x, laser_y, dim_line_x/2, dim_line_y/2);
+                graph_elements.push_back(str_laser.tab[i]);
         }
 
         /* opponents */
@@ -132,15 +132,15 @@ Game::Game(
                 randomStart(&tab_opp[i].x, &tab_opp[i].y, &tab_opp[i].angle);
                 tab_opp[i].presence_x = funcX(tab_opp[i].x);
                 tab_opp[i].presence_y = funcY(tab_opp[i].y);
-		(tab_opp+i)->numero = i+1;
+                (tab_opp+i)->numero = i+1;
                 (tab_opp+i)->speed = 0;
                 (tab_opp+i)->pt_moto = new Moto(_moto_size, RED);
         }
 
         /* drawing elements */
-/*        for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
-                graph_elements.push_back(*it);
-  */ 
+        /*        for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
+                  graph_elements.push_back(*it);
+                  */ 
         graph_elements.push_back(player.pt_moto);
         for (int i=0 ; i<opponentNumber ; i++) {
                 graph_elements.push_back((tab_opp+i)->pt_moto);
@@ -196,34 +196,51 @@ Game::Game(
 }
 
 void Game::testNewCase(MOTO_STRUCT *motoTest) {
-	GLfloat temp_x = inverseX(motoTest->presence_x);
-	GLfloat temp_y = inverseY(motoTest->presence_y);
-	if (motoTest->x<temp_x-SIZE_CASE_X/2.0 || motoTest->x>temp_x+SIZE_CASE_X/2.0
-	    || motoTest->y<temp_y-SIZE_CASE_Y/2.0 || motoTest->y>temp_y+SIZE_CASE_Y/2.0) {
-		/* Si on se trouve sur une nouvelle case 
-		 * We draw the previous beam ;
-		 * We test the new case ;
-		 */
-		if (testPresence(motoTest)){
-//			cout << "ouais ouais"<<endl;
-			if (motoTest->numero) {
-				opponentNumber--;
-				if (!opponentNumber) {
-					win = true;
-					end_game = true;
-				}
-			} else {
-				end_game = true;
-			}
-			motoTest->pt_moto->explode();
-		}else{
-			Beam *beam;
-			beam = new Beam(temp_x, temp_y, motoTest->angle, motoTest->angle, motoTest->numero, SIZE_CASE_X, SIZE_CASE_Y, BLUE);
-			beams.push_back(beam);
-			graph_elements.push_back(beam);
-			presence_matrix[motoTest->presence_x][motoTest->presence_y] = true;
-		}
-	}
+        GLfloat temp_x = inverseX(motoTest->presence_x);
+        GLfloat temp_y = inverseY(motoTest->presence_y);
+        bool is_laser = false;
+
+        if (motoTest->x<temp_x-SIZE_CASE_X/2.0 || motoTest->x>temp_x+SIZE_CASE_X/2.0
+                        || motoTest->y<temp_y-SIZE_CASE_Y/2.0 || motoTest->y>temp_y+SIZE_CASE_Y/2.0) {
+                /* Si on se trouve sur une nouvelle case 
+                 * We draw the previous beam ;
+                 * We test the new case ;
+                 */
+                if (testPresence(motoTest)){
+                        /* tests if it's a laser */
+                        for(int i = 0; i < str_laser.init_num; i++){
+                                if(str_laser.tab[i]->testPos(player.x, player.y)){
+                                        sound.play(LASER);
+                                        str_laser.tab[i]->deactivate();
+                                        str_laser.cur_num--;
+                                        if(str_laser.cur_num == 0){
+                                                win = true;
+                                        }
+                                        is_laser = true;
+                                }
+                        }
+
+                        if(is_laser)
+                                ;
+                        else if(motoTest->numero){
+                                opponentNumber--;
+                                if (!opponentNumber) {
+                                        win = true;
+                                }
+                                return;
+                        }else{
+                                /* it's a wall */
+                                end_game = true;
+                                motoTest->pt_moto->explode();
+                                return;
+                        }
+                }
+                Beam *beam;
+                beam = new Beam(temp_x, temp_y, motoTest->angle, motoTest->angle, motoTest->numero, SIZE_CASE_X, SIZE_CASE_Y, BLUE);
+                beams.push_back(beam);
+                graph_elements.push_back(beam);
+                presence_matrix[motoTest->presence_x][motoTest->presence_y] = true;
+        }
 }
 
 void Game::draw(){
@@ -245,15 +262,15 @@ void Game::draw(){
                 player.y += player.speed*((int) sin(((float)player.angle)*M_PI/180.0));
                 player.pt_moto->setPos(player.x, player.y, player.angle);
 
-		/* enemy position calculation */
-		for (int i=0 ; i<opponentNumber ; i++) {
-			MOTO_STRUCT *enemy = tab_opp+i;
-			enemy->x += enemy->speed*((int) cos(((float)enemy->angle)*M_PI/180.0));
-			enemy->y += enemy->speed*((int) sin(((float)enemy->angle)*M_PI/180.0));
-			enemy->pt_moto->setPos(enemy->x, enemy->y, enemy->angle);
-			enemyMov(enemy);
-			testNewCase(enemy);
-		}
+                /* enemy position calculation */
+                for (int i=0 ; i<opponentNumber ; i++) {
+                        MOTO_STRUCT *enemy = tab_opp+i;
+                        enemy->x += enemy->speed*((int) cos(((float)enemy->angle)*M_PI/180.0));
+                        enemy->y += enemy->speed*((int) sin(((float)enemy->angle)*M_PI/180.0));
+                        enemy->pt_moto->setPos(enemy->x, enemy->y, enemy->angle);
+                        enemyMov(enemy);
+                        testNewCase(enemy);
+                }
 
                 /* colision detection */
                 testNewCase(&player);
@@ -295,8 +312,8 @@ void Game::draw(){
 Game::~Game(){
         for(std::vector<Light*>::iterator it = lights.begin(); it < lights.end();it++)
                 delete *it;
-      //  for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
-       //         delete *it;
+        //  for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
+        //         delete *it;
         for(std::vector<Beam*>::iterator it = beams.begin();it<beams.end();it++)
                 delete *it;
         delete player.pt_moto;
@@ -374,7 +391,7 @@ void Game::motoMov(enum MOV mov){
  * Déplace l'ennemi dans la bonne direction
  */
 void Game::enemyMov(MOTO_STRUCT *enemy) {
-	switch (choseDirection(enemy->x, enemy->y, enemy->angle)) {
+        switch (choseDirection(enemy->x, enemy->y, enemy->angle)) {
                 case UP:
                         speedIncrement(enemy, UP);
                         break;
@@ -388,71 +405,71 @@ void Game::enemyMov(MOTO_STRUCT *enemy) {
                 case RIGHT:
                         enemy->angle = (enemy->angle + 360 - ROTATION_INCREMENT) % 360;
                         break;
-	}
+        }
 }
 
 /**
  * Renvoie la meilleure direction
  */
 enum MOV Game::choseDirection(GLfloat x, GLfloat y, int angle) {
-	int min, upper;
-	enum MOV res = UP;
-	int cosr;
-	int sinr;
+        int min, upper;
+        enum MOV res = UP;
+        int cosr;
+        int sinr;
 
-	switch ((angle%360+360)%360) {
-	case 0 :
-		cosr = 1;
-		sinr = 0;
-		break;
-	case 90 :
-		cosr = 0;
-		sinr = 1;
-		break;
-	case 180 :
-		cosr = -1;
-		sinr = 0;
-		break;
-	case 270 :
-		cosr = 0;
-		sinr = -1;
-		break;
-	}
+        switch ((angle%360+360)%360) {
+                case 0 :
+                        cosr = 1;
+                        sinr = 0;
+                        break;
+                case 90 :
+                        cosr = 0;
+                        sinr = 1;
+                        break;
+                case 180 :
+                        cosr = -1;
+                        sinr = 0;
+                        break;
+                case 270 :
+                        cosr = 0;
+                        sinr = -1;
+                        break;
+        }
 
-	min = look(funcX(x), funcY(y), cosr, sinr);
-	upper = look(funcX(x), funcY(y), sinr, -cosr);
-	if ( min > upper ) {
-		min = upper;
-		res = RIGHT;
-	}
-	upper = look(funcX(x), funcY(y), -sinr, -cosr);
-	if ( min > upper) {
-		min = upper;
-		res = LEFT;
-	}
-	upper = look(funcX(x), funcY(y), cosr, -sinr);
-// 	if ( min > upper) {
-// 		min = upper;
-// 		res = DOWN;
-// 	}
-	cout << "direction " << res << endl;
-	return res;
+        min = look(funcX(x), funcY(y), cosr, sinr);
+        upper = look(funcX(x), funcY(y), sinr, -cosr);
+        if ( min > upper ) {
+                min = upper;
+                res = RIGHT;
+        }
+        upper = look(funcX(x), funcY(y), -sinr, -cosr);
+        if ( min > upper) {
+                min = upper;
+                res = LEFT;
+        }
+        upper = look(funcX(x), funcY(y), cosr, -sinr);
+        // 	if ( min > upper) {
+        // 		min = upper;
+        // 		res = DOWN;
+        // 	}
+        cout << "direction " << res << endl;
+        return res;
 }
 
 /**
  * Calcule la distance libre dans la direction donnée
  */
 int Game::look(int px, int py, int kx, int ky) {
-	int resx = px;
-	int resy = py;
-	assert(kx*ky == 0);
-	do {
-		resx += kx;
-		resy += ky;
-	} while (!presence_matrix[resx][resy]);
-	if (kx + ky > 0)
-		return (resx-px)+(resy-py);
-	else return (px-resx)+(py-resy);
+        int resx = px;
+        int resy = py;
+        assert(kx*ky == 0);
+        do {
+                resx += kx;
+                resy += ky;
+        } while (!presence_matrix[resx][resy]);
+        if (kx + ky > 0)
+                return (resx-px)+(resy-py);
+        else return (px-resx)+(py-resy);
 }
 
 void Game::setPerspCam() {

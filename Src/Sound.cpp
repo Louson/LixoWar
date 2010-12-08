@@ -30,6 +30,7 @@ void Sound::init(void) throw(File::ExceptionBadPath, File::ExceptionParamInexist
         sounds[EXPLOSION] = config_file.getParamString("explosion");
 	sounds[THEME] = config_file.getParamString("theme");
 	sounds[VROUM] = config_file.getParamString("vroum");
+        sounds[LASER] = config_file.getParamString("laser");
 }
 
 Sound::~Sound() {

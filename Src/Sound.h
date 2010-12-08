@@ -9,7 +9,7 @@
 #include "fmod/fmod_errors.h"
 #include "fmod/wincompat.h"
 
-enum SON {EXPLOSION, THEME, VROUM};
+enum SON {EXPLOSION, THEME, VROUM, LASER};
 
 class Sound {
         public:
@@ -22,8 +22,8 @@ class Sound {
                 void play(enum SON);
         private:
                 /* sounds used */
-                std::string sounds[3];
-                FMOD::Sound *fmod_sounds[3];
+                std::string sounds[4];
+                FMOD::Sound *fmod_sounds[4];
 
                 void checkError(std::string s);
                 FMOD::System *system;

@@ -15,7 +15,7 @@
 static const unsigned char * END_TEXT = (unsigned char *) 
         "Type ENTER to continue or ESC to quit.";
 static const unsigned char * WIN_TEXT = (unsigned char *) 
-        "You win !";
+        "You win !\n\n";
 static const unsigned char * LOST_TEXT = (unsigned char *) 
         "GAME OVER !\n\nYou lost ...";
 
