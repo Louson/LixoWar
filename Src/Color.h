@@ -3,7 +3,7 @@
 
 #include <GL/glut.h>
 
-enum COLOR {BLUE = 0, RED};
+enum COLOR {BLUE = 0, RED, ORANGE, VIOLET};
 
 class Color {
         public :

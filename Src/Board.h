@@ -15,7 +15,6 @@
 #define HALF_LINE_SIZE_X (GLfloat)NB_CASE_HALF_LINE_X*SIZE_CASE_X
 #define HALF_LINE_SIZE_Y (GLfloat)NB_CASE_HALF_LINE_Y*SIZE_CASE_Y
 
-
 /**
  * Ambient détermine la couleur qui sera réfléchie
  */

@@ -1,6 +1,8 @@
 #include "Color.h"
 
-static const GLfloat TAB_COLOR[][4] = {{0.2, 0.2, 0.8, 1}, {0.8, 0.2, 0.2, 1}};
+/* BLUE = 0, RED, ORANGE, VIOLET */
+static const GLfloat TAB_COLOR[][4] = {{38.0/255, 74.0/255, 89.0/255, 1}, {186.0/255, 47.0/255, 29.0/255, 1},
+        {245.0/255, 115.0/255, 54.0/255, 1}, {127.0/255, 22.0/255, 55.0/255, 1}};
 static const GLfloat EMISSION[] = {0, 0, 0, 1};
 static const GLfloat SPECULAR[] = {1.0, 1.0, 1.0, 1};
 static const GLfloat SHININESS = 120;
