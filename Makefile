@@ -1,6 +1,6 @@
 PROJECT_NAME = lixo_war
 CC = g++
-CFLAGS =  -Wall -lm -g
+CFLAGS =  -Wall -lm -O3
 LDFLAGS =  -L/usr/X11R6/lib -lglut -lGLU -lGL -lX11
 OBJECTS = Src/main.o Src/Plan.o Src/Texture.o Src/Board.o Src/PlanText.o Src/Sky.o Src/Wall.o Src/Camera.o Src/Camera_Ortho.o Src/Camera_Persp.o\
 Src/Located_Light.o\
