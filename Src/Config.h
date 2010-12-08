@@ -16,6 +16,7 @@
 #define DIM_LINE_X 6.0   /* Cases between two lines */
 #define DIM_LINE_Y 6.0
 #define OPPONENT_NUMBER 1
+#define NUM_LASERS 4
 
 #define MOTO_SIZE 1
 /* Camera height */

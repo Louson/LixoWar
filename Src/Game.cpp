@@ -52,7 +52,8 @@ Game::Game(
                 GLfloat _dim_lines_x, 
                 GLfloat _dim_lines_y, 
                 int _moto_size,
-                Sound & _sound
+                Sound & _sound,
+                int _num_lasers
           ) throw (ExceptionWrongBoardSize) :
 
         win(false), lose(false),
@@ -78,14 +79,12 @@ Game::Game(
         begin_explosion(true),
         end_game(false)
 {
-        srand((unsigned)time(0));
-
         if(board_size_x < MIN_SIZE_BOARD || board_size_y < MIN_SIZE_BOARD)
                 throw ExceptionWrongBoardSize(); 
 
-        action = -1;
+        action = NOTHING;
 
-        /* presence matrix */
+        /* presence matrix initialization */
         int x_dim = 2+board_size_x/(float)SIZE_CASE_X;
         int y_dim = 2+board_size_y/(float)SIZE_CASE_Y;
         presence_matrix = new bool * [x_dim];
@@ -109,13 +108,23 @@ Game::Game(
                 }//cout<<endl;
         }
 
-        /* motos */
+        /* moto of the player */
         randomStart(&player.x, &player.y, &player.angle);
         player.presence_x = funcX(player.x);
         player.presence_y = funcY(player.y);
 	player.numero = 0;
         player.speed = 0;
         player.pt_moto = new Moto(_moto_size, BLUE);
+
+        /* lasers */
+        str_laser.init_num = str_laser.cur_num = _num_lasers; 
+        str_laser.tab = new Laser * [str_laser.init_num];
+        for(int i = 0; i < str_laser.init_num; i++){
+           GLfloat laser_x, laser_y;
+           randomStart(&laser_x, &laser_y, NULL);
+           str_laser.tab[i] = new Laser(laser_x, laser_y, dim_line_x, dim_line_y);
+           graph_elements.push_back(str_laser.tab[i]);
+        }
 
         /* opponents */
         tab_opp = new MOTO_STRUCT[opponentNumber];
@@ -129,8 +138,9 @@ Game::Game(
         }
 
         /* drawing elements */
-        for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
+/*        for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
                 graph_elements.push_back(*it);
+  */ 
         graph_elements.push_back(player.pt_moto);
         for (int i=0 ; i<opponentNumber ; i++) {
                 graph_elements.push_back((tab_opp+i)->pt_moto);
@@ -138,7 +148,7 @@ Game::Game(
         graph_elements.push_back(&wall);
         graph_elements.push_back(&board);
 
-        /* light */
+        /* lights */
         LIGHT spot_sky;
 
         spot_sky.diffuse[0] = 1;
@@ -285,14 +295,17 @@ void Game::draw(){
 Game::~Game(){
         for(std::vector<Light*>::iterator it = lights.begin(); it < lights.end();it++)
                 delete *it;
-        for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
-                delete *it;
+      //  for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
+       //         delete *it;
         for(std::vector<Beam*>::iterator it = beams.begin();it<beams.end();it++)
                 delete *it;
         delete player.pt_moto;
         for(int i=0; i<2+board_size_x/(float)SIZE_CASE_X; i++)
                 delete [] presence_matrix[i];
         delete [] presence_matrix;
+        for(int i = 0; i < str_laser.init_num; i++)
+                delete str_laser.tab[i];
+        delete [] str_laser.tab;
 }
 
 void Game::activatePerspCam(){
@@ -334,15 +347,11 @@ void Game::speedIncrement(MOTO_STRUCT *pt_moto, enum MOV mov)
                                 pt_moto->speed -= SPEED_INCREMENT;
                         break;
         }
-
-        //cout << pt_moto->speed<<endl;
-
 }
 
 void Game::motoMov(enum MOV mov){
         /* the comportement of negative modulo is undefined !!! */
         /* the cast is here to prevent overflow */
-
         switch(mov){
                 case UP:
                         speedIncrement(&player, UP);
@@ -513,9 +522,9 @@ void Game::randomStart(GLfloat *x, GLfloat *y, int *angle) {
                         || py == funcY(board_size_y/2.0+1)
                         || py == funcY(-board_size_y/2.0-1));
 
-        *x = inverseX(px);
-        *y = inverseY(py);;
-        *angle = 90* (int) (rand()%4 -1);
+        if(x) *x = inverseX(px);
+        if(y) *y = inverseY(py);;
+        if(angle) *angle = 90* (int) (rand()%4 -1);
         presence_matrix[px][py] = true;
 }
 

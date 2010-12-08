@@ -9,6 +9,7 @@
 #include "Camera_Persp.h"
 #include "Drawable.h"
 #include "Explosion.h"
+#include "Laser.h"
 #include "Light.h"
 #include "Moto.h"
 #include "PtBeam.h"
@@ -21,6 +22,12 @@ enum MOV {UP, DOWN, LEFT, RIGHT};
 enum ACTIONS {NOTHING=-1, TURN_RIGHT, TURN_LEFT};
 
 enum CARD {NORTH, EAST, SOUTH, WEST};
+
+typedef struct str_laser {
+        Laser **tab;
+        int init_num;
+        int cur_num;
+} STR_LASER;
 
 class Game: public Drawable{
     private:
@@ -73,7 +80,9 @@ class Game: public Drawable{
 	GLfloat inverseY(int py);
         
         Sound & sound;
-       
+        
+        STR_LASER str_laser;
+
         bool begin_explosion;
         bool end_game;
 
@@ -84,7 +93,7 @@ class Game: public Drawable{
 	     GLfloat quality_x, GLfloat quality_y,
 	     GLfloat _d_line_x, GLfloat _d_line_y,
 	     GLfloat _dim_line_x, GLfloat _dim_line_y,
-	     int _moto_size, Sound &) throw (ExceptionWrongBoardSize);
+	     int _moto_size, Sound &, int) throw (ExceptionWrongBoardSize);
         ~Game();
 
         void draw();

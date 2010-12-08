@@ -16,7 +16,7 @@ Game * pt_game = NULL;
 int main(int argc, char *argv[])
 {
 
-        int side_x, side_y, quality_x, quality_y, d_line_x, d_line_y, dim_line_x, dim_line_y;
+        int side_x, side_y, quality_x, quality_y, d_line_x, d_line_y, dim_line_x, dim_line_y, num_lasers;
         int moto_size;
         int opponent_number;
         Sound sound;
@@ -41,6 +41,7 @@ int main(int argc, char *argv[])
                 opponent_number = Config::fetchParam("enemy_number",OPPONENT_NUMBER,config_file);
 
                 moto_size = Config::fetchParam("moto_size", MOTO_SIZE, config_file);
+                num_lasers = Config::fetchParam("num_lasers", NUM_LASERS, config_file);
 
         }catch(const File::ExceptionBadPath &){
                 cout << PATH_CONFIG_FILE << " is absent" << endl;
@@ -70,7 +71,7 @@ int main(int argc, char *argv[])
                                 quality_x, quality_y,
                                 d_line_x, d_line_y,
                                 dim_line_x, dim_line_y,
-                                moto_size, sound);
+                                moto_size, sound, num_lasers);
 
                 glutMainLoop();
                 if(pt_game->has_won()){

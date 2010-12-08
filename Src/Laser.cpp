@@ -4,7 +4,7 @@
 
 #define UP_COORD 70
 
-Laser::Laser(const int _x, const int _y, const int _dim_line_x, const int _dim_line_y):
+Laser::Laser(const GLfloat _x, const GLfloat _y, const int _dim_line_x, const int _dim_line_y):
         x_pos(_x), y_pos(_y),
         dim_line_x(_dim_line_x), dim_line_y(_dim_line_y),
         activated(true), base_color(ORANGE), top_color(ORANGE)
