@@ -216,7 +216,7 @@ void Game::draw(){
                                 player.pt_moto->explode();
                         }else{
                                 Beam *beam;
-                                beam = new Beam(x, y, player.angle, player.angle, 1, SIZE_CASE_X, SIZE_CASE_Y);
+                                beam = new Beam(x, y, player.angle, player.angle, 1, SIZE_CASE_X, SIZE_CASE_Y, BLUE);
                                 beams.push_back(beam);
                                 graph_elements.push_back(beam);
                                 presence_matrix[player.presence_x][player.presence_y] = true;
@@ -438,5 +438,5 @@ void enemyMov(ENEMY_STRUCT enemy) {
 }
 
 enum MOV Game::choseDirection(GLfloat x, GLfloat y) {
-	
+        return UP;	
 }

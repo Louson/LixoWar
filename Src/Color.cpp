@@ -1,19 +1,28 @@
 #include "Color.h"
 
-Color::Color(){
-	type = GL_FRONT_AND_BACK;
-        GLfloat vecteur[4] = {1, 1, 1, 1};
+static const GLfloat TAB_COLOR[][4] = {{0.2, 0.2, 0.8, 1}, {0.8, 0.2, 0.2, 1}};
+static const GLfloat EMISSION[] = {0, 0, 0, 1};
+static const GLfloat SPECULAR[] = {1.0, 1.0, 1.0, 1};
+static const GLfloat SHININESS = 120;
+
+
+Color::Color(enum COLOR _color):
+        shininess(SHININESS)
+{
+        type = GL_FRONT_AND_BACK;
 	for (int i=0 ; i<4 ; i++) {
-		emission[i] =  
-		ambient[i] =  
-		diffuse[i] =  
-		specular[i] = vecteur[i]; 
+		emission[i] = EMISSION[i];
+		ambient[i] = TAB_COLOR[_color][i];
+		diffuse[i] = TAB_COLOR[_color][i];
+		specular[i] = SPECULAR[i];
 	}
 
 }
 
 Color::Color(const GLfloat _emission[4], const GLfloat _ambient[4], const GLfloat _diffuse[4],
-	     const GLfloat _specular[4], const GLfloat _shininess) : shininess(_shininess) {
+	     const GLfloat _specular[4], const GLfloat _shininess) : 
+        shininess(_shininess) 
+{
 	type = GL_FRONT_AND_BACK;
 	for (int i=0 ; i<4 ; i++) {
 		emission[i] = _emission[i];

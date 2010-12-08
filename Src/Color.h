@@ -3,19 +3,20 @@
 
 #include <GL/glut.h>
 
-class Color {
-public :
-        Color();
-	Color(const GLfloat _emission[4], const GLfloat _ambient[4], const GLfloat _diffuse[4],
-	      const GLfloat _specular[4], const GLfloat _shininess);
-	void active();
-private :
-	GLfloat emission[4];
-	GLfloat ambient[4];
-	GLfloat diffuse[4];
-	GLfloat specular[4];
-	GLfloat shininess;
-	GLenum type;
-};
+enum COLOR {BLUE = 0, RED};
 
+class Color {
+        public :
+                Color(enum COLOR);
+                Color(const GLfloat _emission[4], const GLfloat _ambient[4], const GLfloat _diffuse[4],
+                                const GLfloat _specular[4], const GLfloat _shininess);
+                void active();
+        private :
+                GLfloat emission[4];
+                GLfloat ambient[4];
+                GLfloat diffuse[4];
+                GLfloat specular[4];
+                GLfloat shininess;
+                GLenum type;
+};
 #endif
