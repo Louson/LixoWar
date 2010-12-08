@@ -41,6 +41,9 @@ const char * SKY_PIC = "Images/ciel.ppm";
 #define X_START    -100
 #define TAN_FINISH  100
 
+#define LOOK_MAX_X 30
+#define LOOK_MAX_Y 30
+
 Game::Game(
 	int _opponent_number,
 	int _board_size_x, int _board_size_y,
@@ -466,7 +469,7 @@ int Game::look(int px, int py, int kx, int ky) {
         do {
                 resx += kx;
                 resy += ky;
-        } while (!presence_matrix[resx][resy]);
+        } while (!presence_matrix[resx][resy] && resx-px+resy-py<LOOK_MAX_X && px-resx+py-resy<LOOK_MAX_Y );
         if (kx + ky > 0)
                 return (resx-px)+(resy-py);
         else return (px-resx)+(py-resy);
