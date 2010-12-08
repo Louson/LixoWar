@@ -18,7 +18,9 @@ Moto::Moto(GLfloat _moto_size):
         wheelNW(_moto_size, false),
         wheelNE(_moto_size, true),
         wheelSE(_moto_size, true),
-        wheelSW(_moto_size, false) {
+        wheelSW(_moto_size, false),
+        pt_explosion(NULL)
+{
 }
 
 void Moto::setPos(GLfloat _x, GLfloat _y, int _angle){
@@ -27,8 +29,16 @@ void Moto::setPos(GLfloat _x, GLfloat _y, int _angle){
         angle = _angle;
 }
 
-void Moto::draw() {
-	glMatrixMode(GL_MODELVIEW);
+void Moto::draw(void)
+{
+ 
+        if(pt_explosion){
+                pt_explosion->draw();
+                if(pt_explosion->getApogee())
+                        return;
+        }
+	
+        glMatrixMode(GL_MODELVIEW);
         
         GLfloat val_sin = sin(angle*M_PI/180);
         GLfloat val_cos = cos(angle*M_PI/180);
@@ -69,5 +79,25 @@ void Moto::draw() {
         glRotatef(angle, 0, 0, 1);
         glRotatef(90, 0, 1, 0);
         glutWireCone(moto_size/3, moto_size*2, 20, 30);
-        glPopMatrix(); 
+        glPopMatrix();
+
+}
+
+
+void Moto::explode(void)
+{
+        pt_explosion = new Explosion(x, y);
+}
+
+Moto::~Moto(void)
+{
+        delete pt_explosion;
+}
+
+bool Moto::getEndExplosion(void) const
+{
+        if(pt_explosion)
+                return pt_explosion->getEnd();
+        else
+                return false;
 }

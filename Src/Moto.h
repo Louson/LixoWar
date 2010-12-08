@@ -3,9 +3,10 @@
 
 #include <GL/glut.h>
 
-#include "Drawable.h"
-#include "Wheel.h"
 #include "Color.h"
+#include "Drawable.h"
+#include "Explosion.h"
+#include "Wheel.h"
 
 #define MOTO_WIDTH      4.0
 #define MOTO_LENGTH     4.0
@@ -18,8 +19,11 @@
 class Moto : public Drawable{
 public :
 	Moto(GLfloat moto_size);
+        ~Moto(void);
 	void draw();
 	void setPos(GLfloat _x, GLfloat _y, int _angle);
+        void explode(void);
+        bool getEndExplosion(void) const;
 
 private :
         Color color;
@@ -34,6 +38,8 @@ private :
 	Wheel wheelNE;
 	Wheel wheelSE;
 	Wheel wheelSW;
+
+        Explosion *pt_explosion;
 };
 
 typedef struct moto_struct {

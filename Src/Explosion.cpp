@@ -4,7 +4,7 @@
 #include "Explosion.h"
 
 #define MAX_RADIUS 3
-#define RADIUS_INCREMENT 0.03
+#define RADIUS_INCREMENT 0.05
 
 static const GLfloat Emission[] = {0.0, 0.0, 0.0, 1};
 static const GLfloat Diffuse[] = {1, 0.5, 0 , 1.0};

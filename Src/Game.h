@@ -71,9 +71,9 @@ class Game: public Drawable{
 	GLfloat inverseY(int py);
         
         Sound & sound;
-        
-        Explosion *explosion;
+       
         bool begin_explosion;
+        bool end_game;
 
     public:
         class ExceptionWrongBoardSize:public std::exception{};

@@ -14,7 +14,7 @@
 
 const char * SKY_PIC = "Images/ciel.ppm";
 
-#define MAX_SPEED 0.15
+#define MAX_SPEED       0.3
 #define WALL_SIZE       10000
 
 /* lights */
@@ -75,8 +75,8 @@ Game::Game(
         wall(2*WALL_SIZE, 2*WALL_SIZE),
         moto_size(_moto_size),
         sound(_sound),
-        explosion(NULL),
-        begin_explosion(true)
+        begin_explosion(true),
+        end_game(false)
 {
         srand((unsigned)time(0));
 
@@ -189,16 +189,12 @@ void Game::draw(){
         assert(player.y<=2*SIZE_CASE_Y+board_size_y/2.0);
         assert(player.y>=-2*SIZE_CASE_Y-board_size_y/2.0);
 
-        if(explosion){
+        if(end_game){
                 if(begin_explosion){
                         begin_explosion = false;
                         sound.play(EXPLOSION);
                 }
-                explosion->draw();
-                if(explosion->getApogee())
-                        /* we throw away the moto => cheap hack */
-                        player.pt_moto->setPos(-1000000, -1000000, 0);
-                if(explosion->getEnd())
+                if(player.pt_moto->getEndExplosion())
                         lose = true;
         }else{
                 /* player position calculation */
@@ -215,8 +211,9 @@ void Game::draw(){
                          * We draw the previous beam ;
                          * We test the new case ;
                          */
-                        if (testPresence()) {
-                                explosion = new Explosion(player.x, player.y);
+                        if (testPresence()){
+                                end_game = true;
+                                player.pt_moto->explode();
                         }else{
                                 Beam *beam;
                                 beam = new Beam(x, y, player.angle, player.angle, 1, SIZE_CASE_X, SIZE_CASE_Y);
@@ -271,7 +268,6 @@ Game::~Game(){
         for(int i=0; i<2+board_size_x/(float)SIZE_CASE_X; i++)
                 delete [] presence_matrix[i];
         delete [] presence_matrix;
-        delete explosion;
 }
 
 void Game::activatePerspCam(){
