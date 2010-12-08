@@ -20,6 +20,8 @@ enum MOV {UP, DOWN, LEFT, RIGHT};
 
 enum ACTIONS {NOTHING=-1, TURN_RIGHT, TURN_LEFT};
 
+enum CARD {NORTH, EAST, SOUTH, WEST};
+
 class Game: public Drawable{
     private:
 	bool win;
@@ -46,7 +48,7 @@ class Game: public Drawable{
         int moto_size;
 
         MOTO_STRUCT player;
-	ENEMY_STRUCT *tab_opp;
+	MOTO_STRUCT *tab_opp;
 
 	std::vector<Beam *> beams;
 
@@ -86,11 +88,13 @@ class Game: public Drawable{
         ~Game();
 
         void draw();
+	void testNewCase(MOTO_STRUCT *motoTest);
 
         /* actions */
         void motoMov(enum MOV);
-	void enemyMov(ENEMY_STRUCT enemy);
-	enum MOV choseDirection(GLfloat x, GLfloat y);
+	void enemyMov(MOTO_STRUCT *enemy);
+	enum MOV choseDirection(GLfloat x, GLfloat y, GLfloat angle);
+	int look(int px, int py, int kx, int ky);
         void zoomOrthoCam(int);
 
         /* Cameras */

@@ -43,6 +43,7 @@ private :
 };
 
 typedef struct moto_struct {
+	int numero;
         GLfloat x;
         GLfloat y;
 	int presence_x;
@@ -51,16 +52,5 @@ typedef struct moto_struct {
         GLfloat speed;
         Moto * pt_moto;
 } MOTO_STRUCT;
-
-typedef struct enemy_struct {
-        int numero;
-	GLfloat x;
-        GLfloat y;
-	int presence_x;
-	int presence_y;
-        int angle;
-        GLfloat speed;
-        Moto * pt_moto;
-} ENEMY_STRUCT;
 
 #endif

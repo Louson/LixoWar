@@ -113,12 +113,12 @@ Game::Game(
         randomStart(&player.x, &player.y, &player.angle);
         player.presence_x = funcX(player.x);
         player.presence_y = funcY(player.y);
+	player.numero = 0;
         player.speed = 0;
         player.pt_moto = new Moto(_moto_size, BLUE);
 
-        opponentNumber = 6;
         /* opponents */
-        tab_opp = new ENEMY_STRUCT[opponentNumber];
+        tab_opp = new MOTO_STRUCT[opponentNumber];
         for (int i=0 ; i<opponentNumber ; i++) {
                 randomStart(&tab_opp[i].x, &tab_opp[i].y, &tab_opp[i].angle);
                 (tab_opp+i)->numero = i+1;
@@ -183,6 +183,28 @@ Game::Game(
         lights.push_back(new Spot(&spot_sky, L_EXPONENT, L_CUTOFF));
 }
 
+void Game::testNewCase(MOTO_STRUCT *motoTest) {
+	GLfloat temp_x = inverseX(motoTest->presence_x);
+	GLfloat temp_y = inverseY(motoTest->presence_y);
+	if (motoTest->x<temp_x-SIZE_CASE_X/2.0 || motoTest->x>temp_x+SIZE_CASE_X/2.0
+	    || motoTest->y<temp_y-SIZE_CASE_Y/2.0 || motoTest->y>temp_y+SIZE_CASE_Y/2.0) {
+		/* Si on se trouve sur une nouvelle case 
+		 * We draw the previous beam ;
+		 * We test the new case ;
+		 */
+		if (testPresence()){
+			end_game = true;
+			motoTest->pt_moto->explode();
+		}else{
+			Beam *beam;
+			beam = new Beam(temp_x, temp_y, motoTest->angle, motoTest->angle, 1, SIZE_CASE_X, SIZE_CASE_Y, BLUE);
+			beams.push_back(beam);
+			graph_elements.push_back(beam);
+			presence_matrix[motoTest->presence_x][motoTest->presence_y] = true;
+		}
+	}
+}
+
 void Game::draw(){
         assert(player.x<=2*SIZE_CASE_X+board_size_x/2.0);
         assert(player.x>=-2*SIZE_CASE_X-board_size_x/2.0);
@@ -202,26 +224,17 @@ void Game::draw(){
                 player.y += player.speed*((int) sin(((float)player.angle)*M_PI/180.0));
                 player.pt_moto->setPos(player.x, player.y, player.angle);
 
+		/* enemy position calculation */
+		for (int i=0 ; i<opponentNumber ; i++) {
+			MOTO_STRUCT *enemy = tab_opp+i;
+			enemy->x += enemy->speed*((int) cos(((float)enemy->angle)*M_PI/180.0));
+			enemy->y += enemy->speed*((int) sin(((float)enemy->angle)*M_PI/180.0));
+			enemy->pt_moto->setPos(enemy->x, enemy->y, enemy->angle);
+			testNewCase(enemy);
+		}
+
                 /* colision detection */
-                GLfloat x = inverseX(player.presence_x);
-                GLfloat y = inverseY(player.presence_y);
-                if (player.x<x-SIZE_CASE_X/2.0 || player.x>x+SIZE_CASE_X/2.0
-                                || player.y<y-SIZE_CASE_Y/2.0 || player.y>y+SIZE_CASE_Y/2.0) {
-                        /* Si on se trouve sur une nouvelle case 
-                         * We draw the previous beam ;
-                         * We test the new case ;
-                         */
-                        if (testPresence()){
-                                end_game = true;
-                                player.pt_moto->explode();
-                        }else{
-                                Beam *beam;
-                                beam = new Beam(x, y, player.angle, player.angle, 1, SIZE_CASE_X, SIZE_CASE_Y, BLUE);
-                                beams.push_back(beam);
-                                graph_elements.push_back(beam);
-                                presence_matrix[player.presence_x][player.presence_y] = true;
-                        }
-                }
+                testNewCase(&player);
         }
 
         for (int i=0 ; i< opponentNumber ; i++) 
@@ -336,8 +349,59 @@ void Game::motoMov(enum MOV mov){
         }
 }
 
-void Game::enemyMov(ENEMY_STRUCT enemy) {
+void Game::enemyMov(MOTO_STRUCT *enemy) {
+	switch (choseDirection(enemy->x, enemy->y, enemy->angle)) {
+                case UP:
+                        speedIncrement(enemy, UP);
+                        break;
+                case DOWN:
+                        speedIncrement(enemy, DOWN);
+                        break;
+                case LEFT:
+                        enemy->angle = (enemy->angle + ROTATION_INCREMENT) % 360;
+                        break;
+                case RIGHT:
+                        enemy->angle = (enemy->angle + 360 - ROTATION_INCREMENT) % 360;
+                        break;
+	}
+}
 
+/**
+ * Renvoie la meilleure direction
+ */
+enum MOV Game::choseDirection(GLfloat x, GLfloat y, GLfloat angle) {
+	int min, upper;
+	enum MOV res = UP;
+	if ( (min = look(funcX(x), funcY(y), cos(angle), sin(angle)))
+	     > (upper = look(funcX(x), funcY(y), sin(angle), -cos(angle))) ) {
+		min = upper;
+		res = RIGHT;
+	}
+	if ( min > (upper = look(funcX(x), funcY(y), -sin(angle), -cos(angle))) ) {
+		min = upper;
+		res = LEFT;
+	}
+	if ( (min > (upper = look(funcX(x), funcY(y), cos(angle), -sin(angle)))) ) {
+		min = upper;
+		res = DOWN;
+	}
+	return res;
+}
+
+/**
+ * Calcule la distance libre dans la direction donnée
+ */
+int Game::look(int px, int py, int kx, int ky) {
+	int resx = px;
+	int resy = py;
+	assert(kx*ky == 0);
+	do {
+		resx = px + kx;
+		resy = py + ky;
+	} while (presence_matrix[resx][resy]);
+	if (kx + ky > 0)
+		return (resx-px)+(resy-py);
+	else return (px-resx)+(py-resy);
 }
 
 void Game::setPerspCam() {
@@ -431,12 +495,4 @@ GLfloat Game::inverseX(int px) {
 }
 GLfloat Game::inverseY(int py) {
         return SIZE_CASE_Y*(py-0.5)-board_size_y/2.0;
-}
-
-void enemyMov(ENEMY_STRUCT enemy) {
-	
-}
-
-enum MOV Game::choseDirection(GLfloat x, GLfloat y) {
-        return UP;	
 }
