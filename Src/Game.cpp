@@ -114,7 +114,7 @@ Game::Game(
         presence_x = funcX(player.x);
         presence_y = funcY(player.y);
         player.speed = 0;
-        player.pt_moto = new Moto(_moto_size);
+        player.pt_moto = new Moto(_moto_size, BLUE);
 
         opponentNumber = 6;
         /* opponents */
@@ -123,7 +123,7 @@ Game::Game(
                 randomStart(&tab_opp[i].x, &tab_opp[i].y, &tab_opp[i].angle);
                 (tab_opp+i)->numero = i+1;
                 (tab_opp+i)->speed = 0;
-                (tab_opp+i)->pt_moto = new Moto(_moto_size);
+                (tab_opp+i)->pt_moto = new Moto(_moto_size, RED);
         }
 
         /* drawing elements */

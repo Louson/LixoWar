@@ -9,10 +9,10 @@
 static const GLfloat MotoEmission[] = {0.01, 0.02, 0.04, 1};
 static const GLfloat MotoDiffuse[] = {0.1, 0.2, 0.4, 1};
 static const GLfloat MotoAmbient[] = {0.2, 0.2, 0.2, 1};
-static const GLfloat MotoSpecular[] = {1.0, 0.0, 0.0, 1};
+static const GLfloat MotoSpecular[] = {1.0, 1.0, 1.0, 1};
 static const GLfloat MotoShininess = 120;
 
-Moto::Moto(GLfloat _moto_size):
+Moto::Moto(GLfloat _moto_size, enum COLOR color):
         color(MotoEmission, MotoAmbient, MotoDiffuse, MotoSpecular, MotoShininess),
         moto_size(_moto_size),
         wheelNW(_moto_size, false),

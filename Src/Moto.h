@@ -16,9 +16,11 @@
 #define BACK_WHEELS_H_DISTANCE_RATIO    1/2
 #define FRONT_WHEELS_W_DISTANCE_RATIO   1/3
 
+enum COLOR {BLUE, RED};
+
 class Moto : public Drawable{
 public :
-	Moto(GLfloat moto_size);
+	Moto(GLfloat moto_size, enum COLOR);
         ~Moto(void);
 	void draw();
 	void setPos(GLfloat _x, GLfloat _y, int _angle);
