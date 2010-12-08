@@ -221,7 +221,7 @@ void Game::testNewCase(MOTO_STRUCT *motoTest) {
                                         is_laser = true;
                                 }
                         }
-                
+
                         if(is_laser)
                                 ;
                         /* if it's a opponent */
@@ -238,14 +238,11 @@ void Game::testNewCase(MOTO_STRUCT *motoTest) {
                                 return;
                         }
                 }
-        
-                {
-                        Beam *beam;
-                        beam = new Beam(temp_x, temp_y, motoTest->angle, motoTest->angle, motoTest->numero, SIZE_CASE_X, SIZE_CASE_Y, BLUE);
-                        beams.push_back(beam);
-                        graph_elements.push_back(beam);
-                        presence_matrix[motoTest->presence_x][motoTest->presence_y] = true;
-                }
+                Beam *beam;
+                beam = new Beam(temp_x, temp_y, motoTest->angle, motoTest->angle, motoTest->numero, SIZE_CASE_X, SIZE_CASE_Y, BLUE);
+                beams.push_back(beam);
+                graph_elements.push_back(beam);
+                presence_matrix[motoTest->presence_x][motoTest->presence_y] = true;
         }
 }
 
