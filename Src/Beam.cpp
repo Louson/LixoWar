@@ -5,23 +5,23 @@
 
 using namespace std;
 
-const GLfloat emission_P1[4] = {0.3, 0.0, 0.0, 0.5};
-const GLfloat ambient_P1[4] = {0.0, 0.0, 0.0, 0.0};
-const GLfloat diffuse_P1[4]= {0.0, 0.0, 0.0, 0.0};
-const GLfloat specular_P1[4]= {0.0, 0.0, 0.0, 0.0};
-const GLfloat shininess_P1 = 20;
+const GLfloat emission_P1[] = {0, 0, 0, 0};
+const GLfloat ambient_P1[] = {0.0, 0.0, 0.0, 0.0};
+const GLfloat diffuse_P1[]= {0.0, 0.0, 0.0, 0.0};
+const GLfloat specular_P1[]= {1, 1, 1, 1};
+const GLfloat shininess_P1 = 120;
 
-const GLfloat emission_P2[4]= {0.0, 0.0, 0.0, 0.0};
-const GLfloat ambient_P2[4]= {0.0, 0.0, 0.0, 0.0};
-const GLfloat diffuse_P2[4]= {0.0, 0.0, 0.0, 0.0};
-const GLfloat specular_P2[4]= {0.0, 0.0, 0.0, 0.0};
-const GLfloat shininess_P2 = 20;
-
-const GLfloat emission_P3[4]= {0.0, 0.0, 0.0, 0.0};
-const GLfloat ambient_P3[4]= {0.0, 0.0, 0.0, 0.0};
-const GLfloat diffuse_P3[4]= {0.0, 0.0, 0.0, 0.0};
-const GLfloat specular_P3[4]= {0.0, 0.0, 0.0, 0.0};
-const GLfloat shininess_P3 = 20;
+//const GLfloat emission_P2[4]= {0.0, 0.0, 0.0, 0.0};
+//const GLfloat ambient_P2[4]= {0.0, 0.0, 0.0, 0.0};
+//const GLfloat diffuse_P2[4]= {0.0, 0.0, 0.0, 0.0};
+//const GLfloat specular_P2[4]= {0.0, 0.0, 0.0, 0.0};
+//const GLfloat shininess_P2 = 20;
+//
+//const GLfloat emission_P3[4]= {0.0, 0.0, 0.0, 0.0};
+//const GLfloat ambient_P3[4]= {0.0, 0.0, 0.0, 0.0};
+//const GLfloat diffuse_P3[4]= {0.0, 0.0, 0.0, 0.0};
+//const GLfloat specular_P3[4]= {0.0, 0.0, 0.0, 0.0};
+//const GLfloat shininess_P3 = 20;
 
 Beam::Beam(MOTO_STRUCT moto) :
 	x(moto.x), y(moto.y)
