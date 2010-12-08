@@ -134,9 +134,6 @@ Game::Game(
         }
 
         /* drawing elements */
-        /*        for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
-                  graph_elements.push_back(*it);
-                  */ 
         graph_elements.push_back(player.pt_moto);
         for (int i=0 ; i<opponentNumber ; i++) {
                 graph_elements.push_back((tab_opp+i)->pt_moto);
@@ -235,7 +232,10 @@ void Game::testNewCase(MOTO_STRUCT *motoTest) {
                         }
                 }
                 Beam *beam;
-                beam = new Beam(temp_x, temp_y, motoTest->angle, motoTest->angle, motoTest->numero, SIZE_CASE_X, SIZE_CASE_Y, BLUE);
+                if(motoTest->numero)
+                        beam = new Beam(temp_x, temp_y, motoTest->angle, motoTest->angle, motoTest->numero, SIZE_CASE_X, SIZE_CASE_Y, RED);
+                else
+                        beam = new Beam(temp_x, temp_y, motoTest->angle, motoTest->angle, motoTest->numero, SIZE_CASE_X, SIZE_CASE_Y, BLUE);
                 beams.push_back(beam);
                 graph_elements.push_back(beam);
                 presence_matrix[motoTest->presence_x][motoTest->presence_y] = true;
@@ -311,8 +311,6 @@ void Game::draw(){
 Game::~Game(){
         for(std::vector<Light*>::iterator it = lights.begin(); it < lights.end();it++)
                 delete *it;
-        //  for(std::vector<Moto*>::iterator it = tab_motos.begin();it<tab_motos.end();it++)
-        //         delete *it;
         for(std::vector<Beam*>::iterator it = beams.begin();it<beams.end();it++)
                 delete *it;
         delete player.pt_moto;
@@ -415,8 +413,6 @@ enum MOV Game::choseDirection(GLfloat x, GLfloat y, int angle) {
         int cosr;
         int sinr;
 
-	cout <<"Angle = "<<angle<<endl;
-
         switch ((angle%360+360)%360) {
                 case 0 :
                         cosr = 1;
@@ -438,17 +434,14 @@ enum MOV Game::choseDirection(GLfloat x, GLfloat y, int angle) {
 
 	/* Tout droit */
         max = look(funcX(x), funcY(y), cosr, sinr);
-	cout << " UP = "<<max;
 	/* à droite */
         lower = look(funcX(x), funcY(y), sinr, -cosr);
-	cout << " RIGHT = "<<lower;
         if ( max < lower ) {
                 max = lower;
                 res = RIGHT;
         }
 	/* à gauche */
         lower = look(funcX(x), funcY(y), -sinr, -cosr);
-	cout << " LEFT = "<<lower;
         if ( max < lower) {
                 max = lower;
                 res = LEFT;
@@ -459,7 +452,6 @@ enum MOV Game::choseDirection(GLfloat x, GLfloat y, int angle) {
         // 		max = lower;
         // 		res = DOWN;
         // 	}
-	cout << " res = " << res << endl;
         return res;
 }
 
@@ -528,7 +520,6 @@ bool Game::has_lost() {
 
 bool Game::testPresence(MOTO_STRUCT *motoTest) {
         if (presence_matrix[motoTest->presence_x][motoTest->presence_y]) {
-                cout << "Wow wow wow stop" <<endl;
                 return true;
         }
         return false;

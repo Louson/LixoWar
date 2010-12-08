@@ -51,7 +51,6 @@ class Game: public Drawable{
         Camera_Ortho cam_ortho;
         Camera_Persp cam_persp;
 
-        std::vector<Moto*> tab_motos;
         int moto_size;
 
         MOTO_STRUCT player;

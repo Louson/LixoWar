@@ -5,6 +5,7 @@
 #include "Board.h"
 #include "Game.h"
 
+#define Z_FIGHTING_VALUE 0.01
 using namespace std;
 
 const GLfloat BoardEmission[] = {0.0, 0.0, 0.0, 1};
@@ -89,10 +90,10 @@ void Board::draw() {
 			lineColor.active();
 			glBegin(GL_QUADS);
 			glNormal3f(0.0, 0.0, 1.0);
-			glVertex3f(linev-HALF_LINE_SIZE_X, v[0][1]+j*s_y, 0.0);
-			glVertex3f(linev-HALF_LINE_SIZE_X, v[0][1]+(j+1)*s_y, 0.0);
-			glVertex3f(linev+HALF_LINE_SIZE_X, v[0][1]+(j+1)*s_y, 0.0);
-			glVertex3f(linev+HALF_LINE_SIZE_X, v[0][1]+j*s_y, 0.0);
+			glVertex3f(linev-HALF_LINE_SIZE_X, v[0][1]+j*s_y, Z_FIGHTING_VALUE);
+			glVertex3f(linev-HALF_LINE_SIZE_X, v[0][1]+(j+1)*s_y, Z_FIGHTING_VALUE);
+			glVertex3f(linev+HALF_LINE_SIZE_X, v[0][1]+(j+1)*s_y, Z_FIGHTING_VALUE);
+			glVertex3f(linev+HALF_LINE_SIZE_X, v[0][1]+j*s_y, Z_FIGHTING_VALUE);
 			glEnd();
 		}
 	}
