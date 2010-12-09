@@ -20,6 +20,7 @@ static const unsigned char * LOST_TEXT = (unsigned char *)
         "GAME OVER !\n\nYou lost ...";
 
 extern Game * pt_game;
+extern Sound * pt_sound;
 
 namespace Window {
         static int window_width, window_height;
@@ -114,7 +115,7 @@ void Window::init(){
         glutKeyboardFunc(&Window::keyboard);
         glutReshapeFunc(&Window::windowReshape);
         glutSpecialFunc(&Window::specialKeyboard);
-	glutTimerFunc(1000, &Window::timer, 0);
+	glutTimerFunc(1000, &Window::timer, -1);
 	glutTimerFunc(2000, &Window::timer, 0);
 	glutTimerFunc(3000, &Window::timer, 1);
 
@@ -206,6 +207,7 @@ void Window::timer(int value) {
 	if (value)
 		/* We can start */
 		pt_game->youCanStart();
-	cout << "BIP"<< endl;
+        if (value == -1)
+                pt_sound->play(START);
 
 }

@@ -34,6 +34,7 @@ void Sound::init(void) throw(File::ExceptionBadPath, File::ExceptionParamInexist
         sounds[VROUM_DOWN] = config_file.getParamString("vroum_down");
         sounds[VICTORY] = config_file.getParamString("victory");
         sounds[GAMEOVER] = config_file.getParamString("game_over");
+        sounds[START] = config_file.getParamString("start");
 }
 
 Sound::~Sound() {

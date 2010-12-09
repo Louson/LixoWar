@@ -12,6 +12,7 @@
 using namespace std;
 
 Game * pt_game = NULL;
+Sound * pt_sound = NULL;
 
 int main(int argc, char *argv[])
 {
@@ -20,6 +21,7 @@ int main(int argc, char *argv[])
         int moto_size;
         int opponent_number;
         Sound sound;
+        pt_sound = &sound;
         /* init random seed for moto construction */
         srand(time(0));
 
@@ -59,7 +61,7 @@ int main(int argc, char *argv[])
                 cout << "Sound configuration file inexistent" << endl;
                 exit(EXIT_FAILURE);
         }
-	sound.play(THEME);
+//	sound.play(THEME);
 
         /* Set window */
         while(!Window::leaveGame()){
