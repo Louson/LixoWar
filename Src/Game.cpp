@@ -16,10 +16,14 @@
 const char * SKY_PIC = "Images/ciel.ppm";
 
 #define WIN_IF_ALL_DEAD false
-#define ALGO_NORM_1
-//#define ALGO_FLEE
 
-#define MAX_SPEED       0.3
+#define ALGO_NORM_1
+//#ifndef ALGO_NORM_1
+//#define ALGO_FLEE
+//#endif
+
+#define PLAYER_MAX_SPEED       0.3
+#define ENEMY_MAX_SPEED        0.2
 #define WALL_SIZE       10000
 
 /* lights */
@@ -360,12 +364,17 @@ void Game::zoomOrthoCam(int gradient){
 
 void Game::speedIncrement(MOTO_STRUCT *pt_moto, enum MOV mov)
 {
-        assert(pt_moto != NULL);
+	GLfloat max_speed;
+	assert(pt_moto != NULL);
+
+	if (pt_moto->numero)
+		max_speed = ENEMY_MAX_SPEED;
+	else max_speed = PLAYER_MAX_SPEED;
 
         switch(mov){
                 case UP:
-                        if(pt_moto->speed + SPEED_INCREMENT > MAX_SPEED)
-                                pt_moto->speed = MAX_SPEED;
+                        if(pt_moto->speed + SPEED_INCREMENT > max_speed)
+                                pt_moto->speed = max_speed;
                         else
                                 pt_moto->speed += SPEED_INCREMENT;
                         break;
