@@ -12,14 +12,9 @@
 #include "Light.h"
 #include "Spot.h"
 
-const char * SKY_PIC = "Images/ciel.ppm";
-
 #define WIN_IF_ALL_DEAD false
 
 #define ALGO_NORM_1
-//#ifndef ALGO_NORM_1
-//#define ALGO_FLEE
-//#endif
 
 #define PLAYER_MAX_SPEED       0.3
 #define ENEMY_MAX_SPEED        0.2
@@ -59,7 +54,7 @@ Game::Game(
 	GLfloat _d_lines_x, GLfloat _d_lines_y, 
 	GLfloat _dim_lines_x, GLfloat _dim_lines_y, 
 	int _moto_size,
-	Sound & _sound,
+	Sound *_pt_sound,
 	int _num_lasers
 	) throw (ExceptionWrongBoardSize) :
 	
@@ -78,20 +73,20 @@ Game::Game(
                         _quality_x, _quality_y,
                         _d_lines_x, _d_lines_y,
                         _dim_lines_x, _dim_lines_y),
-        sky(2*_board_size_x, 2*_board_size_y,
-                        SKY_PIC),
         wall(2*WALL_SIZE, 2*WALL_SIZE),
         moto_size(_moto_size),
-        sound(_sound),
+        pt_sound(_pt_sound),
         begin_explosion(true),
         end_game(false)
 {
         if(board_size_x < MIN_SIZE_BOARD || board_size_y < MIN_SIZE_BOARD)
                 throw ExceptionWrongBoardSize(); 
+        
+        assert(pt_sound != NULL);
 
         action = NOTHING;
 
-        sound.play(VROUM, true);
+        pt_sound->play(VROUM, true);
 
         /* presence matrix initialization */
         int x_dim = 2+board_size_x/(float)SIZE_CASE_X;
@@ -218,11 +213,11 @@ void Game::testNewCase(MOTO_STRUCT *motoTest) {
                         /* tests if it's a laser */
                         for(int i = 0; i < str_laser.init_num; i++){
                                 if(str_laser.tab[i]->testPos(player.x, player.y)){
-                                        sound.play(LASER);
+                                        pt_sound->play(LASER);
                                         str_laser.tab[i]->deactivate();
                                         str_laser.cur_num--;
                                         if(str_laser.cur_num == 0){
-                                                sound.play(VICTORY, false);
+                                                pt_sound->play(VICTORY, false);
 						win = true;
                                         }
                                         is_laser = true;
@@ -235,7 +230,7 @@ void Game::testNewCase(MOTO_STRUCT *motoTest) {
                         else if (motoTest->numero) {
                                 opponentNumber--;
                                 if (!opponentNumber && WIN_IF_ALL_DEAD) {
-					sound.play(VICTORY);
+					pt_sound->play(VICTORY);
 					win = true;
 				}
 				motoTest->pt_moto->explode();
@@ -267,10 +262,10 @@ void Game::draw(){
         if(end_game){
                 if(begin_explosion){
                         begin_explosion = false;
-                        sound.play(EXPLOSION, false);
+                        pt_sound->play(EXPLOSION, false);
                 }
                 if(player.pt_moto->getEndExplosion()){
-                        sound.play(GAMEOVER, false);
+                        pt_sound->play(GAMEOVER, false);
                         lose = true;
                 }
         }else if (iCanStart) {
@@ -393,11 +388,11 @@ void Game::motoMov(enum MOV mov){
         switch(mov){
                 case UP:
                         speedIncrement(&player, UP);
-                        sound.play(VROUM_UP, false);
+                        pt_sound->play(VROUM_UP, false);
                         break;
                 case DOWN:
                         speedIncrement(&player, DOWN);
-                        sound.play(VROUM_DOWN, false);
+                        pt_sound->play(VROUM_DOWN, false);
                         break;
                 case LEFT:
                         player.angle = (player.angle + ROTATION_INCREMENT) % 360;

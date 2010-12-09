@@ -1,5 +1,6 @@
 #include "Wall.h"
-#include "Sky.h"
+
+#define H_SKY 3000
 
 const char * PATH_TEXTURE = "Images/neutron.ppm";
 

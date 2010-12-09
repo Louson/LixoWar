@@ -16,12 +16,10 @@ Sound * pt_sound = NULL;
 
 int main(int argc, char *argv[])
 {
-
         int side_x, side_y, quality_x, quality_y, d_line_x, d_line_y, dim_line_x, dim_line_y, num_lasers;
         int moto_size;
         int opponent_number;
-        Sound sound;
-        pt_sound = &sound;
+        pt_sound = new Sound();
         /* init random seed for moto construction */
         srand(time(0));
 
@@ -53,7 +51,7 @@ int main(int argc, char *argv[])
 
         /* sound */
         try{
-                sound.init();
+                pt_sound->init();
         }catch(File::ExceptionParamInexistent &){
                 cout << "Error in sound configuration file" << endl;
                 exit(EXIT_FAILURE);
@@ -61,7 +59,6 @@ int main(int argc, char *argv[])
                 cout << "Sound configuration file inexistent" << endl;
                 exit(EXIT_FAILURE);
         }
-//	sound.play(THEME);
 
         /* Set window */
         while(!Window::leaveGame()){
@@ -73,16 +70,12 @@ int main(int argc, char *argv[])
                                 quality_x, quality_y,
                                 d_line_x, d_line_y,
                                 dim_line_x, dim_line_y,
-                                moto_size, sound, num_lasers);
+                                moto_size, pt_sound, num_lasers);
 
                 glutMainLoop();
-                if(pt_game->has_won()){
-                        cout << "YOU WIN" << endl;
-                }else if(pt_game->has_lost()) {
-                        cout << "YOU LOSE" << endl;
-                } else cout << "DRAW" << endl;
-
                 delete pt_game;
         }
+        delete pt_sound;
+
         return EXIT_SUCCESS;
 }

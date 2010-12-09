@@ -13,7 +13,6 @@
 #include "Light.h"
 #include "Moto.h"
 #include "PtBeam.h"
-#include "Sky.h"
 #include "Sound.h"
 #include "Wall.h"
 
@@ -44,7 +43,6 @@ class Game: public Drawable{
         GLfloat dim_line_x, dim_line_y;
 
         Board board;
-        Sky sky;
         Wall wall;
 
         std::vector<Light *> lights;
@@ -79,7 +77,7 @@ class Game: public Drawable{
 	GLfloat inverseX(int px);
 	GLfloat inverseY(int py);
         
-        Sound & sound;
+        Sound *pt_sound;
         
         STR_LASER str_laser;
 
@@ -93,7 +91,7 @@ class Game: public Drawable{
 	     GLfloat quality_x, GLfloat quality_y,
 	     GLfloat _d_line_x, GLfloat _d_line_y,
 	     GLfloat _dim_line_x, GLfloat _dim_line_y,
-	     int _moto_size, Sound &, int) throw (ExceptionWrongBoardSize);
+	     int _moto_size, Sound *, int) throw (ExceptionWrongBoardSize);
         ~Game();
 
         void draw();

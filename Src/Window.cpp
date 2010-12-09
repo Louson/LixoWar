@@ -19,8 +19,8 @@ static const unsigned char * WIN_TEXT = (unsigned char *)
 static const unsigned char * LOST_TEXT = (unsigned char *) 
         "GAME OVER !\n\nYou lost ...";
 
-extern Game * pt_game;
-extern Sound * pt_sound;
+extern Game *pt_game;
+extern Sound *pt_sound;
 
 namespace Window {
         static int window_width, window_height;

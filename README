@@ -1,0 +1,26 @@
+== Requirements ==
+
+* 32bit Linux distribution (for FMOD api, see below) 
+* freeglut API 
+* fast computer
+
+== Utilization ==
+
+To compile the project, just do a
+        $ make
+and to run it:
+        $ make run
+or
+        $ ./lixo_war
+
+You can change some of the settings in the lb.cfg config file.
+
+== Sound library ==
+
+FMOD library is included int the ./lib folder. If you want to
+compile the project on a different architecture, you need
+to get the correct version of fmod library for your computer/
+distribution on http://www.fmod.org website. 
+
+In this case, you may eventually want to modify the Makefile and 
+remove the reference to the libfmodex.so object.

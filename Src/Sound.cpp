@@ -27,7 +27,6 @@ void Sound::init(void) throw(File::ExceptionBadPath, File::ExceptionParamInexist
 
         File config_file(PATH_CONFIG_FILE);
         sounds[EXPLOSION] = config_file.getParamString("explosion");
-        sounds[THEME] = config_file.getParamString("theme");
         sounds[VROUM] = config_file.getParamString("vroum");
         sounds[LASER] = config_file.getParamString("laser");
         sounds[VROUM_UP] = config_file.getParamString("vroum_up");
@@ -70,8 +69,7 @@ void Sound::play(enum SON son, bool loop)
                 channelVroum->stop();
                 vroum_playing = son;
                 channel = &channelVroum;
-       }else if(son == THEME)
-               channel = &channelMusic;
+        }
 
         if(fmod_sounds[son] == NULL)
                 result = system->createSound(sounds[son].c_str(), settings, 0, &fmod_sounds[son]);
@@ -80,6 +78,4 @@ void Sound::play(enum SON son, bool loop)
         result = system->playSound(FMOD_CHANNEL_FREE, fmod_sounds[son], 0, channel);
         checkError("The music does not exist");
 
-        if(son == THEME)
-                channelMusic->setVolume(MUSIC_VOLUME);
 }
