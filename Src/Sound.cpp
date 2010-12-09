@@ -7,7 +7,7 @@
 #define PATH_CONFIG_FILE "./sound.cfg"
 
 #define NB_CANAL 4
-#define MUSIC_VOLUME 0.2
+#define MUSIC_VOLUME 0.15
 
 Sound::Sound():
         channelMusic(0),
