@@ -204,7 +204,7 @@ void Window::specialKeyboard(int key, int x, int y){
 }
 
 void Window::timer(int value) {
-	if (value)
+	if (value == 1)
 		/* We can start */
 		pt_game->youCanStart();
         if (value == -1)
