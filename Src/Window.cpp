@@ -116,7 +116,6 @@ void Window::init(){
         glutSpecialFunc(&Window::specialKeyboard);
 	glutTimerFunc(1000, &Window::timer, 0);
 	glutTimerFunc(2000, &Window::timer, 0);
-	glutTimerFunc(3000, &Window::timer, 0);
 	glutTimerFunc(3000, &Window::timer, 1);
 
         glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
@@ -204,9 +203,9 @@ void Window::specialKeyboard(int key, int x, int y){
 }
 
 void Window::timer(int value) {
-	if (!value)
-		cout << "BIP"<< endl;
-	else
+	if (value)
 		/* We can start */
 		pt_game->youCanStart();
+	cout << "BIP"<< endl;
+
 }
