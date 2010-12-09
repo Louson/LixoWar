@@ -23,6 +23,7 @@ namespace Window{
         void init();
         void keyboard(unsigned char cara,int x, int y);
         void specialKeyboard(int, int ,int);
+	void timer(int);
         /* used to get the dimension of the windows */
         void windowReshape(int, int);
         bool leaveGame(void);

@@ -3,7 +3,6 @@
 #include <assert.h>
 #include <cstdlib>
 #include <stdexcept>
-#include <ctime>
 
 #include "Game.h"
 #include "Drawable.h"
@@ -64,7 +63,7 @@ Game::Game(
 	int _num_lasers
 	) throw (ExceptionWrongBoardSize) :
 	
-        win(false), lose(false),
+        win(false), lose(false), iCanStart(false),
 	
         opponentNumber(_opponent_number),
 	
@@ -274,12 +273,11 @@ void Game::draw(){
                         sound.play(GAMEOVER, false);
                         lose = true;
                 }
-        }else{
+        }else if (iCanStart) {
                 /* player position calculation */
                 player.x += player.speed*((int) cos(((float)player.angle)*M_PI/180.0));
                 player.y += player.speed*((int) sin(((float)player.angle)*M_PI/180.0));
                 player.pt_moto->setPos(player.x, player.y, player.angle);
-
                 /* enemy position calculation */
                 for (int i=0 ; i<opponentNumber ; i++) {
                         MOTO_STRUCT *enemy = tab_opp+i;
@@ -292,7 +290,9 @@ void Game::draw(){
 
                 /* colision detection */
                 testNewCase(&player);
-        }
+        } else {
+                player.pt_moto->setPos(player.x, player.y, player.angle);
+	}
 
         for (int i=0 ; i< opponentNumber ; i++) 
                 (tab_opp+i)->pt_moto->setPos((tab_opp+i)->x, (tab_opp+i)->y, (tab_opp+i)->angle);
@@ -622,4 +622,8 @@ GLfloat Game::inverseX(int px) {
 }
 GLfloat Game::inverseY(int py) {
         return SIZE_CASE_Y*(py-0.5)-board_size_y/2.0;
+}
+
+void Game::youCanStart() {
+	iCanStart = true;
 }

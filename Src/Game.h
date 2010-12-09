@@ -33,6 +33,7 @@ class Game: public Drawable{
     private:
 	bool win;
 	bool lose;
+	bool iCanStart;
 
         /* game logistic */
         int opponentNumber;
@@ -115,6 +116,7 @@ class Game: public Drawable{
 	bool has_won();
 	bool has_lost();
 
+	void youCanStart();
 };
 
 #endif

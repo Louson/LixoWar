@@ -114,6 +114,10 @@ void Window::init(){
         glutKeyboardFunc(&Window::keyboard);
         glutReshapeFunc(&Window::windowReshape);
         glutSpecialFunc(&Window::specialKeyboard);
+	glutTimerFunc(1000, &Window::timer, 0);
+	glutTimerFunc(2000, &Window::timer, 0);
+	glutTimerFunc(3000, &Window::timer, 0);
+	glutTimerFunc(3000, &Window::timer, 1);
 
         glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
 
@@ -197,4 +201,12 @@ void Window::specialKeyboard(int key, int x, int y){
                         return;
         }
         glutPostRedisplay();
+}
+
+void Window::timer(int value) {
+	if (!value)
+		cout << "BIP"<< endl;
+	else
+		/* We can start */
+		pt_game->youCanStart();
 }
