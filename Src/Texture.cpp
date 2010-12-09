@@ -45,34 +45,34 @@ void Texture::readPPM(const char* _path) {
     }
 
     /* lecture of magic number */
-    fread(magic, 2, sizeof(char), fp);
+    if(!fread(magic, 2, sizeof(char), fp)) throw runtime_error("Error in the fread in Texture");
     magic[2]='\0';
     if ( magic[0] != 'P' || magic[1] != '6') {
         throw invalid_argument("Texture image isn't .ppm");
     }
-    fread(&white, 1, sizeof(char), fp);
+    if(!fread(&white, 1, sizeof(char), fp)) throw runtime_error("Error in the fread in Texture");
 
     /* width, height and max_color_value */
     i = 0;
     while(i < 3) {
-        fgets(buff, 100, fp);
-        if (buff[0] == '#') continue;
-        switch(i) {
+	    if (!fgets(buff, 100, fp)) throw runtime_error("Error in the fread in Texture");
+	    if (buff[0] == '#') continue;
+	    switch(i) {
             case 0 :
-                i += sscanf(buff, "%d %d %d",
-                        &width, &height, &max_color_value);
-                break;
+		    i += sscanf(buff, "%d %d %d",
+				&width, &height, &max_color_value);
+		    break;
             case 1 :
-                i += sscanf(buff, "%d %d",
-                        &height, &max_color_value);
-                break;
+		    i += sscanf(buff, "%d %d",
+				&height, &max_color_value);
+		    break;
             case 2 :
-                i += sscanf(buff, "%d", &max_color_value);
-                break;
+		    i += sscanf(buff, "%d", &max_color_value);
+		    break;
             default :
-                i=3;
-                break;
-        }
+		    i=3;
+		    break;
+	    }
     }
 
     if (width<0) {
@@ -92,7 +92,7 @@ void Texture::readPPM(const char* _path) {
 
     image = new unsigned char[width*height*3];
 
-    fread(image, width*height*3, sizeof(char), fp);
+    if (!fread(image, width*height*3, sizeof(char), fp)) throw runtime_error("Error in the fread in Texture");
 
     fclose(fp);	
 }

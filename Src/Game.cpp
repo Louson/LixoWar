@@ -2,6 +2,7 @@
 #include <cmath>
 #include <assert.h>
 #include <cstdlib>
+#include <stdexcept>
 #include <ctime>
 
 #include "Game.h"
@@ -400,7 +401,7 @@ void Game::motoMov(enum MOV mov){
  * Déplace l'ennemi dans la bonne direction
  */
 void Game::enemyMov(MOTO_STRUCT *enemy) {
-        switch (choseDirection(enemy->x, enemy->y, enemy->angle)) {
+        switch (directionChose(enemy->presence_x, enemy->presence_y, enemy->angle)) {
                 case UP:
                         speedIncrement(enemy, UP);
                         break;
@@ -425,22 +426,25 @@ enum MOV Game::choseDirection(GLfloat x, GLfloat y, int angle) {
         int cosr = 0, sinr = 0;
 
         switch ((angle%360+360)%360) {
-                case 0 :
-                        cosr = 1;
-                        sinr = 0;
-                        break;
-                case 90 :
-                        cosr = 0;
-                        sinr = 1;
-                        break;
-                case 180 :
-                        cosr = -1;
-                        sinr = 0;
-                        break;
-                case 270 :
-                        cosr = 0;
-                        sinr = -1;
-                        break;
+	case 0 :
+		cosr = 1;
+		sinr = 0;
+		break;
+	case 90 :
+		cosr = 0;
+		sinr = 1;
+		break;
+	case 180 :
+		cosr = -1;
+		sinr = 0;
+		break;
+	case 270 :
+		cosr = 0;
+		sinr = -1;
+		break;
+	default :
+		throw std::runtime_error("This angle is not possible");
+		break;
         }
 
 	/* Tout droit */
@@ -481,6 +485,36 @@ int Game::look(int px, int py, int kx, int ky) {
         if (kx + ky > 0)
                 return (resx-px)+(resy-py);
         else return (px-resx)+(py-resy);
+}
+
+enum MOV Game::directionChose(int epx, int epy, int angle) {
+	int ppx = player.presence_x;
+	int ppy = player.presence_y;
+	int epsilonX = 1;
+	int epsilonY = 1;
+	int next_angle;
+
+	int dx = ppx-epx;
+	if (dx<0) epsilonX = -1;
+	int dy = ppy-epy;
+	if (dy<0) epsilonY = -1;
+
+	if (!presence_matrix[epx+epsilonX][epy]) {
+		next_angle = 90-epsilonX*90;
+	} else if (!presence_matrix[epx][epy+epsilonY]) {
+		next_angle = 180-epsilonY*90;
+	} else if(!presence_matrix[epx-epsilonX][epy]) {
+		next_angle = 90+epsilonX*90;
+	} else next_angle = 180+epsilonY*90;
+
+
+	switch ((360 + angle-next_angle)%360) {
+	case 0   : return UP;
+	case 90  : return RIGHT;
+	case 180 : return DOWN;
+	case 270 : return LEFT;
+	default  : assert(false); return UP;
+	}
 }
 
 void Game::setPerspCam() {

@@ -11,7 +11,7 @@ class Spot : public Located_Light {
                 Spot(LIGHT * light, GLfloat exponent, GLfloat cutoff);
                 void init();
         private :
-                GLfloat direction[3];
+                GLfloat direction[4];
                 GLfloat exponent;
                 GLfloat cutoff;
 };

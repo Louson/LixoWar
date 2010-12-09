@@ -3,7 +3,7 @@
 Located_Light::Located_Light(LIGHT * light):
         Light(light)
 {
-	for (int i=0 ; i < 4 ; i++) {
+	for (int i=0 ; i < 3 ; i++) {
 		location[i] = light->location[i];
 		diffuse[i] = light->diffuse[i];
 		ambient[i] = light->ambient[i];

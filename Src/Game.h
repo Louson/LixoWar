@@ -102,6 +102,7 @@ class Game: public Drawable{
         void motoMov(enum MOV);
 	void enemyMov(MOTO_STRUCT *enemy);
 	enum MOV choseDirection(GLfloat x, GLfloat y, int angle);
+	enum MOV directionChose(int epx, int epy, int angle);
 	int look(int px, int py, int kx, int ky);
         void zoomOrthoCam(int);
 
