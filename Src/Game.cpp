@@ -83,6 +83,8 @@ Game::Game(
 
         action = NOTHING;
 
+        sound.play(VROUM, true);
+
         /* presence matrix initialization */
         int x_dim = 2+board_size_x/(float)SIZE_CASE_X;
         int y_dim = 2+board_size_y/(float)SIZE_CASE_Y;
@@ -212,6 +214,7 @@ void Game::testNewCase(MOTO_STRUCT *motoTest) {
                                         str_laser.tab[i]->deactivate();
                                         str_laser.cur_num--;
                                         if(str_laser.cur_num == 0){
+                                                sound.play(VICTORY, false);
                                                 win = true;
                                         }
                                         is_laser = true;
@@ -224,6 +227,7 @@ void Game::testNewCase(MOTO_STRUCT *motoTest) {
                         else if (motoTest->numero) {
                                 opponentNumber--;
                                 if (!opponentNumber) {
+                                        sound.play(VICTORY);
                                         win = true;
 				}
 				motoTest->pt_moto->explode();
@@ -246,6 +250,7 @@ void Game::testNewCase(MOTO_STRUCT *motoTest) {
 }
 
 void Game::draw(){
+
         assert(player.x<=2*SIZE_CASE_X+board_size_x/2.0);
         assert(player.x>=-2*SIZE_CASE_X-board_size_x/2.0);
         assert(player.y<=2*SIZE_CASE_Y+board_size_y/2.0);
@@ -254,10 +259,12 @@ void Game::draw(){
         if(end_game){
                 if(begin_explosion){
                         begin_explosion = false;
-                        sound.play(EXPLOSION);
+                        sound.play(EXPLOSION, false);
                 }
-                if(player.pt_moto->getEndExplosion())
+                if(player.pt_moto->getEndExplosion()){
+                        sound.play(GAMEOVER, false);
                         lose = true;
+                }
         }else{
                 /* player position calculation */
                 player.x += player.speed*((int) cos(((float)player.angle)*M_PI/180.0));
@@ -372,9 +379,11 @@ void Game::motoMov(enum MOV mov){
         switch(mov){
                 case UP:
                         speedIncrement(&player, UP);
+                        sound.play(VROUM_UP, false);
                         break;
                 case DOWN:
                         speedIncrement(&player, DOWN);
+                        sound.play(VROUM_DOWN, false);
                         break;
                 case LEFT:
                         player.angle = (player.angle + ROTATION_INCREMENT) % 360;
@@ -413,8 +422,7 @@ void Game::enemyMov(MOTO_STRUCT *enemy) {
 enum MOV Game::choseDirection(GLfloat x, GLfloat y, int angle) {
         int max, lower;
         enum MOV res = UP;
-        int cosr;
-        int sinr;
+        int cosr = 0, sinr = 0;
 
         switch ((angle%360+360)%360) {
                 case 0 :

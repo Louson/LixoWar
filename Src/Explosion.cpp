@@ -12,11 +12,12 @@ static GLfloat Ambient[] = {1, 0.5 , 0,  1.0};
 static const GLfloat Specular[] = {1, 1, 1, 1,};
 static const GLfloat Shininess = 70;
 
-Explosion::Explosion(const int _x, const int _y):
+Explosion::Explosion(const int _x, const int _y, const int _moto_size):
         center_x(_x), center_y(_y),
         radius(0), increment(true),
         explosion_finished(false),
-        apogee(false)
+        apogee(false),
+        moto_size(_moto_size)
 {
 }
 
@@ -32,7 +33,7 @@ bool Explosion::getEnd(void) const
 void Explosion::changeRadius(void)
 {
         if(increment){
-                if(radius + RADIUS_INCREMENT > MAX_RADIUS){
+                if(radius + RADIUS_INCREMENT > MAX_RADIUS*moto_size){
                         radius = MAX_RADIUS;
                         apogee = true;
                         increment = false;
@@ -50,8 +51,8 @@ void Explosion::changeRadius(void)
 
 void Explosion::changeColor(void)
 {
-        Ambient[2] = radius/(3*MAX_RADIUS);
-        Ambient[1] = radius/(2*MAX_RADIUS);
+        Ambient[2] = radius/(3*MAX_RADIUS*moto_size);
+        Ambient[1] = radius/(2*MAX_RADIUS*moto_size);
         Color color(Emission, Ambient, Diffuse, Specular, Shininess);
         color.active();
 }

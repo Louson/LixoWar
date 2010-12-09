@@ -5,7 +5,7 @@
 
 class Explosion : public Drawable{
         public:
-                Explosion(const int, const int);
+                Explosion(const int, const int, const int);
                 void draw(void);
                 bool getEnd(void) const;
                 bool getApogee(void) const;
@@ -15,6 +15,7 @@ class Explosion : public Drawable{
                 double radius;
                 bool increment, explosion_finished;
                 bool apogee;
+                int moto_size;
 
                 void changeRadius(void);
                 void changeColor(void);

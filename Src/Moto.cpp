@@ -80,7 +80,7 @@ void Moto::draw(void)
 
 void Moto::explode(void)
 {
-        pt_explosion = new Explosion(x, y);
+        pt_explosion = new Explosion(x, y, moto_size);
 }
 
 Moto::~Moto(void)
