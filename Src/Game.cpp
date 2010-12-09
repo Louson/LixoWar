@@ -15,6 +15,10 @@
 
 const char * SKY_PIC = "Images/ciel.ppm";
 
+#define WIN_IF_ALL_DEAD false
+#define ALGO_NORM_1
+//#define ALGO_FLEE
+
 #define MAX_SPEED       0.3
 #define WALL_SIZE       10000
 
@@ -216,7 +220,7 @@ void Game::testNewCase(MOTO_STRUCT *motoTest) {
                                         str_laser.cur_num--;
                                         if(str_laser.cur_num == 0){
                                                 sound.play(VICTORY, false);
-                                                win = true;
+						win = true;
                                         }
                                         is_laser = true;
                                 }
@@ -227,9 +231,9 @@ void Game::testNewCase(MOTO_STRUCT *motoTest) {
                         /* if it's a opponent */
                         else if (motoTest->numero) {
                                 opponentNumber--;
-                                if (!opponentNumber) {
-                                        sound.play(VICTORY);
-                                        win = true;
+                                if (!opponentNumber && WIN_IF_ALL_DEAD) {
+					sound.play(VICTORY);
+					win = true;
 				}
 				motoTest->pt_moto->explode();
                                 return;
@@ -401,22 +405,27 @@ void Game::motoMov(enum MOV mov){
  * Déplace l'ennemi dans la bonne direction
  */
 void Game::enemyMov(MOTO_STRUCT *enemy) {
+#ifdef ALGO_NORM_1
         switch (directionChose(enemy->presence_x, enemy->presence_y, enemy->angle)) {
-                case UP:
-                        speedIncrement(enemy, UP);
-                        break;
-                case DOWN:
-                        enemy->angle = (enemy->angle + 180) % 360;
-                        break;
-                case LEFT:
-                        enemy->angle = (enemy->angle + 90) % 360;
-                        break;
-                case RIGHT:
-                        enemy->angle = (enemy->angle + 270) % 360;
-                        break;
+#endif
+#ifdef ALGO_FLEE
+	switch (choseDirection(enemy->x, enemy->y, enemy->angle)) {
+#endif
+	case UP:
+		speedIncrement(enemy, UP);
+		break;
+	case DOWN:
+		enemy->angle = (enemy->angle + 180) % 360;
+		break;
+	case LEFT:
+		enemy->angle = (enemy->angle + 90) % 360;
+		break;
+	case RIGHT:
+		enemy->angle = (enemy->angle + 270) % 360;
+		break;
         }
 }
-
+	
 /**
  * Renvoie la meilleure direction
  */
