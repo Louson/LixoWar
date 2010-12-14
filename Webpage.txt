@@ -1,0 +1,48 @@
+Lixo War   -> image TheGame.jpg
+
+The improbable happened ! The very famous team LouisOlivier&Co has produced a
+new game, which mix race and fight : LixoWar.
+
+Your game begins in a random position of a huge area with four enemies -> image Begin.png
+and your goal is to get the four laser dispatched on the board. -> image Laser.png
+
+But be carefull ! To not die, you have to avoid your enemies and beams that bikes -> Image Enemy.png
+let after them. Do not fall out of the road ! You shall make regrets. ->image Boum.png
+
+Your enemies will take a pleasure to trap you    -> image Trap.png
+
+Characteristics:
+----------------
+
+Graphics have been created on OpenGl. You will have a great speed feeling.
+
+This game has got very nice managements of lights ! -> image Light.png
+
+The sounds effects are human voices made with the very powerful fmod
+library. That makes a lot of fun.
+
+The gamepley is cool. It is very easy to play : just push UP to speed up, DOWN to speed down, LEFT and RIGHT
+to turn. If you lose, just push ENTER to try again. If you want to stop, you
+just have to press ESC. Wonderful !
+
+The lixo war is free. Just download it !
+
+Requirements :
+--------------
+
+* 32bit Linux distribution (for FMOD api, see below) 
+* gcc
+* freeglut API 
+* fast computer
+
+Installation :
+--------------
+
+To compile the project, just do a :
+        $ make
+and to run it :
+        $ make run
+or :
+        $ ./lixo_war
+
+You can change some of the settings in the lb.cfg config file.
